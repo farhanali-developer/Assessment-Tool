@@ -157,5 +157,52 @@ function assessment_form_function(){
 }
 
 function settings_function(){
-	return "";
+?>
+<div class="container-fluid mt-5">
+	<div class="row mx-auto">
+		<div class="col-12 col-md-4 offset-md-2">
+			<h1>Assessment Tool Settings</h1>
+			<form>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Email address</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+					<div id="emailHelp" class="form-text">This email address will be used to send assessment tool results.</div>
+				</div>
+				<div class="mb-3">
+					<h2>Form Styles</h2>
+					<label class="mt-3">Theme:</label>
+					<select id="theme_selector" class="form-control">
+						<option value="default">Default</option>
+						<option value="arrows" selected="">Arrows</option>
+						<option value="dots">Dots</option>
+						<option value="progress">Progress</option>
+					</select>
+					
+					<label class="mt-3">Animation:</label>
+					<select id="animation" class="form-control">
+						<option value="none">None</option>
+						<option value="fade">Fade</option>
+						<option value="slide-horizontal" selected="">Slide Horizontal</option>
+						<option value="slide-vertical">Slide Vertical</option>
+						<option value="slide-swing">Slide Swing</option>
+					</select>
+					
+					<div class="custom-control custom-checkbox mt-3">
+						<input type="checkbox" class="custom-control-input" id="is_justified" value="1" checked="" data-np-checked="1">
+						<label class="custom-control-label" for="is_justified">Justified</label>
+					</div>
+
+					<div class="custom-control custom-checkbox mt-3 mb-3">
+						<input type="checkbox" class="custom-control-input" id="dark_mode" value="1" data-np-checked="1">
+						<label class="custom-control-label" for="dark_mode">Dark Mode</label>
+					</div>
+					
+					<span>An example of these stylings can be found out at: </span><a target="_blank" href="http://techlaboratory.net/jquery-smartwizard">Click Here</a>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+<?php
 }
