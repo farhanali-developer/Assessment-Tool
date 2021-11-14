@@ -106,8 +106,8 @@ class Assessment_tool_Admin {
 	}
 
 	function admin_menu(){
-		add_menu_page( "Assessment Tool", "Assessment Tool", "manage_options", "assessment_tool", "assessment_tool_function", "dashicons-forms", "15" );
-		add_submenu_page( "assessment_tool", "Assessment Form", "Assessment Form", "manage_options", "assessment_form", "assessment_form_function");
+		add_menu_page( "Assessment Tool", "Assessment Tool", "manage_options", "assessment_tool", "assessment_form_function", "dashicons-forms", "15" );
+		add_submenu_page( "assessment_tool", "Assessment Form", "Assessment Form", "manage_options", "assessment_tool", "assessment_form_function");
 		add_submenu_page( "assessment_tool", "Settings", "Settings", "manage_options", "settings", "settings_function");
 	}
 

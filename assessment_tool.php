@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Assessment Tool
- * Plugin URI:        https://logikware.tech/plugins/assessment_tool
+ * Plugin URI:        https://logikware.tech/plugins/
  * Description:       This plugin is for Assessment Tool, developed with specific requirements.
  * Version:           1.0.0
  * Author:            Farhan Ali

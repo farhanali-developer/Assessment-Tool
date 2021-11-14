@@ -29,3 +29,20 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+function uninstall_tables()
+{
+    global $wpdb;
+    $users_table = 'assessment_tool_users';
+    $questions_table = 'assessment_tool_questions';
+    $tabs_table = 'assessment_tool_tabs';
+    $delete_table1 = "DROP TABLE IF EXISTS $users_table";
+    $delete_table2 = "DROP TABLE IF EXISTS $questions_table";
+    $delete_table3 = "DROP TABLE IF EXISTS $tabs_table";
+    $wpdb->query($delete_table1);
+    $wpdb->query($delete_table2);
+    $wpdb->query($delete_table3);
+    delete_option('e34s_time_card_version');
+}
+
+uninstall_tables();
