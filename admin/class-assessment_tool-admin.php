@@ -76,8 +76,9 @@ class Assessment_tool_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
+		wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -103,6 +104,7 @@ class Assessment_tool_Admin {
 		wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
 
 	}
@@ -126,7 +128,7 @@ function assessment_form_function(){
 	<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
 			<div class="col-12 col-md-9">
-				<form class="repeater">
+				<form class="repeater" method="POST">
 					<input data-repeater-create type="button" class="btn btn-primary mb-3" value="Add New Tab"/>
     				<div data-repeater-list="outer-list">
       					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
@@ -161,7 +163,7 @@ function assessment_form_function(){
 							</div>
       					</div>
     				</div>
-    				<input data-repeater-create type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+    				<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
 				</form>
             </div>
             <div class="col-12 col-md-3">
