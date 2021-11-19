@@ -126,27 +126,39 @@ function assessment_form_function(){
 	<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
 			<div class="col-12 col-md-9">
-				<!-- outer repeater -->
-<form class="repeater">
+			<form class="repeater">
     <div data-repeater-list="outer-list">
-      <div data-repeater-item>
-        <input type="text" name="text-input" value="A"/>
+      <div data-repeater-item style="border: 1px solid red">
+        Repeater <input type="text" name="text-input" value="A"/>
         <input data-repeater-delete type="button" value="Delete"/>
 
         <!-- innner repeater -->
         <div class="inner-repeater">
           <div data-repeater-list="inner-list">
-            <div data-repeater-item>
-              <input type="text" name="inner-text-input" value="B"/>
+            <div data-repeater-item style="background: #f1f1f1">
+              Inner Repeater <input type="text" name="inner-text-input" value="B"/>
               <input data-repeater-delete type="button" value="Delete"/>
+              
+              <!-- innner repeater -->
+              <!-- <div class="deep-inner-repeater">
+                <div data-repeater-list="deep-inner-list">
+                  <div data-repeater-item style="background: #f9f9f9">
+                    Deep Repeater
+                    <input type="text" name="inner-text-input" value="B"/>
+                    <input data-repeater-delete type="button" value="Delete"/>
+                  </div>
+                </div>
+                <input data-repeater-create type="button" value="Add Deep Repeater"/>
+              </div> -->
+              
             </div>
           </div>
-          <input data-repeater-create type="button" value="Add"/>
+          <input data-repeater-create type="button" value="Add Inner Repeater"/>
         </div>
 
       </div>
     </div>
-    <input data-repeater-create type="button" value="Add"/>
+    <input data-repeater-create type="button" value="Add Repeater"/>
 </form>
             </div>
             <div class="col-12 col-md-3">
