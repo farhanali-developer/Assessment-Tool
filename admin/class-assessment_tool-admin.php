@@ -126,43 +126,46 @@ function assessment_form_function(){
 	<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
 			<div class="col-12 col-md-9">
-			<form class="repeater">
-    <div data-repeater-list="outer-list">
-      <div data-repeater-item style="border: 1px solid red">
-        Repeater <input type="text" name="text-input" value="A"/>
-        <input data-repeater-delete type="button" value="Delete"/>
+				<form class="repeater">
+					<input data-repeater-create type="button" class="btn btn-primary mb-3" value="Add New Tab"/>
+    				<div data-repeater-list="outer-list">
+      					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
+						  	<div class="card-header">Tab Name</div>
+							<div class="card-body p-3">
+							<div class="row mx-auto justify-content-center w-100 mt-2">
+								<div class="col-12 col-md-10">
+									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name" />
+								</div>
+								<div class="col-12 col-md-2">
+									<input data-repeater-delete type="button" class="btn btn-danger" value="Delete Tab"/>
+								</div>
+							</div>
 
-        <!-- innner repeater -->
-        <div class="inner-repeater">
-          <div data-repeater-list="inner-list">
-            <div data-repeater-item style="background: #f1f1f1">
-              Inner Repeater <input type="text" name="inner-text-input" value="B"/>
-              <input data-repeater-delete type="button" value="Delete"/>
-              
-              <!-- innner repeater -->
-              <!-- <div class="deep-inner-repeater">
-                <div data-repeater-list="deep-inner-list">
-                  <div data-repeater-item style="background: #f9f9f9">
-                    Deep Repeater
-                    <input type="text" name="inner-text-input" value="B"/>
-                    <input data-repeater-delete type="button" value="Delete"/>
-                  </div>
-                </div>
-                <input data-repeater-create type="button" value="Add Deep Repeater"/>
-              </div> -->
-              
-            </div>
-          </div>
-          <input data-repeater-create type="button" value="Add Inner Repeater"/>
-        </div>
-
-      </div>
-    </div>
-    <input data-repeater-create type="button" value="Add Repeater"/>
-</form>
+							<!-- innner repeater -->
+							<div class="inner-repeater">
+								<div data-repeater-list="inner-list">
+									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
+										<div class="col-12 col-md-8">
+											<input type="text" name="inner-text-input" class="form-control" placeholder="Question"/>
+										</div>
+										<div class="col-12 col-md-2">
+											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks"/>
+										</div>
+										<div class="col-12 col-md-2">
+											<input data-repeater-delete type="button" class="btn btn-danger" value="Delete Question"/>
+										</div>
+									</div>
+								</div>
+								<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+							</div>
+							</div>
+      					</div>
+    				</div>
+    				<input data-repeater-create type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+				</form>
             </div>
             <div class="col-12 col-md-3">
-                <div class="card text-dark bg-light mt-0 p-0">
+                <div class="card text-dark bg-light mt-5 p-0">
                     <div class="card-header">Display Form</div>
                     <div class="card-body">
                         <h5 class="card-title">Form Shortcode</h5>
