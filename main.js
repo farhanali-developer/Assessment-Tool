@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+  // Transition from welcome page to Wizard page
+
   $('#smartwizard').css('display', 'none')
   $('.welcome_final button').click(function () {
     $('.welcome_final .row').addClass('active');
@@ -17,6 +20,7 @@ $(document).ready(function () {
     }, 500)
   })
 
+  // Smart Wizard Plugin
 
   $('#smartwizard').smartWizard({
     selected: 0, // Initial selected step, 0 = first step
@@ -71,14 +75,15 @@ $(document).ready(function () {
   let no_color = 'blue'
   var tabs = $("#smartwizard .nav-link");
   var all_fields = {};
-  var all_data = [{
+  var data = {
     tab_name: "",
     tab_marks: "",
     questions: [{
       question: "",
       marks: ""
     }]
-  }];
+  }
+  var all_data = [];
 
   $("#smartwizard").on("showStep", function (e, anchorObject, stepIndex, stepDirection) {
     for (var i = 1; i <= tabs.length; i++) {
@@ -91,29 +96,55 @@ $(document).ready(function () {
     }
   });
 
-  $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
-    // console.log()
-    var all_questions = $('#step-' + (currentStepIndex+1)).children('.form-area').children().children().children('.question')
-    var tab_name;
-    var tab_marks;
+  function compare(key) {
+    return function (obj1, obj2) {
+      if (parseInt(obj1[key]) > parseInt(obj2[key])) { //obj1 first then obj2
+        return -1;
+      }
+      if (parseInt(obj1[key]) < parseInt(obj2[key])) { //obj2 first then obj1
+        return 1;
+      }
+      return 0; //keep the same order
+    }
+  }
+
+  $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+    // console.log("This is step " + (currentStepIndex+1))
+    var all_questions = $('#step-' + (currentStepIndex + 1)).children('.form-area').children().children().children('.question')
+
+    var each_data = {
+      tab_name : $('#step-' + (currentStepIndex + 1)).attr('data-name'),
+      tab_marks: "",
+      questions : []
+    }
     var obj = {
       question: "",
       marks: "",
     };
-    var questions = [];
 
-    tab_name = $('#step-' + (currentStepIndex+1)).attr('data-name');
-    for(var element of all_questions){
-      console.log(element.getAttribute('data-marks'))
-      obj.question = element.innerHTML;
-      obj.marks = element.getAttribute('data-marks');
-      questions.push(obj)
+    for (var element of all_questions) {
+      var attr = element.getAttribute('data-value');
+      if (attr == "Yes") {
+        obj = {
+          question: element.innerHTML,
+          marks: element.getAttribute('data-marks')
+        }
+        each_data.questions.push(obj)
+      }
+      else {
+        obj = {
+          question: element.innerHTML,
+          marks: "0"
+        }
+        each_data.questions.push(obj)
+      }
+      // console.log(element.getAttribute('data-value'))
+
     }
-    // console.log(element + " " + each_attr)
-    // questions = [{
-    //   question: 
-    // }]
-    // console.log($('#step-' + (currentStepIndex+1)).children('.form-area').children().children().children('.question'))
+
+    each_data.questions.sort(compare('marks'))
+    console.log(each_data)
+
   });
 
 
@@ -130,12 +161,14 @@ $(document).ready(function () {
     var display_field = $('#' + grandParent + ' h5.display-ans')
     var allNextQuestions = $('#' + grandParent + '').nextAll();
     var question = $('#' + grandParent + ' h5.question').text();
+    // var question_data_value = ;
     var question_field = $('#' + grandParent + ' input.question_field');
 
 
-    $(display_field).html(selected)
+    $(display_field).text(selected)
+    $('#' + grandParent + ' h5.question').attr('data-value', selected)
     $(question_field).val(question)
-    // console.log(question_field.val())
+    // console.log("questionattribute " + question_data_value)
 
     if (selected == 'Yes') {
       $(display_field).css('color', yes_color)
@@ -216,16 +249,6 @@ $(document).ready(function () {
 
     }
 
-    function set_marks(ans) {
-      if (ans == 'Yes') {
-
-        return;
-      }
-      else if (ans == 'No') {
-
-        return;
-      }
-    }
     // for (var table in questions_values) {
     //   tabs.push([questions_values[table]])
     // }
