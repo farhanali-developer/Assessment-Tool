@@ -136,10 +136,10 @@ function assessment_form_function(){
 							<div class="card-body p-3">
 							<div class="row mx-auto justify-content-center w-100 mt-2">
 								<div class="col-12 col-md-10">
-									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name" />
+									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name" required />
 								</div>
 								<div class="col-12 col-md-2">
-									<input data-repeater-delete type="button" class="btn btn-danger" value="Delete Tab"/>
+									<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
 								</div>
 							</div>
 
@@ -148,13 +148,13 @@ function assessment_form_function(){
 								<div data-repeater-list="inner-list">
 									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
 										<div class="col-12 col-md-8">
-											<input type="text" name="inner-text-input" class="form-control" placeholder="Question"/>
+											<input type="text" name="inner-text-input" class="form-control" placeholder="Question" required />
 										</div>
 										<div class="col-12 col-md-2">
-											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks"/>
+											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks" required />
 										</div>
 										<div class="col-12 col-md-2">
-											<input data-repeater-delete type="button" class="btn btn-danger" value="Delete Question"/>
+											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
 										</div>
 									</div>
 								</div>
@@ -178,6 +178,15 @@ function assessment_form_function(){
 			</div>
 		</div>
 	</div>
+	<script>
+		jQuery(".repeater").submit(function(e){
+				e.preventDefault();
+				// var a = jQuery('input[name="outer-list[0][text-input]"').val();
+				// console.log(a);
+				console.log(jQuery('.repeater').repeaterVal());
+				
+		});
+	</script>
 <?php
 }
 
