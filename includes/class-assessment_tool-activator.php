@@ -49,7 +49,8 @@ class Assessment_tool_Activator {
 
         $tabs_query = "CREATE TABLE IF NOT EXISTS $tabs_table (
           `tab_id` INT NOT NULL AUTO_INCREMENT,
-          `tab` VARCHAR(255) NOT NULL,
+          `tab_name` VARCHAR(255) NOT NULL,
+          `tab_description` VARCHAR(255) NOT NULL,
           PRIMARY KEY  (`tab_id`)
         ) $charset_collate;";
 

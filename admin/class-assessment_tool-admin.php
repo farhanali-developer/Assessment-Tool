@@ -132,14 +132,24 @@ function assessment_form_function(){
 					<input data-repeater-create type="button" class="btn btn-primary mb-3" value="Add New Tab"/>
     				<div data-repeater-list="outer-list">
       					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
-						  	<div class="card-header">Tab Name</div>
+							  
+						  	<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
+								  <div class="col-12 col-md-10">
+								  	<h5>Tab Name</h5>
+								  </div>
+								  <div class="col-12 col-md-2">
+								  	<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
+								  </div>
+							  </div>
+
 							<div class="card-body p-3">
 							<div class="row mx-auto justify-content-center w-100 mt-2">
 								<div class="col-12 col-md-10">
-									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name" required />
+									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
+									<textarea class="form-control mt-2" id="exampleFormControlTextarea1" rows="3" placeholder="Tab Description"></textarea>
 								</div>
 								<div class="col-12 col-md-2">
-									<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
+									<!-- <input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/> -->
 								</div>
 							</div>
 
@@ -148,17 +158,22 @@ function assessment_form_function(){
 								<div data-repeater-list="inner-list">
 									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
 										<div class="col-12 col-md-8">
-											<input type="text" name="inner-text-input" class="form-control" placeholder="Question" required />
+											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
 										</div>
 										<div class="col-12 col-md-2">
-											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks" required />
+											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks" />
+											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
 										</div>
 										<div class="col-12 col-md-2">
 											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
 										</div>
 									</div>
 								</div>
-								<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+								<div class="row mx-auto justify-content-start">
+									<div class="col-12 col-md-2">
+										<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+									</div>
+								</div>
 							</div>
 							</div>
       					</div>
