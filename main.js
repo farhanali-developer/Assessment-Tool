@@ -29,9 +29,9 @@ $(document).ready(function () {
           },
           toolbarSettings: {
             toolbarPosition: 'bottom', // none, top, bottom, both
-            toolbarButtonPosition: 'right', // left, right, center
+            toolbarButtonPosition: 'center', // left, right, center
             showNextButton: true, // show/hide a Next button
-            showPreviousButton: true, // show/hide a Previous button
+            showPreviousButton: false, // show/hide a Previous button
             toolbarExtraButtons: [], // Extra buttons to show on toolbar, array of jQuery input/buttons elements
           },
           anchorSettings: {
@@ -61,6 +61,9 @@ $(document).ready(function () {
           // refresh tab height
           $('.tab-content').css('height', '0%')
           $('.tab-content').css('height', '100%')
+
+          // Next Button Arrow
+          $('.sw .toolbar>.btn').append('<i class="fas fa-long-arrow-alt-right"></i>');
         }, 800)
       }, 500)
     }, 500)
@@ -74,7 +77,7 @@ $(document).ready(function () {
   var all_fields = {};
   var all_data = [];
 
-  
+
   // Fetching & Submiting Form Data
   $("#my-form").submit(function (e) {
     e.preventDefault();
@@ -96,7 +99,7 @@ $(document).ready(function () {
 
     console.log(all_fields)
   })
-  
+
   // Hide all question except first one when rendering each step
   $("#smartwizard").on("showStep", function (e, anchorObject, stepIndex, stepDirection) {
     for (var i = 1; i <= tabs.length; i++) {
@@ -117,10 +120,14 @@ $(document).ready(function () {
   // Events on Click for Radio Buttons 
   // ------------------------------------------
 
+  // var edit_grandParent;
+  var current_grandParent;
+
   $('input.form-radio').click(function () {
     var current = $(this)
     var parent = current.parent();
-    var grandParent = current.parent().parent().attr('id')
+    var grandParent = current.parent().parent().attr('id');
+    current_grandParent = grandParent;
     var step = current.parent().parent().parent().parent().attr('id')
     var input = $('#' + grandParent + ' input.form-radio')
     var label = $('#' + grandParent + ' label')
@@ -132,7 +139,6 @@ $(document).ready(function () {
     var question = $('#' + grandParent + ' h5.question').text();
     var question_field = $('#' + grandParent + ' input.question_field');
 
-
     $(display_field).text(selected)
     $('#' + grandParent + ' h5.question').attr('data-value', selected)
     $(question_field).val(question)
@@ -143,10 +149,18 @@ $(document).ready(function () {
       // Show next question
       $('#' + grandParent + '').next().css('display', 'flex')
 
+
       // refresh tab height
       $('.tab-content').css('height', '0%')
       $('.tab-content').css('height', '100%')
 
+      // Show radio buttons only if they haven't been checked yet
+      for (var each of $($(allNextQuestions).children().children('h5.display-ans'))) {
+        if (each.childNodes.length == 0) {
+          $($(allNextQuestions).children().children('input.form-radio')).css('display', 'block')
+          $($(allNextQuestions).children().children('label')).css('display', 'block')
+        }
+      }
     }
     else if (selected == 'No') {
       $(display_field).css('color', no_color)
@@ -157,7 +171,7 @@ $(document).ready(function () {
       // clear radio btn & Display field values
       $($(allNextQuestions).children().children('input.form-radio')).prop('checked', false)
       $($(allNextQuestions).children().children('h5.display-ans')).empty();
-
+      $($(allNextQuestions).children().children('h5.question')).attr('data-value', '')
 
       // refresh tab height
       $('.tab-content').css('height', '0%')
@@ -165,22 +179,31 @@ $(document).ready(function () {
     }
     $(input).css('display', 'none')
     $(label).css('display', 'none')
-
-    // Called Edit Function declared below
-    Edit(input, label, edit)
-
   })
 
+
   // To EDIT Selection
-  function Edit(input, label, edit) {
-    $(edit).click(function () {
+  $('a.edit').click(function () {
+    var edit_grandParent = $(this).parent().parent().attr('id');
+
+    if (current_grandParent == edit_grandParent) {
+      console.log("Same")
+      var input = $('#' + current_grandParent + ' input.form-radio')
+      var label = $('#' + current_grandParent + ' label')
       $(input).css('display', 'inline-block')
       $(label).css('display', 'inline-block')
-    })
-  }
+    }
+    else {
+      console.log("Not Same")
+      var input = $('#' + edit_grandParent + ' input.form-radio')
+      var label = $('#' + edit_grandParent + ' label')
+      $(input).css('display', 'inline-block')
+      $(label).css('display', 'inline-block')
+    }
+  });
 
 
-  // Get Data of each step just before leaving that step and push that data into "all_data[] array"
+  // Get Data of each step just before leaving that step and push that data into "all_data[]"
   $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
     var all_questions = $('#step-' + (currentStepIndex + 1)).children('.form-area').children().children().children('.question')
     var t_marks = 0;
@@ -225,7 +248,7 @@ $(document).ready(function () {
 
   });
 
-
+  // Callback function for "Sort()"
   function compare(key) {
     return function (obj1, obj2) {
       if (parseInt(obj1[key]) > parseInt(obj2[key])) { //obj1 first then obj2
@@ -237,4 +260,5 @@ $(document).ready(function () {
       return 0; //keep the same order
     }
   }
+
 })
