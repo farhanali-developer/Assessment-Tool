@@ -9,6 +9,11 @@
   margin: 0;
   padding: 0;
 }
+.sw {
+  border: 1px solid var(--green);
+  border-radius: 5px;
+  padding-bottom: 1.523rem;
+}
 
 /* Welcome Page */
 
@@ -84,13 +89,10 @@
 
 
 .welcome_final .row{
-  border: 2px solid var(--grey);
+  border: 2px solid var(--green);
   border-radius: 25px;
 }
 
-.welcome_final .row.active{
-  border: 2px solid var(--green);
-}
 
 .welcome_final p span{
   display: block;
@@ -242,6 +244,7 @@
   margin: 0;
 }
 .edit {
+  display: none;
   padding-left: 1.5625em;
   padding-right: 1.5625em;
 }

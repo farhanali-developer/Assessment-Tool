@@ -3,7 +3,6 @@ $(document).ready(function () {
   // Transition from welcome section to Wizard section
   $('#smartwizard').css('display', 'none')
   $('.welcome_final button').click(function () {
-    $('.welcome_final .row').addClass('active');
     $(this).addClass('active');
 
     setTimeout(function () {
@@ -31,7 +30,7 @@ $(document).ready(function () {
             toolbarPosition: 'bottom', // none, top, bottom, both
             toolbarButtonPosition: 'center', // left, right, center
             showNextButton: true, // show/hide a Next button
-            showPreviousButton: false, // show/hide a Previous button
+            showPreviousButton: true, // show/hide a Previous button
             toolbarExtraButtons: [], // Extra buttons to show on toolbar, array of jQuery input/buttons elements
           },
           anchorSettings: {
@@ -116,11 +115,16 @@ $(document).ready(function () {
   });
 
 
+
+
+
+
+  
   // ------------------------------------------
   // Events on Click for Radio Buttons 
   // ------------------------------------------
 
-  // var edit_grandParent;
+  // Get ID of div which contains 'Yes/No' button which has just been clicked
   var current_grandParent;
 
   $('input.form-radio').click(function () {
@@ -136,25 +140,24 @@ $(document).ready(function () {
     var selected = $('#' + grandParent + " input[name='" + inputAttr + "']:checked").val()
     var display_field = $('#' + grandParent + ' h5.display-ans')
     var allNextQuestions = $('#' + grandParent + '').nextAll();
-    var question = $('#' + grandParent + ' h5.question').text();
-    var question_field = $('#' + grandParent + ' input.question_field');
 
     $(display_field).text(selected)
     $('#' + grandParent + ' h5.question').attr('data-value', selected)
-    $(question_field).val(question)
+    $(edit).css('display', 'block')
 
+    // If Yes is selected
     if (selected == 'Yes') {
+
       $(display_field).css('color', yes_color)
 
       // Show next question
       $('#' + grandParent + '').next().css('display', 'flex')
 
-
       // refresh tab height
       $('.tab-content').css('height', '0%')
       $('.tab-content').css('height', '100%')
 
-      // Show radio buttons only if they haven't been checked yet
+      // Show radio buttons of all next questions only if they haven't been checked yet
       for (var each of $($(allNextQuestions).children().children('h5.display-ans'))) {
         if (each.childNodes.length == 0) {
           $($(allNextQuestions).children().children('input.form-radio')).css('display', 'block')
@@ -162,32 +165,48 @@ $(document).ready(function () {
         }
       }
     }
+
+    // If No is selected
     else if (selected == 'No') {
+
       $(display_field).css('color', no_color)
 
       // Hide All next questions
       $(allNextQuestions).css('display', 'none')
 
-      // clear radio btn & Display field values
+      // clear radio button, data-value attribute & Display field values
       $($(allNextQuestions).children().children('input.form-radio')).prop('checked', false)
       $($(allNextQuestions).children().children('h5.display-ans')).empty();
       $($(allNextQuestions).children().children('h5.question')).attr('data-value', '')
+      $($(allNextQuestions).children().children('a.edit')).css('display', 'none')
 
       // refresh tab height
       $('.tab-content').css('height', '0%')
       $('.tab-content').css('height', '100%')
     }
+
+    // Hide radio button after clicking
     $(input).css('display', 'none')
     $(label).css('display', 'none')
   })
 
 
-  // To EDIT Selection
+
+
+
+
+
+  // To EDIT selected value
   $('a.edit').click(function () {
+
+    // Get ID of div that contains the 'edit' button which has just been clicked
     var edit_grandParent = $(this).parent().parent().attr('id');
 
+    // Check if ID of Parent Div which contains 'edit' button is equal to 
+    // the ID of Parent Div which contains the 'Yes/No' button => which was clicked just before 'edit' button was clicked
     if (current_grandParent == edit_grandParent) {
       console.log("Same")
+      // If is Equals then show input fields ('Yes/No') of the same Parent Div
       var input = $('#' + current_grandParent + ' input.form-radio')
       var label = $('#' + current_grandParent + ' label')
       $(input).css('display', 'inline-block')
@@ -195,6 +214,7 @@ $(document).ready(function () {
     }
     else {
       console.log("Not Same")
+      // If is not Equals then show input fields ('Yes/No') of the Parent Div of 'edit' button
       var input = $('#' + edit_grandParent + ' input.form-radio')
       var label = $('#' + edit_grandParent + ' label')
       $(input).css('display', 'inline-block')
@@ -203,8 +223,16 @@ $(document).ready(function () {
   });
 
 
+
+
+
+
+
+
   // Get Data of each step just before leaving that step and push that data into "all_data[]"
   $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+
+    // get all questions in this step
     var all_questions = $('#step-' + (currentStepIndex + 1)).children('.form-area').children().children().children('.question')
     var t_marks = 0;
 
@@ -218,6 +246,7 @@ $(document).ready(function () {
       marks: "",
     };
 
+    // Populate questions array in "each_data" with all questions and their marks
     for (var element of all_questions) {
       var attr = element.getAttribute('data-value');
       if (attr == "Yes") {
@@ -236,12 +265,22 @@ $(document).ready(function () {
       }
     }
 
+    // Sort questions based on marks
     each_data.questions.sort(compare('marks'))
+
+    // Populate t_marks declared above with Sum of marks of all questions
     for (var key in each_data.questions) {
       t_marks = t_marks + parseInt(each_data.questions[key].marks)
     }
+
+    // Push total marks from t_marks in tab_marks of "each_data"
     each_data.tab_marks = t_marks;
+
+    // Now that we have tab name, tab marks, and all questions with their marks, of every step
+    // We Push that into Global array containing data of every step "all_data[]"
     all_data.push(each_data)
+
+    // Sort all_data based on total marks
     all_data.sort(compare('tab_marks'));
 
     console.table(all_data)
@@ -251,10 +290,10 @@ $(document).ready(function () {
   // Callback function for "Sort()"
   function compare(key) {
     return function (obj1, obj2) {
-      if (parseInt(obj1[key]) > parseInt(obj2[key])) { //obj1 first then obj2
+      if (parseInt(obj1[key]) > parseInt(obj2[key])) { // Place obj2 first, then obj1
         return -1;
       }
-      if (parseInt(obj1[key]) < parseInt(obj2[key])) { //obj2 first then obj1
+      if (parseInt(obj1[key]) < parseInt(obj2[key])) { // Place obj1 first, then obj2 
         return 1;
       }
       return 0; //keep the same order
