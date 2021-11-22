@@ -101,11 +101,16 @@ class Assessment_tool_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js", array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
+
+		
+		// Pass ajax_url to script.js
+		wp_localize_script( 'plugin-ajax', 'plugin_ajax_object',
+		array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 	}
 
@@ -125,11 +130,18 @@ function assessment_tool_function(){
 
 function assessment_form_function(){
 ?>
+
+
+<?php
+		//getting file path to send form data
+		$dir = plugin_dir_url( __FILE__ ) . "formdata.php";
+	?>
+
 	<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
+			<h2>Assessment Tool Form</h2>
 			<div class="col-12 col-md-9">
-				<form class="repeater" method="POST">
-					<input data-repeater-create type="button" class="btn btn-primary mb-3" value="Add New Tab"/>
+				<form class="repeater" id="assessment_backend_form" method="POST" action="<?php echo $dir; ?>">
     				<div data-repeater-list="outer-list">
       					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
 							  
@@ -143,13 +155,10 @@ function assessment_form_function(){
 							  </div>
 
 							<div class="card-body p-3">
-							<div class="row mx-auto justify-content-center w-100 mt-2">
+							<div class="row mx-auto justify-content-start w-100 mt-2">
 								<div class="col-12 col-md-10">
 									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
-									<textarea class="form-control mt-2" id="exampleFormControlTextarea1" rows="3" placeholder="Tab Description"></textarea>
-								</div>
-								<div class="col-12 col-md-2">
-									<!-- <input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/> -->
+									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
 								</div>
 							</div>
 
@@ -161,7 +170,7 @@ function assessment_form_function(){
 											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
 										</div>
 										<div class="col-12 col-md-2">
-											<input type="number" name="inner-text-input" class="form-control" min="0" placeholder="Marks" />
+											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
 											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
 										</div>
 										<div class="col-12 col-md-2">
@@ -178,11 +187,14 @@ function assessment_form_function(){
 							</div>
       					</div>
     				</div>
-    				<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+    				<div class="d-flex justify-content-between">
+						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+						<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
+					</div>
 				</form>
             </div>
             <div class="col-12 col-md-3">
-                <div class="card text-dark bg-light mt-5 p-0">
+                <div class="card text-dark bg-light mt-0 p-0">
                     <div class="card-header">Display Form</div>
                     <div class="card-body">
                         <h5 class="card-title">Form Shortcode</h5>
@@ -193,14 +205,70 @@ function assessment_form_function(){
 			</div>
 		</div>
 	</div>
+
+
+
 	<script>
-		jQuery(".repeater").submit(function(e){
+		jQuery("#assessment_backend_form").submit(function(e){
 				e.preventDefault();
-				// var a = jQuery('input[name="outer-list[0][text-input]"').val();
-				// console.log(a);
-				console.log(jQuery('.repeater').repeaterVal());
+// 				// $(this).html()
 				
-		});
+// 				 var formData = jQuery('.repeater').repeaterVal();
+// 				 let newData = JSON.stringify(formData);
+// 				// console.log(newData);
+// 				//console.log(formData["outer-list"][0]["text-input"]);
+// //let a = formData["outer-list"][0]["text-input"];
+// 				// let no_of_fields = $("input[type='text']").length;
+// 				// for(let i = 1; i <= no_of_fields; i++){
+					
+// 				// }
+				var formData = jQuery(".repeater").repeaterVal();
+    // let newData = JSON.stringify(formData);
+    // console.log(newData);
+    //console.log(formData["outer-list"][0]["text-input"]);
+    //let a = formData["outer-list"][0]["text-input"];
+    // let no_of_fields = $("input[type='text']").length;
+    // for(let i = 1; i <= no_of_fields; i++){
+
+    // }
+
+	ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ) ?>';
+    $.ajax({
+      method: "POST",
+      url: ajaxurl,
+      data: JSON.stringify(formData),
+      contentType: "application/json",
+      // async: false,
+      // cache: false,
+      success: function (data) {
+        console.log("Form is submitted");
+        window.location.href =
+          "../wp-content/plugins/assessment_tool/admin/formdata.php";
+        console.log(data);
+        // for(i in data){
+        // 	console.log(i +' : '+ data[i]);
+
+        // }
+
+        // var dataResult = JSON.parse(data);
+        // if(dataResult.statusCode==200){
+        // 	$('#success').html('Data added successfully !');
+        // }
+        // else if(dataResult.statusCode==201){
+        // alert("Error occured !");
+        // }
+      },
+      error: function (jqXHR, exception) {
+        console.log(jqXHR);
+        // Your error handling logic here..
+      },
+    });
+				});
+
+				
+				
+				
+// 		});
 	</script>
 <?php
 }
@@ -209,7 +277,7 @@ function settings_function(){
 ?>
 <div class="container-fluid mt-5">
 	<div class="row mx-auto">
-		<div class="col-12 col-md-4 offset-md-2">
+		<div class="col-12 col-md-4 offset-md-3">
 			<h1>Assessment Tool Settings</h1>
 			<form>
 				<div class="mb-3">
@@ -220,7 +288,7 @@ function settings_function(){
 				<div class="mb-3">
 					<h2>Form Styles</h2>
 					<label class="mt-3">Theme:</label>
-					<select id="theme_selector" class="form-control">
+					<select id="theme_selector" class="form-control mw-100">
 						<option value="default">Default</option>
 						<option value="arrows" selected="">Arrows</option>
 						<option value="dots">Dots</option>
@@ -228,13 +296,17 @@ function settings_function(){
 					</select>
 					
 					<label class="mt-3">Animation:</label>
-					<select id="animation" class="form-control">
+					<select id="animation" class="form-control mw-100">
 						<option value="none">None</option>
 						<option value="fade">Fade</option>
 						<option value="slide-horizontal" selected="">Slide Horizontal</option>
 						<option value="slide-vertical">Slide Vertical</option>
 						<option value="slide-swing">Slide Swing</option>
 					</select>
+
+					<label class="mt-3">Animation:</label>
+					<input type="number" class="form-control" placeholder="2" />
+					<span>Please provide animated speed in seconds i.e 1 = 1seconds or 5 = 5seconds</span>
 					
 					<div class="custom-control custom-checkbox mt-3">
 						<input type="checkbox" class="custom-control-input" id="is_justified" value="1" checked="" data-np-checked="1">

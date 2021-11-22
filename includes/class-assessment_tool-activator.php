@@ -35,6 +35,7 @@ class Assessment_tool_Activator {
         $users_table = 'assessment_tool_users';
         $tabs_table = 'assessment_tool_tabs';
         $questions_table = 'assessment_tool_questions';
+        $settings_table = 'assessment_tool_settings';
         $charset_collate = $wpdb->get_charset_collate();
 
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -43,14 +44,14 @@ class Assessment_tool_Activator {
           `user_id` INT NOT NULL AUTO_INCREMENT,
           `full_name` VARCHAR(255) NOT NULL,
           `phone_number` BIGINT,
-          `user_email` VARCHAR(255),
+          `user_email` VARCHAR(255) NOT NULL,
           PRIMARY KEY  (`user_id`)
         ) $charset_collate;";
 
         $tabs_query = "CREATE TABLE IF NOT EXISTS $tabs_table (
           `tab_id` INT NOT NULL AUTO_INCREMENT,
           `tab_name` VARCHAR(255) NOT NULL,
-          `tab_description` VARCHAR(255) NOT NULL,
+          `tab_description` LONGTEXT,
           PRIMARY KEY  (`tab_id`)
         ) $charset_collate;";
 
@@ -63,10 +64,18 @@ class Assessment_tool_Activator {
           PRIMARY KEY  (`question_id`)
         ) $charset_collate;";
 
+        $settings_query = "CREATE TABLE IF NOT EXISTS $settings_table (
+          `setting_id` INT NOT NULL AUTO_INCREMENT,
+          `setting_name` VARCHAR(255),
+          `setting_value` VARCHAR(255),
+          PRIMARY KEY  (`setting_id`)
+        ) $charset_collate;";
+
         
         dbDelta( $users_query );
         dbDelta( $tabs_query );
         dbDelta( $questions_query );
+        dbDelta( $settings_query );
         
 	}
 

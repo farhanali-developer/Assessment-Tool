@@ -32,14 +32,17 @@ class Assessment_tool_Deactivator {
 	public static function deactivate() {
 		global $wpdb;
 		$users_table = 'assessment_tool_users';
-		$questions_table = 'assessment_tool_questions';
 		$tabs_table = 'assessment_tool_tabs';
+		$questions_table = 'assessment_tool_questions';
+		$settings_table = 'assessment_tool_settings';
 		$delete_table1 = "DROP TABLE IF EXISTS $users_table";
-		$delete_table2 = "DROP TABLE IF EXISTS $questions_table";
-		$delete_table3 = "DROP TABLE IF EXISTS $tabs_table";
+		$delete_table2 = "DROP TABLE IF EXISTS $tabs_table";
+		$delete_table3 = "DROP TABLE IF EXISTS $questions_table";
+		$delete_table4 = "DROP TABLE IF EXISTS $settings_table";
 		$wpdb->query($delete_table1);
 		$wpdb->query($delete_table2);
 		$wpdb->query($delete_table3);
+		$wpdb->query($delete_table4);
 		delete_option('e34s_time_card_version');
 	}
 
