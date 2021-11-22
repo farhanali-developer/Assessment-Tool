@@ -1,6 +1,10 @@
 $(document).ready(function () {
-  $(".repeater").submit(function (e) {
-    e.preventDefault();
+
+  $('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+
+  //$(".repeater").submit(function (e) {
+    //e.preventDefault();
     //   console.log($('input[name="outer-list[0][text-input]"').val());
     //   const Toast = Swal.mixin({
     //     toast: true,
@@ -60,7 +64,7 @@ $(document).ready(function () {
     //     // Your error handling logic here..
     //   },
     // });
-  });
+  //});
 
   var $repeater = $(".repeater").repeater({
     hide: function (deleteElement) {
