@@ -135,16 +135,13 @@ function assessment_form_function(){
 ?>
 
 
-<?php
-		//getting file path to send form data
-		$dir = plugin_dir_url( __FILE__ ) . "formdata.php";
-	?>
+
 
 	<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
 			<h2>Assessment Tool Form</h2>
 			<div class="col-12 col-md-9">
-				<form class="repeater" id="assessment_backend_form" method="POST" action="<?php echo $dir; ?>">
+				<form class="repeater" id="assessment_backend_form">
     				<div data-repeater-list="outer-list">
       					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
 							  
@@ -210,27 +207,32 @@ function assessment_form_function(){
 	</div>
 
 
-
+	<?php
+		//getting file path to send form data
+		$dir = plugin_dir_url( __FILE__ ) . "formdata.php";
+	?>
 	<script>
 		jQuery("#assessment_backend_form").submit(function(e){
 			e.preventDefault();
-			var formData = jQuery(".repeater").repeaterVal();
-			// console.log(formData);
-			ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ) ?>';
+			var form = "<?php echo $dir ?>";
+			var formData1 = $('.repeater').repeaterVal();
+			var formData = new FormData();
+
+			formData.append('data',JSON.stringify(formData1));
+
 			$.ajax({
-			method: "POST",
-			url: ajaxurl,
-			data: formData,
-			success: function (data) {
-				console.log("Form is submitted");
-				//window.location.href =
-				//"../wp-content/plugins/assessment_tool/admin/formdata.php";
-				console.log(data); 
-			},
-			error: function (jqXHR, exception) {
-				console.log(jqXHR);
-				// Your error handling logic here..
-			},
+				method: "POST",
+				url: form,
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					console.log(data);
+					console.log("Form is submitted");
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
 			});
 		});
 

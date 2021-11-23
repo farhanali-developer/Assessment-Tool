@@ -1,15 +1,16 @@
 <?php
 
-// $_POST
-// $a = json_encode($_POST, JSON_FORCE_OBJECT);
+$a = $_POST;
+// echo gettype($a);
+// $b = json_encode($a);
 // echo var_dump(json_decode(file_get_contents("php://input")));
-// var_dump($a);
+var_dump($a);
 // echo $_POST;
 
 // foreach($a as $b){
 //     echo $a;
 // }
-
+// print_r(array_keys($a));
 // if(!$a){
 //     echo "Array is empty";
 // }
@@ -17,8 +18,8 @@
 
 //     print_r(array_keys($a));
 // }
-print_r($a);
+// print_r($a);
 // echo count($a);
 // echo $a;
-wp_die();
+
 ?>
