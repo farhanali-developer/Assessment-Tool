@@ -228,6 +228,7 @@ function assessment_form_function(){
 				contentType: false,
 				success: function (data) {
 					console.log(data);
+					// window.location.href = "../wp-content/plugins/assessment_tool/admin/formdata.php";
 					console.log("Form is submitted");
 				},
 				error: function (jqXHR, exception) {
