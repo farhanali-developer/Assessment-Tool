@@ -45,6 +45,7 @@ class Assessment_tool_Activator {
           `full_name` VARCHAR(255) NOT NULL,
           `phone_number` BIGINT,
           `user_email` VARCHAR(255) NOT NULL,
+          `allow_retake` BOOLEAN,
           PRIMARY KEY  (`user_id`)
         ) $charset_collate;";
 

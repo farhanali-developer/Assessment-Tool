@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -21,7 +20,7 @@
  * @author     Farhan Ali <farhan@logikware.tech>
  */
 class Assessment_tool_Admin {
-
+	
 	/**
 	 * The ID of this plugin.
 	 *
@@ -142,50 +141,81 @@ function assessment_form_function(){
 			<h2>Assessment Tool Form</h2>
 			<div class="col-12 col-md-9">
 				<form class="repeater" id="assessment_backend_form">
+
+
+
+				<?php
+				global $wpdb;
+				$wpdb->hide_errors();
+				$tabs_table = 'assessment_tool_tabs';
+				$questions_table = 'assessment_tool_questions';
+				$charset_collate = $wpdb->get_charset_collate();
+		
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+				$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
+				$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions");
+				?>
     				<div data-repeater-list="outer-list">
-      					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
-							  
-						  	<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
-								  <div class="col-12 col-md-10">
-								  	<h5>Tab Name</h5>
-								  </div>
-								  <div class="col-12 col-md-2">
-								  	<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
-								  </div>
-							  </div>
-
-							<div class="card-body p-3">
-							<div class="row mx-auto justify-content-start w-100 mt-2">
-								<div class="col-12 col-md-10">
-									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
-									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
-								</div>
-							</div>
-
-							<!-- innner repeater -->
-							<div class="inner-repeater">
-								<div data-repeater-list="inner-list">
-									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
-										<div class="col-12 col-md-8">
-											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
+						<?php
+							foreach($tabs as $tabs_name => $tabs_data){
+								$tab = $tabs_data->tab_name;
+								$description = $tabs_data->tab_description;
+							
+						?>
+								<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">  
+									<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
+										<div class="col-12 col-md-10">
+											<h5><?php echo $tab; ?></h5>
 										</div>
 										<div class="col-12 col-md-2">
-											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
-											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+											<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
 										</div>
-										<div class="col-12 col-md-2">
-											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
+									</div>
+
+									<div class="card-body p-3">
+									<div class="row mx-auto justify-content-start w-100 mt-2">
+										<div class="col-12 col-md-10">
+											<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+											<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
+										</div>
+									</div>
+									<?php
+										foreach($questions as $questions_name => $questions_data){
+											$question = $questions_data->question;
+											$marks = $questions_data->marks;
+									?>
+									<!-- innner repeater -->
+									<div class="inner-repeater">
+										<div data-repeater-list="inner-list">
+											<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
+												<div class="col-12 col-md-8">
+													<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
+												</div>
+												<div class="col-12 col-md-2">
+													<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
+													<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+												</div>
+												<div class="col-12 col-md-2">
+													<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+									<?php
+									}
+									?>
+									<div class="row mx-auto justify-content-start">
+											<div class="col-12 col-md-2">
+												<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+											</div>
 										</div>
 									</div>
 								</div>
-								<div class="row mx-auto justify-content-start">
-									<div class="col-12 col-md-2">
-										<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
-									</div>
-								</div>
-							</div>
-							</div>
-      					</div>
+						  <?php
+						 } 
+						  ?>
     				</div>
     				<div class="d-flex justify-content-between">
 						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
@@ -230,9 +260,55 @@ function assessment_form_function(){
 					console.log(data);
 					// window.location.href = "../wp-content/plugins/assessment_tool/admin/formdata.php";
 					console.log("Form is submitted");
+
+
+
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						// didOpen: (toast) => {
+						//   toast.addEventListener("mouseenter", Swal.stopTimer);
+						//   toast.addEventListener("mouseleave", Swal.resumeTimer);
+						// },
+						customClass: {
+						container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "Form Submitted Successfully",
+					});
+
+
+
+
+
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
+
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						// didOpen: (toast) => {
+						//   toast.addEventListener("mouseenter", Swal.stopTimer);
+						//   toast.addEventListener("mouseleave", Swal.resumeTimer);
+						// },
+						customClass: {
+						container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "error",
+						title: "There is some error in the form. Please try again.",
+					});
+
 				}
 			});
 		});
@@ -316,356 +392,33 @@ function users_function(){
 					</tr>
 				</thead>
 				<tbody>
+				<?php
+					global $wpdb;
+					$wpdb->hide_errors();
+					$users_table = 'assessment_tool_users';
+					$charset_collate = $wpdb->get_charset_collate();
+			
+					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+					$users = $wpdb->get_results("SELECT * FROM assessment_tool_users");
+
+					foreach($users as $col => $val){
+						$user_id = $val->user_id;
+						$full_name = $val->full_name;
+						$phone_number = $val->phone_number;
+						$user_email = $val->user_email;
+						$allow_retake = $val->allow_retake;
+					?>
 					<tr>
-						<td>1</td>
-						<td>System Architect</td>
-						<td>(470)839-2692</td>
-						<td>prudence.parker@mertz.net</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
+						<td><?php echo $user_id; ?></td>
+						<td><?php echo $full_name; ?></td>
+						<td><a class="text-dark" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
+						<td><a class="text-dark" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
+						<td><input class="form-check-input" type="checkbox" value="" <?php echo $allow_retake ? 'checked' : '' ?> ></td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td>Accountant</td>
-						<td>(505)530-4575</td>
-						<td>wterry@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>Junior Technical Author</td>
-						<td>(407)825-4022</td>
-						<td>elenor.nolan@schmeler.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>Senior Javascript Developer</td>
-						<td>(501)665-8399</td>
-						<td>nkeeling@rolfson.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>Accountant</td>
-						<td>(260)357-2557</td>
-						<td>mckenzie.melody@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>6</td>
-						<td>Integration Specialist</td>
-						<td>(214)799-4522</td>
-						<td>kshlerin.marcella@abshire.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>7</td>
-						<td>Sales Assistant</td>
-						<td>(575)394-4638</td>
-						<td>streich.meghan@kertzmann.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>8</td>
-						<td>Integration Specialist</td>
-						<td>(615)430-9078</td>
-						<td>tressa55@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>9</td>
-						<td>Javascript Developer</td>
-						<td>(502)639-4513</td>
-						<td>carter.andreanne@schulist.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>10</td>
-						<td>Software Engineer</td>
-						<td>(208)351-5350</td>
-						<td>jerod22@bauch.org</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>11</td>
-						<td>Office Manager</td>
-						<td>(774)305-1070</td>
-						<td>filiberto.stamm@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>12</td>
-						<td>Support Lead</td>
-						<td>(805)202-9053</td>
-						<td>fsanford@rolfson.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>13</td>
-						<td>Regional Director</td>
-						<td>(206)533-3668</td>
-						<td>jermaine.lemke@stehr.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>14</td>
-						<td>Senior Marketing Designer</td>
-						<td>(432)556-7910</td>
-						<td>eriberto.ernser@bernhard.biz</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>15</td>
-						<td>Regional Director</td>
-						<td>(270)920-7447</td>
-						<td>ursula.graham@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>16</td>
-						<td>Marketing Designer</td>
-						<td>(248)802-7272</td>
-						<td>prudence.abshire@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>17</td>
-						<td>Chief Financial Officer (CFO)</td>
-						<td>(716)325-7308</td>
-						<td>muriel.aufderhar@sauer.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>18</td>
-						<td>Systems Administrator</td>
-						<td>(225)268-3839</td>
-						<td>abdullah27@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>19</td>
-						<td>Software Engineer</td>
-						<td>(209)569-6808</td>
-						<td>welch.enola@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>20</td>
-						<td>Personnel Lead</td>
-						<td>(252)671-2748</td>
-						<td>batz.presley@rutherford.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>21</td>
-						<td>Development Lead</td>
-						<td>(470)839-2692</td>
-						<td>schroeder.opal@torp.org</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>22</td>
-						<td>Chief Marketing Officer (CMO)</td>
-						<td>(505)530-4575</td>
-						<td>mlarkin@goldner.biz</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>23</td>
-						<td>Pre-Sales Support</td>
-						<td>(407)825-4022</td>
-						<td>albert.carter@keebler.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>24</td>
-						<td>Sales Assistant</td>
-						<td>(501)665-8399</td>
-						<td>jschowalter@casper.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>25</td>
-						<td>Chief Executive Officer (CEO)</td>
-						<td>(260)357-2557</td>
-						<td>feeney.polly@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>26</td>
-						<td>Developer</td>
-						<td>(214)799-4522</td>
-						<td>ggreenholt@hodkiewicz.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>27</td>
-						<td>Regional Director</td>
-						<td>(575)394-4638</td>
-						<td>loy06@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>28</td>
-						<td>Software Engineer</td>
-						<td>(615)430-9078</td>
-						<td>arlene49@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>29</td>
-						<td>Chief Operating Officer (COO)</td>
-						<td>(502)639-4513</td>
-						<td>iking@ondricka.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>30</td>
-						<td>Regional Marketing</td>
-						<td>(208)351-5350</td>
-						<td>qreinger@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>31</td>
-						<td>Integration Specialist</td>
-						<td>(774)305-1070</td>
-						<td>cremin.quincy@kuphal.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>32</td>
-						<td>Developer</td>
-						<td>(805)202-9053</td>
-						<td>boyer.abigail@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>33</td>
-						<td>Technical Author</td>
-						<td>(206)533-3668</td>
-						<td>kschumm@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>34</td>
-						<td>Team Leader</td>
-						<td>(432)556-7910</td>
-						<td>mcclure.maximillia@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>35</td>
-						<td>Post-Sales support</td>
-						<td>(248)802-7272</td>
-						<td>zkiehn@lakin.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-						</tr>
-					<tr>
-						<td>36</td>
-						<td>Marketing Designer</td>
-						<td>(270)920-7447</td>
-						<td>braden.schiller@harris.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>37</td>
-						<td>Office Manager</td>
-						<td>(716)325-7308</td>
-						<td>ukunde@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>38</td>
-						<td>Secretary</td>
-						<td>(225)268-3839</td>
-						<td>wiza.sam@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>39</td>
-						<td>Financial Controller</td>
-						<td>(209)569-6808</td>
-						<td>dewayne87@will.org</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>40</td>
-						<td>Office Manager</td>
-						<td>(252)671-2748</td>
-						<td>billy12@hills.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>41</td>
-						<td>Director</td>
-						<td>(509)633-5633</td>
-						<td>nikolaus.miller@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>42</td>
-						<td>Support Engineer</td>
-						<td>(513)819-4217</td>
-						<td>nels.rowe@yahoo.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>43</td>
-						<td>Software Engineer</td>
-						<td>(407)699-2419</td>
-						<td>rtillman@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>44</td>
-						<td>Support Engineer</td>
-						<td>(608)261-4991</td>
-						<td>mgrimes@goodwin.biz</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>45</td>
-						<td>Developer</td>
-						<td>(541)898-7271</td>
-						<td>hugh57@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>46</td>
-						<td>Support Engineer</td>
-						<td>(417)874-6478</td>
-						<td>beverly.conn@gulgowski.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>47</td>
-						<td>Data Coordinator</td>
-						<td>(512)470-5250</td>
-						<td>beverly.conn@gulgowski.info</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>Software Engineer</td>
-						<td>(716)373-1649</td>
-						<td>briana.wolf@gmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>49</td>
-						<td>Software Engineer</td>
-						<td>(309)677-1768</td>
-						<td>teresa89@ullrich.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
-					<tr>
-						<td>50</td>
-						<td>Junior Javascript Developer</td>
-						<td>(618)234-4328</td>
-						<td>kaylin.bruen@hotmail.com</td>
-						<td><input class="form-check-input" type="checkbox" value=""></td>
-					</tr>
+					<?php
+					}
+				?>	
 				</tbody>
 				<tfoot>
 					<tr>
@@ -677,8 +430,16 @@ function users_function(){
 					</tr>
 				</tfoot>
 			</table>
+			<button class="btn btn-success text-right">Submit</button>
 		</div>
 	</div>
 </div>
 <?php
 }
+
+
+
+
+
+
+
