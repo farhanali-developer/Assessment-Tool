@@ -41,35 +41,35 @@ class Assessment_tool_Activator {
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
         $users_query = "CREATE TABLE IF NOT EXISTS $users_table (
-          `user_id` INT NOT NULL AUTO_INCREMENT,
+          `id` INT NOT NULL AUTO_INCREMENT,
           `full_name` VARCHAR(255) NOT NULL,
-          `phone_number` BIGINT,
+          `phone_number` VARCHAR(255),
           `user_email` VARCHAR(255) NOT NULL,
           `allow_retake` BOOLEAN,
-          PRIMARY KEY  (`user_id`)
+          PRIMARY KEY  (`id`)
         ) $charset_collate;";
 
         $tabs_query = "CREATE TABLE IF NOT EXISTS $tabs_table (
-          `tab_id` INT NOT NULL AUTO_INCREMENT,
+          `id` INT NOT NULL AUTO_INCREMENT,
           `tab_name` VARCHAR(255) NOT NULL,
           `tab_description` LONGTEXT,
-          PRIMARY KEY  (`tab_id`)
+          PRIMARY KEY  (`id`)
         ) $charset_collate;";
 
         $questions_query = "CREATE TABLE IF NOT EXISTS $questions_table (
-          `question_id` INT NOT NULL AUTO_INCREMENT,
+          `id` INT NOT NULL AUTO_INCREMENT,
           `question` LONGTEXT NOT NULL,
           `marks` INT NOT NULL,
     	    `tab_id` INT NOT NULL,
-          CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(tab_id),
-          PRIMARY KEY  (`question_id`)
+          CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(id),
+          PRIMARY KEY  (`id`)
         ) $charset_collate;";
 
         $settings_query = "CREATE TABLE IF NOT EXISTS $settings_table (
-          `setting_id` INT NOT NULL AUTO_INCREMENT,
+          `id` INT NOT NULL AUTO_INCREMENT,
           `setting_name` VARCHAR(255),
           `setting_value` VARCHAR(255),
-          PRIMARY KEY  (`setting_id`)
+          PRIMARY KEY  (`id`)
         ) $charset_collate;";
 
         

@@ -141,86 +141,143 @@ function assessment_form_function(){
 			<h2>Assessment Tool Form</h2>
 			<div class="col-12 col-md-9">
 				<form class="repeater" id="assessment_backend_form">
-
-
-
-				<?php
-				global $wpdb;
-				$wpdb->hide_errors();
-				$tabs_table = 'assessment_tool_tabs';
-				$questions_table = 'assessment_tool_questions';
-				$charset_collate = $wpdb->get_charset_collate();
-		
-				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-				$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
-				$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions");
-				?>
     				<div data-repeater-list="outer-list">
-						<?php
-							foreach($tabs as $tabs_name => $tabs_data){
-								$tab = $tabs_data->tab_name;
-								$description = $tabs_data->tab_description;
-							
-						?>
+      					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
+							  
+						  	<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
+								  <div class="col-12 col-md-10">
+								  	<h5>New Tab</h5>
+								  </div>
+								  <div class="col-12 col-md-2">
+								  	<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
+								  </div>
+							  </div>
+
+							<div class="card-body p-3">
+							<div class="row mx-auto justify-content-start w-100 mt-2">
+								<div class="col-12 col-md-10">
+									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
+									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
+								</div>
+							</div>
+
+							<!-- innner repeater -->
+							<div class="inner-repeater">
+								<div data-repeater-list="inner-list">
+									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
+										<div class="col-12 col-md-8">
+											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
+										</div>
+										<div class="col-12 col-md-2">
+											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
+											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+										</div>
+										<div class="col-12 col-md-2">
+											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
+										</div>
+									</div>
+								</div>
+								<div class="row mx-auto justify-content-start">
+									<div class="col-12 col-md-2">
+										<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+									</div>
+								</div>
+							</div>
+							</div>
+      					</div>
+    				</div>
+    				<div class="d-flex justify-content-between">
+						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+						<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
+					</div>
+				</form>
+
+				<form class="repeater" id="tabs_and_questions">
+					<?php
+						global $wpdb;
+						$wpdb->hide_errors();
+						$tabs_table = 'assessment_tool_tabs';
+						$questions_table = 'assessment_tool_questions';
+						$charset_collate = $wpdb->get_charset_collate();
+				
+						require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+						$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
+						
+						if($tabs){
+					?>
+						<div data-repeater-list="outer-list">
+							<?php
+								foreach($tabs as $tabs_name => $tabs_data){
+									$tab_id = $tabs_data->id;
+									$tab = $tabs_data->tab_name;
+									$description = $tabs_data->tab_description;
+								
+							?>
 								<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">  
 									<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
 										<div class="col-12 col-md-10">
 											<h5><?php echo $tab; ?></h5>
 										</div>
 										<div class="col-12 col-md-2">
-											<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
+											<input data-repeater-delete type="button" class="btn btn-outline-danger w-100 delete-tab" tab-id="<?php echo $tab_id; ?>" value="Delete Tab"/>
 										</div>
 									</div>
 
 									<div class="card-body p-3">
-									<div class="row mx-auto justify-content-start w-100 mt-2">
-										<div class="col-12 col-md-10">
-											<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
-											<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
-										</div>
-									</div>
-									<?php
-										foreach($questions as $questions_name => $questions_data){
-											$question = $questions_data->question;
-											$marks = $questions_data->marks;
-									?>
-									<!-- innner repeater -->
-									<div class="inner-repeater">
-										<div data-repeater-list="inner-list">
-											<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
-												<div class="col-12 col-md-8">
-													<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
-												</div>
-												<div class="col-12 col-md-2">
-													<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
-													<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
-												</div>
-												<div class="col-12 col-md-2">
-													<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
-												</div>
+										<div class="row mx-auto justify-content-start w-100 mt-2">
+											<div class="col-12 col-md-10">
+												<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+												<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
 											</div>
 										</div>
+										<!-- innner repeater -->
+										<div class="inner-repeater">
+											<div data-repeater-list="inner-list">
+											<?php
+												$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id");
+												foreach($questions as $questions_name => $questions_data){
+													$question_id = $questions_data->id;
+													$question = $questions_data->question;
+													$marks = $questions_data->marks;
+											?>
+												<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2 questions" question-id="<?php echo $question_id; ?>">
+													<div class="col-12 col-md-8">
+														<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
+													</div>
+													<div class="col-12 col-md-2">
+														<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
+														<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+													</div>
+													<div class="col-12 col-md-2">
+														<input data-repeater-delete type="button" class="btn btn-danger w-100 delete-question" question-id="<?php echo $question_id; ?>" value="Delete Question"/>
+													</div>
+												</div>
+											<?php
+											}
+											?>
+											</div>
+											<div class="row mx-auto justify-content-start">
+												<div class="col-12 col-md-2">
+													<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+												</div>
+											</div>
 										
-									</div>
-									<?php
-									}
-									?>
-									<div class="row mx-auto justify-content-start">
-											<div class="col-12 col-md-2">
-												<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
-											</div>
 										</div>
 									</div>
+									
 								</div>
-						  <?php
-						 } 
-						  ?>
-    				</div>
-    				<div class="d-flex justify-content-between">
-						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
-						<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
-					</div>
+								<?php
+								} 
+								?>
+							</div>
+							<div class="d-flex justify-content-between">
+								<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+								<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
+							</div>
+						<?php
+						}
+						?>	
 				</form>
             </div>
             <div class="col-12 col-md-3">
@@ -239,53 +296,40 @@ function assessment_form_function(){
 
 	<?php
 		//getting file path to send form data
-		$dir = plugin_dir_url( __FILE__ ) . "formdata.php";
+		$formdata = plugin_dir_url( __FILE__ ) . "formdata.php";
+		$deleteTab = plugin_dir_url( __FILE__ ) . "deleteTab.php";
+		$deleteQuestion = plugin_dir_url( __FILE__ ) . "deleteQuestion.php";
 	?>
 	<script>
 		jQuery("#assessment_backend_form").submit(function(e){
 			e.preventDefault();
-			var form = "<?php echo $dir ?>";
-			var formData1 = $('.repeater').repeaterVal();
+			var formdata = "<?php echo $formdata ?>";
+			var formData1 = $('#assessment_backend_form').repeaterVal();
 			var formData = new FormData();
 
 			formData.append('data',JSON.stringify(formData1));
 
 			$.ajax({
 				method: "POST",
-				url: form,
+				url: formdata,
 				data: formData,
 				processData: false,
 				contentType: false,
 				success: function (data) {
-					console.log(data);
-					// window.location.href = "../wp-content/plugins/assessment_tool/admin/formdata.php";
-					console.log("Form is submitted");
-
-
-
 					const Toast = Swal.mixin({
 						toast: true,
 						position: "top-end",
 						showConfirmButton: false,
 						timer: 4000,
 						timerProgressBar: true,
-						// didOpen: (toast) => {
-						//   toast.addEventListener("mouseenter", Swal.stopTimer);
-						//   toast.addEventListener("mouseleave", Swal.resumeTimer);
-						// },
 						customClass: {
-						container: "mt-4",
+							container: "mt-4",
 						},
 					});
 					Toast.fire({
 						icon: "success",
 						title: "Form Submitted Successfully",
 					});
-
-
-
-
-
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
@@ -296,10 +340,6 @@ function assessment_form_function(){
 						showConfirmButton: false,
 						timer: 4000,
 						timerProgressBar: true,
-						// didOpen: (toast) => {
-						//   toast.addEventListener("mouseenter", Swal.stopTimer);
-						//   toast.addEventListener("mouseleave", Swal.resumeTimer);
-						// },
 						customClass: {
 						container: "mt-4",
 						},
@@ -316,7 +356,61 @@ function assessment_form_function(){
 				
 				
 				
-// 		});
+		jQuery(".delete-question").click(function(e){
+			e.preventDefault();
+			let questionUrl = "<?php echo $deleteQuestion ?>";
+			let deletequestion = jQuery(this).attr("question-id");
+
+			$.ajax({
+				method: "POST",
+				url: questionUrl,
+				data: {"questionId": deletequestion},
+				success: function (data) {
+					console.log(data);
+					console.log("Question Deleted.");
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+		});
+
+
+
+
+
+
+		jQuery(".delete-tab").click(function(){
+			let tabUrl = "<?php echo $deleteTab ?>";
+			let deletetabid = jQuery(this).attr("tab-id");
+			let questionsid = [];
+			let thisdata = jQuery(this).parent().parent().parent().children().children(".inner-repeater").children().children(".questions");
+			
+			jQuery(thisdata).each(function(){
+				let id = $(this).attr("question-id")
+				questionsid.push(id);
+			});
+			
+			$.ajax({
+				method: "POST",
+				url: tabUrl,
+				data: {
+					"tabId": deletetabid,
+					"questionsid": questionsid
+				},
+				success: function (data) {
+					console.log(data);
+					console.log("Tabs and Questions Deleted.");
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+
+
+		});
+
+
 	</script>
 <?php
 }
@@ -403,7 +497,7 @@ function users_function(){
 					$users = $wpdb->get_results("SELECT * FROM assessment_tool_users");
 
 					foreach($users as $col => $val){
-						$user_id = $val->user_id;
+						$user_id = $val->id;
 						$full_name = $val->full_name;
 						$phone_number = $val->phone_number;
 						$user_email = $val->user_email;
@@ -436,10 +530,3 @@ function users_function(){
 </div>
 <?php
 }
-
-
-
-
-
-
-
