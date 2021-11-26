@@ -117,7 +117,8 @@ class Assessment_tool_Admin {
 
 	function admin_menu(){
 		add_menu_page( "Assessment Tool", "Assessment Tool", "manage_options", "assessment_tool", "assessment_form_function", "dashicons-forms", "15" );
-		add_submenu_page( "assessment_tool", "Assessment Form", "Assessment Form", "manage_options", "assessment_tool", "assessment_form_function");
+		add_submenu_page( "assessment_tool", "Add New Tab", "Add New Tab", "manage_options", "assessment_tool", "assessment_form_function");
+		add_submenu_page( "assessment_tool", "All Tabs", "All Tabs", "manage_options", "all_tabs", "all_tabs_function");
 		add_submenu_page( "assessment_tool", "Settings", "Settings", "manage_options", "settings", "settings_function");
 		add_submenu_page( "assessment_tool", "Users", "Users", "manage_options", "users", "users_function");
 	}
@@ -126,72 +127,11 @@ class Assessment_tool_Admin {
 
 }
 
-function assessment_tool_function(){
-	return "";
-}
-
-function assessment_form_function(){
+function all_tabs_function(){
 ?>
-
-
-
-
-	<div class="container-fluid mt-5">
+<div class="container-fluid mt-5">
 		<div class="row mx-auto justify-content-between">
-			<h2>Assessment Tool Form</h2>
 			<div class="col-12 col-md-9">
-				<form class="repeater" id="assessment_backend_form">
-    				<div data-repeater-list="outer-list">
-      					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
-							  
-						  	<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
-								  <div class="col-12 col-md-10">
-								  	<h5>New Tab</h5>
-								  </div>
-								  <div class="col-12 col-md-2">
-								  	<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
-								  </div>
-							  </div>
-
-							<div class="card-body p-3">
-							<div class="row mx-auto justify-content-start w-100 mt-2">
-								<div class="col-12 col-md-10">
-									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
-									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
-								</div>
-							</div>
-
-							<!-- innner repeater -->
-							<div class="inner-repeater">
-								<div data-repeater-list="inner-list">
-									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
-										<div class="col-12 col-md-8">
-											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
-										</div>
-										<div class="col-12 col-md-2">
-											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
-											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
-										</div>
-										<div class="col-12 col-md-2">
-											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
-										</div>
-									</div>
-								</div>
-								<div class="row mx-auto justify-content-start">
-									<div class="col-12 col-md-2">
-										<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
-									</div>
-								</div>
-							</div>
-							</div>
-      					</div>
-    				</div>
-    				<div class="d-flex justify-content-between">
-						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
-						<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
-					</div>
-				</form>
-
 				<form class="repeater" id="tabs_and_questions">
 					<?php
 						global $wpdb;
@@ -271,16 +211,16 @@ function assessment_form_function(){
 								} 
 								?>
 							</div>
-							<div class="d-flex justify-content-between">
-								<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
-								<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
+							<div class="d-flex justify-content-center">
+								<input type="submit" class="btn btn-success mb-3" value="Update Form"/>
+								<!-- <input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/> -->
 							</div>
 						<?php
 						}
 						?>	
 				</form>
             </div>
-            <div class="col-12 col-md-3">
+			<div class="col-12 col-md-3">
                 <div class="card text-dark bg-light mt-0 p-0">
                     <div class="card-header">Display Form</div>
                     <div class="card-body">
@@ -293,12 +233,129 @@ function assessment_form_function(){
 		</div>
 	</div>
 
+	<?php
+		$deleteTab = plugin_dir_url( __FILE__ ) . "deleteTab.php";
+		$deleteQuestion = plugin_dir_url( __FILE__ ) . "deleteQuestion.php";
+	?>
+	<script>
+		jQuery(".delete-question").click(function(e){
+			e.preventDefault();
+			let questionUrl = "<?php echo $deleteQuestion ?>";
+			let deletequestion = jQuery(this).attr("question-id");
+
+			$.ajax({
+				method: "POST",
+				url: questionUrl,
+				data: {"questionId": deletequestion},
+				success: function (data) {
+					console.log(data);
+					console.log("Question Deleted.");
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+		});
+
+		jQuery(".delete-tab").click(function(){
+			let tabUrl = "<?php echo $deleteTab ?>";
+			let deletetabid = jQuery(this).attr("tab-id");
+			let questionsid = [];
+			let thisdata = jQuery(this).parent().parent().parent().children().children(".inner-repeater").children().children(".questions");
+			
+			jQuery(thisdata).each(function(){
+				let id = $(this).attr("question-id")
+				questionsid.push(id);
+			});
+			
+			$.ajax({
+				method: "POST",
+				url: tabUrl,
+				data: {
+					"tabId": deletetabid,
+					"questionsid": questionsid
+				},
+				success: function (data) {
+					console.log(data);
+					console.log("Tabs and Questions Deleted.");
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+		});
+	</script>
+<?php
+}
+
+function assessment_tool_function(){
+	return "";
+}
+
+function assessment_form_function(){
+?>
+	<div class="container-fluid mt-5">
+		<div class="row mx-auto justify-content-between">
+			<div class="col-12 col-md-9">
+				<form class="repeater" id="assessment_backend_form">
+    				<div data-repeater-list="outer-list">
+      					<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">
+							  
+						  	<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
+								  <div class="col-12 col-md-10">
+								  	<h5>New Tab</h5>
+								  </div>
+								  <div class="col-12 col-md-2">
+								  	<input data-repeater-delete type="button" class="btn btn-outline-danger w-100" value="Delete Tab"/>
+								  </div>
+							  </div>
+
+							<div class="card-body p-3">
+							<div class="row mx-auto justify-content-start w-100 mt-2">
+								<div class="col-12 col-md-10">
+									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
+									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
+								</div>
+							</div>
+
+							<!-- innner repeater -->
+							<div class="inner-repeater">
+								<div data-repeater-list="inner-list">
+									<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2">
+										<div class="col-12 col-md-8">
+											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
+										</div>
+										<div class="col-12 col-md-2">
+											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
+											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+										</div>
+										<div class="col-12 col-md-2">
+											<input data-repeater-delete type="button" class="btn btn-danger w-100" value="Delete Question"/>
+										</div>
+									</div>
+								</div>
+								<div class="row mx-auto justify-content-start">
+									<div class="col-12 col-md-2">
+										<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+									</div>
+								</div>
+							</div>
+							</div>
+      					</div>
+    				</div>
+    				<div class="d-flex justify-content-between">
+						<input type="submit" class="btn btn-success mb-3" value="Submit Form"/>
+						<input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/>
+					</div>
+				</form>
+            </div>
+		</div>
+	</div>
+
 
 	<?php
 		//getting file path to send form data
 		$formdata = plugin_dir_url( __FILE__ ) . "formdata.php";
-		$deleteTab = plugin_dir_url( __FILE__ ) . "deleteTab.php";
-		$deleteQuestion = plugin_dir_url( __FILE__ ) . "deleteQuestion.php";
 	?>
 	<script>
 		jQuery("#assessment_backend_form").submit(function(e){
@@ -316,6 +373,7 @@ function assessment_form_function(){
 				processData: false,
 				contentType: false,
 				success: function (data) {
+					jQuery("#assessment_backend_form input[type='text']").val('')
 					const Toast = Swal.mixin({
 						toast: true,
 						position: "top-end",
@@ -352,65 +410,6 @@ function assessment_form_function(){
 				}
 			});
 		});
-
-				
-				
-				
-		jQuery(".delete-question").click(function(e){
-			e.preventDefault();
-			let questionUrl = "<?php echo $deleteQuestion ?>";
-			let deletequestion = jQuery(this).attr("question-id");
-
-			$.ajax({
-				method: "POST",
-				url: questionUrl,
-				data: {"questionId": deletequestion},
-				success: function (data) {
-					console.log(data);
-					console.log("Question Deleted.");
-				},
-				error: function (jqXHR, exception) {
-					console.log(jqXHR);
-				}
-			});
-		});
-
-
-
-
-
-
-		jQuery(".delete-tab").click(function(){
-			let tabUrl = "<?php echo $deleteTab ?>";
-			let deletetabid = jQuery(this).attr("tab-id");
-			let questionsid = [];
-			let thisdata = jQuery(this).parent().parent().parent().children().children(".inner-repeater").children().children(".questions");
-			
-			jQuery(thisdata).each(function(){
-				let id = $(this).attr("question-id")
-				questionsid.push(id);
-			});
-			
-			$.ajax({
-				method: "POST",
-				url: tabUrl,
-				data: {
-					"tabId": deletetabid,
-					"questionsid": questionsid
-				},
-				success: function (data) {
-					console.log(data);
-					console.log("Tabs and Questions Deleted.");
-				},
-				error: function (jqXHR, exception) {
-					console.log(jqXHR);
-				}
-			});
-
-
-		});
-
-
 	</script>
 <?php
 }
@@ -421,52 +420,123 @@ function settings_function(){
 	<div class="row mx-auto">
 		<div class="col-12 col-md-4 offset-md-3">
 			<h1>Assessment Tool Settings</h1>
-			<form>
-				<div class="mb-3">
-					<label for="exampleInputEmail1" class="form-label">Email address</label>
-					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-					<div id="emailHelp" class="form-text">This email address will be used to send assessment tool results.</div>
-				</div>
-				<div class="mb-3">
-					<h2>Form Styles</h2>
-					<label class="mt-3">Theme:</label>
-					<select id="theme_selector" class="form-control mw-100">
-						<option value="default">Default</option>
-						<option value="arrows" selected="">Arrows</option>
-						<option value="dots">Dots</option>
-						<option value="progress">Progress</option>
-					</select>
-					
-					<label class="mt-3">Animation:</label>
-					<select id="animation" class="form-control mw-100">
-						<option value="none">None</option>
-						<option value="fade">Fade</option>
-						<option value="slide-horizontal" selected="">Slide Horizontal</option>
-						<option value="slide-vertical">Slide Vertical</option>
-						<option value="slide-swing">Slide Swing</option>
-					</select>
-
-					<label class="mt-3">Animation:</label>
-					<input type="number" class="form-control" placeholder="2" />
-					<span>Please provide animated speed in seconds i.e 1 = 1seconds or 5 = 5seconds</span>
-					
-					<div class="custom-control custom-checkbox mt-3">
-						<input type="checkbox" class="custom-control-input" id="is_justified" value="1" checked="" data-np-checked="1">
-						<label class="custom-control-label" for="is_justified">Justified</label>
-					</div>
-
-					<div class="custom-control custom-checkbox mt-3 mb-3">
-						<input type="checkbox" class="custom-control-input" id="dark_mode" value="1" data-np-checked="1">
-						<label class="custom-control-label" for="dark_mode">Dark Mode</label>
-					</div>
-					
-					<span>An example of these stylings can be found out at: </span><a target="_blank" href="http://techlaboratory.net/jquery-smartwizard">Click Here</a>
-				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
+			<form class="settings-form">
+				
 			</form>
 		</div>
 	</div>
 </div>
+<?php
+	//getting file path to send form data
+	$settingsUrl = plugin_dir_url( __FILE__ ) . "settings.php";
+	$getSettingsUrl = plugin_dir_url( __FILE__ ) . "getSettings.php";
+?>
+<script>
+
+jQuery(document).ready(function(){
+	var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
+	$.ajax({
+		"method" : "GET",
+		"url": getSettingsUrl,
+		"async" : true,
+		dataType: "html",
+		success : function(data){
+			console.log("Data Fetched.");
+			console.log(data);
+			$(".settings-form").html(data);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		}
+	});
+});
+
+
+
+jQuery(".settings-form").submit(function(e){
+	e.preventDefault();
+	var settingsUrl = "<?php echo $settingsUrl ?>";
+	let email = jQuery("#exampleInputEmail1").val();
+	let theme = jQuery("#theme_selector").find(":selected").text();
+	let animation = jQuery("#animation").find(":selected").text();
+	let animation_speed = jQuery("#animation_speed").val();
+	let alignment = jQuery("#is_justified").is(":checked");
+	let dark_mode = jQuery("#dark_mode").is(":checked");
+
+	$.ajax({
+		method: "POST",
+		url: settingsUrl,
+		data: {
+			"email" : email,
+			"theme": theme,
+			"animation": animation,
+			"animation_speed" : animation_speed,
+			"alignment" : alignment,
+			"dark_mode" : dark_mode
+		},
+		success: function (data) {
+
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 4000,
+				timerProgressBar: true,
+				customClass: {
+					container: "mt-4",
+				},
+			});
+			Toast.fire({
+				icon: "success",
+				title: "Form Updated.",
+			});
+
+
+			
+			var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
+			$.ajax({
+				"method" : "GET",
+				"url": getSettingsUrl,
+				"async" : true,
+				dataType: "html",
+				success : function(data){
+					console.log("Data Fetched.");
+					console.log(data);
+					$(".settings-form").html(data);
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 4000,
+				timerProgressBar: true,
+				customClass: {
+					container: "mt-4",
+				},
+			});
+			Toast.fire({
+				icon: "error",
+				title: "Form Update Failed.",
+			});
+		}
+	});
+});
+
+
+
+// jQuery(".settings-form").submit(function(e){
+// 	e.preventDefault();
+	
+// });
+</script>
 <?php
 }
 
@@ -486,33 +556,7 @@ function users_function(){
 					</tr>
 				</thead>
 				<tbody>
-				<?php
-					global $wpdb;
-					$wpdb->hide_errors();
-					$users_table = 'assessment_tool_users';
-					$charset_collate = $wpdb->get_charset_collate();
-			
-					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-					$users = $wpdb->get_results("SELECT * FROM assessment_tool_users");
-
-					foreach($users as $col => $val){
-						$user_id = $val->id;
-						$full_name = $val->full_name;
-						$phone_number = $val->phone_number;
-						$user_email = $val->user_email;
-						$allow_retake = $val->allow_retake;
-					?>
-					<tr>
-						<td><?php echo $user_id; ?></td>
-						<td><?php echo $full_name; ?></td>
-						<td><a class="text-dark" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
-						<td><a class="text-dark" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
-						<td><input class="form-check-input" type="checkbox" value="" <?php echo $allow_retake ? 'checked' : '' ?> ></td>
-					</tr>
-					<?php
-					}
-				?>	
+				
 				</tbody>
 				<tfoot>
 					<tr>
@@ -524,9 +568,55 @@ function users_function(){
 					</tr>
 				</tfoot>
 			</table>
-			<button class="btn btn-success text-right">Submit</button>
+			<button class="btn btn-success text-right">Update</button>
 		</div>
 	</div>
 </div>
+
+<?php
+	//getting file path to send form data
+	$getUsersUrl = plugin_dir_url( __FILE__ ) . "getUsers.php";
+	$postUsersUrl = plugin_dir_url( __FILE__ ) . "postUsers.php";
+?>
+<script>
+	var getUsersUrl = "<?php echo $getUsersUrl; ?>";
+	var postUsersUrl = "<?php echo $postUsersUrl; ?>";
+
+	jQuery(document).ready(function(){
+
+		$.ajax({
+			"method" : "GET",
+			"url": getUsersUrl,
+			"async" : true,
+			dataType: "html",
+			success : function(data){
+				console.log("Data Fetched.");
+				console.log(data);
+				$("#dtBasicExample tbody").html(data);
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+			}
+		});
+		
+
+		$(".update-users").click(function(){
+
+			$.ajax({
+				"method" : "POST",
+				"url" : postUsersUrl,
+				"data" : "",
+				success: function(data){
+					console.log(data);
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+		});
+
+
+	});
+</script>
 <?php
 }
