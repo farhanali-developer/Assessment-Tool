@@ -70,7 +70,7 @@ class Assessment_tool_Activator {
           `setting_name` VARCHAR(255),
           `setting_value` VARCHAR(255),
           PRIMARY KEY  (`id`)
-        ) $charset_collate;";
+        ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('email',''), ('theme','Default'), ('animation','Fade'), ('animation_speed','4'), ('alignment','0'), ('mode','0')";
 
         
         dbDelta( $users_query );

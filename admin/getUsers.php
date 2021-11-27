@@ -21,11 +21,12 @@ foreach($users as $col => $val){
 <tr>
     <td><?php echo $user_id; ?></td>
     <td><?php echo $full_name; ?></td>
-    <td><a class="text-dark" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
-    <td><a class="text-dark" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
-    <td><input class="form-check-input" type="checkbox" value="" <?php echo $allow_retake ? 'checked' : '' ?> ></td>
+    <td><a class="text-dark alert-link" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
+    <td><a class="text-dark alert-link" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
+    <td><input class="form-check-input allow-retake" type="checkbox" value="" <?php echo $allow_retake ? 'checked' : '' ?> ></td>
 </tr>
 
 <?php
 
 }
+?>

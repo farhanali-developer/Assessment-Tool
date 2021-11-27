@@ -36,8 +36,8 @@ class Assessment_tool_Deactivator {
 		$questions_table = 'assessment_tool_questions';
 		$settings_table = 'assessment_tool_settings';
 		$delete_table1 = "DROP TABLE IF EXISTS $users_table";
-		$delete_table2 = "DROP TABLE IF EXISTS $tabs_table";
-		$delete_table3 = "DROP TABLE IF EXISTS $questions_table";
+		$delete_table2 = "DROP TABLE IF EXISTS $questions_table";
+		$delete_table3 = "DROP TABLE IF EXISTS $tabs_table";
 		$delete_table4 = "DROP TABLE IF EXISTS $settings_table";
 		$wpdb->query($delete_table1);
 		$wpdb->query($delete_table2);

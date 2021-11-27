@@ -1,12 +1,12 @@
-$(document).ready(function () {
+jQuery(document).ready(function () {
   //Datatable JQUERY plugin for users data in admin panel
-  $("#dtBasicExample").DataTable();
-  $(".dataTables_length").addClass("bs-select");
+  jQuery("#dtBasicExample").DataTable();
+  jQuery(".dataTables_length").addClass("bs-select");
 
-  var $repeater = $(".repeater").repeater({
+  var $repeater = jQuery(".repeater").repeater({
     hide: function (deleteElement) {
       if (confirm("Are you sure you want to delete this element?")) {
-        $(this).slideUp(deleteElement);
+        jQuery(this).slideUp(deleteElement);
       }
     },
     repeaters: [
