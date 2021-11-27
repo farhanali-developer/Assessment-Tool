@@ -75,13 +75,21 @@ class Assessment_tool_Admin {
 		 * class.
 		 */
 
-		// wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
-		// wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
-		// wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
-		wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
+		
+		
+		$screen = get_current_screen();
+
+		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
+
+			// wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
+			// wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
+			// wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
+			wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
+
+		}
 		
 	}
 
@@ -104,19 +112,28 @@ class Assessment_tool_Admin {
 		 * class.
 		 */
 
-		// wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
-		// wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
-		// wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
-		// wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
-		// wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "jquery", plugins_url() . '/assessment_tool/assets/jquery/jquery.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "bootstrap-bundle", plugins_url() . '/assessment_tool/assets/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
+		
 
 		
+		$screen = get_current_screen();
+		
+		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
+
+			// wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "jquery", plugins_url() . '/assessment_tool/assets/jquery/jquery.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "bootstrap-bundle", plugins_url() . '/assessment_tool/assets/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
+
+		}
+
+
 		// Pass ajax_url to script.js
 		wp_localize_script( 'plugin-ajax', 'plugin_ajax_object',
 		array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -142,7 +159,87 @@ function all_tabs_function(){
 			<div class="col-12 col-md-9">
 				<form class="repeater" id="tabs_and_questions">
 					<div data-repeater-list="outer-list">
+						<?php
+							global $wpdb;
+							$wpdb->hide_errors();
+							$tabs_table = 'assessment_tool_tabs';
+							$questions_table = 'assessment_tool_questions';
+							$charset_collate = $wpdb->get_charset_collate();
+
+							require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+							$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
+
+							if($tabs){
+								foreach($tabs as $tabs_name => $tabs_data){
+									$tab_id = $tabs_data->id;
+									$tab = $tabs_data->tab_name;
+									$description = $tabs_data->tab_description;
+									
+						?>
+						<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">  
+							<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
+								<div class="col-12 col-md-10">
+									<input type="hidden" name="text-input-id" value="<?php echo $tab_id; ?>"/>
+									<h5><?php echo $tab; ?></h5>
+								</div>
+								<div class="col-12 col-md-2">
+									<input data-repeater-delete type="button" class="btn btn-outline-danger w-100 delete-tab" tab-id="<?php echo $tab_id; ?>" value="Delete Tab"/>
+								</div>
+							</div>
+
+							<div class="card-body p-3">
+								<div class="row mx-auto justify-content-start w-100 mt-2">
+									<div class="col-12 col-md-10">
+										<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+										<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
+									</div>
+								</div>
+								<!-- innner repeater -->
+								<div class="inner-repeater">
+									<div data-repeater-list="inner-list">
+										<?php
+											$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id");
+											foreach($questions as $questions_name => $questions_data){
+												$question_id = $questions_data->id;
+												$question = $questions_data->question;
+												$marks = $questions_data->marks;
+										?>
+											<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2 questions" question-id="<?php echo $question_id; ?>">
+												<div class="col-12 col-md-8">
+													<input type="hidden" name="inner-text-id" value="<?php echo $question_id; ?>"/>
+													<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
+												</div>
+												<div class="col-12 col-md-2">
+													<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
+													<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
+												</div>
+												<div class="col-12 col-md-2">
+													<input data-repeater-delete type="button" class="btn btn-danger w-100 delete-question" question-id="<?php echo $question_id; ?>" value="Delete Question"/>
+												</div>
+											</div>
+										<?php
+										}
+										?>
+									</div>
+									<div class="row mx-auto justify-content-start">
+										<div class="col-12 col-md-2">
+											<input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+									<?php
+									} 
+									?>
 					</div>
+					<div class="d-flex justify-content-center">
+						<input type="submit" class="btn btn-success mb-3" value="Update Form"/>
+					</div>
+						<?php
+						}
+						?>	
 				</form>
             </div>
 			<div class="col-12 col-md-3">
@@ -173,6 +270,26 @@ function all_tabs_function(){
 		$deleteQuestion = plugin_dir_url( __FILE__ ) . "deleteQuestion.php";
 	?>
 	<script>
+
+		var getFormData = "<?php echo $getFormData; ?>";
+
+		jQuery(document).ready(function(){
+			jQuery.ajax({
+				"method" : "GET",
+				"url": getFormData,
+				"async" : true,
+				dataType: "html",
+				success : function(data){
+					console.log("Form Data Fetched.");
+					// console.log(data);
+					//jQuery("#tabs_and_questions div[data-repeater-list='outer-list']").html(data);
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
+		});
+
 		jQuery(".delete-question").click(function(e){
 			e.preventDefault();
 			let questionUrl = "<?php echo $deleteQuestion ?>";
@@ -221,107 +338,94 @@ function all_tabs_function(){
 		});
 
 
-		var getFormData = "<?php echo $getFormData; ?>";
-
-		jQuery(document).ready(function(){
-			jQuery.ajax({
-				"method" : "GET",
-				"url": getFormData,
-				"async" : true,
-				dataType: "html",
-				success : function(data){
-					console.log("Form Data Fetched.");
-					// console.log(data);
-					jQuery("#tabs_and_questions div[data-repeater-list='outer-list']").html(data);
-				},
-				error: function (jqXHR, exception) {
-					console.log(jqXHR);
-				}
-			});
+		
 
 			jQuery("#tabs_and_questions").submit(function(e){
-			e.preventDefault();
-			var updateFormdata = "<?php echo $updateFormData ?>";
-			var updateFormData1 = jQuery('form#tabs_and_questions.repeater').repeaterVal();
-			var updateFormData = new FormData();
-			updateFormData.append('data',JSON.stringify(updateFormData1));
+				e.preventDefault();
+				var updateFormdata = "<?php echo $updateFormData ?>";
+				var updateFormData1 = jQuery('form#tabs_and_questions.repeater').repeaterVal();
+				var updateFormData = new FormData();
+				updateFormData.append('data',JSON.stringify(updateFormData1));
 
-			console.log(updateFormData1);
-			
-			// console.log(updateFormData1);
+				console.log(updateFormData1);
 
-			// for(var a in updateFormData1){
-			// 	// console.log(a + " : " + updateFormData1[a])
-			// 	var b = updateFormData1[a];
-			// 	for(var c in b){
-			// 		console.log(b[c]);
-			// 	}
-			// }
+				
+				// console.log(updateFormData1);
 
-			// $.ajax({
-			// 	method: "POST",
-			// 	url: updateFormdata,
-			// 	data: updateFormData,
-			// 	processData: false,
-			// 	contentType: false,
-			// 	success: function (data) {
-			// 		console.log("Form Updated.");
-			// 		console.log(data);
+				// for(var a in updateFormData1){
+				// 	// console.log(a + " : " + updateFormData1[a])
+				// 	var b = updateFormData1[a];
+				// 	for(var c in b){
+				// 		console.log(b[c]);
+				// 	}
+				// }
 
-			// 		jQuery("#assessment_backend_form input[type='text']").val('')
-			// 		$.ajax({
-			// 			"method" : "GET",
-			// 			"url": getFormData,
-			// 			"async" : true,
-			// 			dataType: "html",
-			// 			success : function(data){
-			// 				console.log("Form Data Fetched.");
-			// 				// console.log(data);
-			// 				$("#tabs_and_questions").html(data);
-			// 			},
-			// 			error: function (jqXHR, exception) {
-			// 				console.log(jqXHR);
-			// 			}
-			// 		});
+				jQuery.ajax({
+					method: "POST",
+					url: updateFormdata,
+					data: updateFormData,
+					processData: false,
+					contentType: false,
+					success: function (data) {
+						console.log("Form Updated.");
+						console.log(data);
+						var updatedFormData = jQuery('div[data-repeater-list="outer-list"]');
+						updatedFormData.empty();
+						updatedFormData(data);
+						// jQuery("#assessment_backend_form input[type='text']").val('')
+						// $.ajax({
+						// 	"method" : "GET",
+						// 	"url": getFormData,
+						// 	"async" : true,
+						// 	dataType: "html",
+						// 	success : function(data){
+						// 		console.log("Form Data Fetched.");
+						// 		// console.log(data);
+						// 		// $("#tabs_and_questions").html(data);
+						// 	},
+						// 	error: function (jqXHR, exception) {
+						// 		console.log(jqXHR);
+						// 	}
+						// });
 
-			// 		const Toast = Swal.mixin({
-			// 			toast: true,
-			// 			position: "top-end",
-			// 			showConfirmButton: false,
-			// 			timer: 4000,
-			// 			timerProgressBar: true,
-			// 			customClass: {
-			// 				container: "mt-4",
-			// 			},
-			// 		});
-			// 		Toast.fire({
-			// 			icon: "success",
-			// 			title: "Form Submitted Successfully",
-			// 		});
-			// 	},
-			// 	error: function (jqXHR, exception) {
-			// 		console.log(jqXHR);
+						// const Toast = Swal.mixin({
+						// 	toast: true,
+						// 	position: "top-end",
+						// 	showConfirmButton: false,
+						// 	timer: 4000,
+						// 	timerProgressBar: true,
+						// 	customClass: {
+						// 		container: "mt-4",
+						// 	},
+						// });
+						// Toast.fire({
+						// 	icon: "success",
+						// 	title: "Form Submitted Successfully",
+						// });
+					},
+					error: function (jqXHR, exception) {
+						console.log(jqXHR);
 
-			// 		const Toast = Swal.mixin({
-			// 			toast: true,
-			// 			position: "top-end",
-			// 			showConfirmButton: false,
-			// 			timer: 4000,
-			// 			timerProgressBar: true,
-			// 			customClass: {
-			// 			container: "mt-4",
-			// 			},
-			// 		});
-			// 		Toast.fire({
-			// 			icon: "error",
-			// 			title: "There is some error in the form. Please try again.",
-			// 		});
+						const Toast = Swal.mixin({
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 4000,
+							timerProgressBar: true,
+							customClass: {
+							container: "mt-4",
+							},
+						});
+						Toast.fire({
+							icon: "error",
+							title: "There is some error in the form. Please try again.",
+						});
 
-			// 	}
-			// });
+					}
+				});
 			});
 
-		});
+		
 
 
 
