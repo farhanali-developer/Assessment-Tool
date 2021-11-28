@@ -762,18 +762,23 @@ function users_function(){
 	var getUsersUrl = "<?php echo $getUsersUrl; ?>";
 	var postUsersUrl = "<?php echo $postUsersUrl; ?>";
 
+	
+
 	jQuery(".users").submit(function(e){
 		e.preventDefault();
 		var retake_values = [];
 
+		jQuery(this).DataTable().destroy();
 
 		var table = jQuery("#dtBasicExample").DataTable({
 			"destroy": true,
+			"stateSave": true
 		});
 		jQuery(".dataTables_length").addClass("bs-select");
 
 
 		table.$("input.allow-retake[type='checkbox']").each(function(){
+
 			if(jQuery(this).prop("checked")){
 				let chkbox_id = jQuery(this).attr("id");
 				var single_retake = {
@@ -823,6 +828,7 @@ function users_function(){
 
 				jQuery("#dtBasicExample").DataTable({
 					"destroy": true,
+					"stateSave": true
 				});
   				jQuery(".dataTables_length").addClass("bs-select");
 			},
@@ -865,10 +871,33 @@ function users_function(){
 				console.log("Data Fetched.");
 				// console.log(data);
 				jQuery("#dtBasicExample tbody").html(data);
-				jQuery("#dtBasicExample").DataTable({
-					"destroy": true,
-				});
-  				jQuery(".dataTables_length").addClass("bs-select");
+				// jQuery("#dtBasicExample").DataTable({
+				// 	"destroy": true,
+				// });
+  				// jQuery(".dataTables_length").addClass("bs-select");
+
+
+
+
+
+				  var oTable = jQuery("#dtBasicExample").dataTable({
+						"destroy": true,
+						"stateSave": true,
+						"columnDefs": {
+							"targets": [5],
+							"orderable": false
+						}
+					});
+
+					var allPages = oTable.fnGetNodes();
+
+					jQuery(".all-retake").click(function () {
+						jQuery("#dtBasicExample tbody input:checkbox", allPages)
+						.not(this)
+						.prop("checked", this.checked);
+					});
+
+					jQuery(".dataTables_length").addClass("bs-select");
 			},
 			error: function (jqXHR, exception) {
 				console.log(jqXHR);

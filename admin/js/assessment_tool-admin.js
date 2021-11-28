@@ -1,9 +1,13 @@
 jQuery.noConflict();
 
 jQuery(document).ready(function () {
-  jQuery(".all-retake").click(function () {
-    jQuery("input:checkbox").not(this).prop("checked", this.checked);
-  });
+  // jQuery(".all-retake").click(function () {
+  //   jQuery("#dtBasicExample tbody input:checkbox")
+  //     .not(this)
+  //     .prop("checked", this.checked);
+  // });
+
+
 
   //Datatable JQUERY plugin for users data in admin panel
   // jQuery("#dtBasicExample").DataTable();
