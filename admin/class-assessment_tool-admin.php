@@ -212,7 +212,7 @@ function all_tabs_function(){
 													<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
 												</div>
 												<div class="col-12 col-md-2">
-													<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
+													<input type="text" name="inner-text-marks" class="form-control marks" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
 													<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
 												</div>
 												<div class="col-12 col-md-2">
@@ -500,7 +500,7 @@ function assessment_form_add_new_tab(){
 											<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" required />
 										</div>
 										<div class="col-12 col-md-2">
-											<input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" />
+											<input type="text" name="inner-text-marks" class="form-control marks" min="0" placeholder="Marks" />
 											<p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
 										</div>
 										<div class="col-12 col-md-2">
@@ -727,42 +727,14 @@ function users_function(){
 						<th class="th-sm">Full Name</th>
 						<th class="th-sm">Phone Number</th>
 						<th class="th-sm">Email</th>
-						<th class="th-sm"><input class="form-check-input" type="checkbox" value=""> Allow Retake</th>
+						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
 					</tr>
 				</thead>
 				<tbody>
 					
-					<?php
-					require_once dirname( dirname( dirname( dirname( dirname( __FILE__ )) ) ) ) . '/wp-config.php';
+					
 
-					global $wpdb;
-					$wpdb->show_errors();
-					$users_table = 'assessment_tool_users';
-					$charset_collate = $wpdb->get_charset_collate();
-
-					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-					$users = $wpdb->get_results("SELECT * FROM $users_table");
-
-					foreach($users as $col => $val){
-						$user_id = $val->id;
-						$full_name = $val->full_name;
-						$phone_number = $val->phone_number;
-						$user_email = $val->user_email;
-						$allow_retake = $val->allow_retake;
-					?>
-					<tr>
-						<td><?php echo $user_id; ?></td>
-						<td><?php echo $full_name; ?></td>
-						<td><a class="text-dark alert-link" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
-						<td><a class="text-dark alert-link" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
-						<td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" value="" <?php (intval($allow_retake) == 1) ? 'checked' : '' ?> ></td>
-					</tr>
-
-					<?php
-
-					}
-					?>
+					
 					
 				</tbody>
 				<tfoot>
@@ -771,7 +743,7 @@ function users_function(){
 						<th class="th-sm">Full Name</th>
 						<th class="th-sm">Phone Number</th>
 						<th class="th-sm">Email</th>
-						<th class="th-sm"><input class="form-check-input" type="checkbox" value=""> Allow Retake</th>
+						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
 					</tr>
 				</tfoot>
 			</table>
@@ -783,74 +755,136 @@ function users_function(){
 
 <?php
 	//getting file path to send form data
-	// $getUsersUrl = plugin_dir_url( __FILE__ ) . "getUsers.php";
+	$getUsersUrl = plugin_dir_url( __FILE__ ) . "getUsers.php";
 	$postUsersUrl = plugin_dir_url( __FILE__ ) . "postUsers.php";
 ?>
 <script>
-	// var getUsersUrl = "<?php //echo $getUsersUrl; ?>";
+	var getUsersUrl = "<?php echo $getUsersUrl; ?>";
 	var postUsersUrl = "<?php echo $postUsersUrl; ?>";
 
 	jQuery(".users").submit(function(e){
-			e.preventDefault();
-			console.log("Hello World");
-			var retake_val = [];
-			var input_retake = $(".allow-retake");
-			if(input_retake.prop('checked') == true){
-				retake_value = 1;
-					retake_val.push(retake_value);
+		e.preventDefault();
+		var retake_values = [];
+
+
+		var table = jQuery("#dtBasicExample").DataTable({
+			"destroy": true,
+		});
+		jQuery(".dataTables_length").addClass("bs-select");
+
+
+		table.$("input.allow-retake[type='checkbox']").each(function(){
+			if(jQuery(this).prop("checked")){
+				let chkbox_id = jQuery(this).attr("id");
+				var single_retake = {
+					"id" : chkbox_id,
+					"value" : 1
 				}
-			else{
-				retake_value = 0;
-				retake_val.push(retake_value);
+				retake_values.push(single_retake);
 			}
-
-			//var fd = new FormData(retake_val);    
-			// fd.append( 'file', $(this) );
-			
-console.log(retake_val)
-			// for(var f in fd){
-			// 	console.log("Retake Value: " + f);
-			// }
-
-			// $.ajax({
-			// 	"method" : "POST",
-			// 	"url" : postUsersUrl,
-			// 	"data" : "",
-			// 	success: function(data){
-			// 		console.log(data);
-			// 	},
-			// 	error: function (jqXHR, exception) {
-			// 		console.log(jqXHR);
-			// 	}
-			// });
+			else{
+				let chkbox_id = jQuery(this).attr("id");
+				var single_retake = {
+					"id" : chkbox_id,
+					"value" : 0
+				}
+				retake_values.push(single_retake);
+			}
 		});
 
+		var formData = new FormData();
+
+		formData.append('data',JSON.stringify(retake_values));
+
+		jQuery.ajax({
+			"method" : "POST",
+			"url" : postUsersUrl,
+			"data" : formData,
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function(data){
+				jQuery("#dtBasicExample tbody").html(data);
+
+				const Toast = Swal.mixin({
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 4000,
+					timerProgressBar: true,
+					customClass: {
+						container: "mt-4",
+					},
+				});
+				Toast.fire({
+					icon: "success",
+					title: "Users Updated.",
+				});
+
+				jQuery("#dtBasicExample").DataTable({
+					"destroy": true,
+				});
+  				jQuery(".dataTables_length").addClass("bs-select");
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+
+				const Toast = Swal.mixin({
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 4000,
+					timerProgressBar: true,
+					customClass: {
+						container: "mt-4",
+					},
+				});
+				Toast.fire({
+					icon: "error",
+					title: "Failed to update. Please try again.",
+				});
+
+				jQuery("#dtBasicExample").DataTable({
+					"destroy": true,
+				});
+  				jQuery(".dataTables_length").addClass("bs-select");
+			}
+		});
+	});
 
 
 		
-	// jQuery(document).ready(function(){
+	jQuery(document).ready(function(){
 
-		// $.ajax({
-		// 	"method" : "GET",
-		// 	"url": getUsersUrl,
-		// 	"async" : true,
-		// 	dataType: "html",
-		// 	success : function(data){
-		// 		console.log("Data Fetched.");
-		// 		// console.log(data);
-		// 		$("#dtBasicExample tbody").html(data);
-		// 	},
-		// 	error: function (jqXHR, exception) {
-		// 		console.log(jqXHR);
-		// 	}
-		// });
+		jQuery.ajax({
+			"method" : "GET",
+			"url": getUsersUrl,
+			"async" : true,
+			dataType: "html",
+			success : function(data){
+				console.log("Data Fetched.");
+				// console.log(data);
+				jQuery("#dtBasicExample tbody").html(data);
+				jQuery("#dtBasicExample").DataTable({
+					"destroy": true,
+				});
+  				jQuery(".dataTables_length").addClass("bs-select");
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+				jQuery("#dtBasicExample").DataTable({
+					"destroy": true,
+				});
+  				jQuery(".dataTables_length").addClass("bs-select");
+			}
+		});
 		
 		
 
 		
 
 
-	// });
+	});
 </script>
 <?php
 }

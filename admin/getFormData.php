@@ -55,7 +55,7 @@ if($tabs){
                                 <input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
                             </div>
                             <div class="col-12 col-md-2">
-                                <input type="text" name="inner-text-marks" class="form-control" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
+                                <input type="text" name="inner-text-marks" class="form-control marks" min="0" placeholder="Marks" value="<?php echo $marks; ?>" />
                                 <p class="font-weight-normal mt-1 mb-0">Default marks are 0.</p>
                             </div>
                             <div class="col-12 col-md-2">
