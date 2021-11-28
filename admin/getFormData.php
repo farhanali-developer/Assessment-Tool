@@ -71,10 +71,8 @@ if($tabs){
                             <input data-repeater-create type="button" class="btn btn-primary mt-2" value="Add New Question"/>
                         </div>
                     </div>
-                
                 </div>
             </div>
-            
         </div>
         <?php
         } 
@@ -82,7 +80,6 @@ if($tabs){
     </div>
     <div class="d-flex justify-content-center">
         <input type="submit" class="btn btn-success mb-3" value="Update Form"/>
-        <!-- <input data-repeater-create type="button" class="btn btn-dark text-white mb-3" value="Add New Tab"/> -->
     </div>
 <?php
 }

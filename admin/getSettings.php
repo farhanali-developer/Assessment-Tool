@@ -137,4 +137,4 @@ foreach($mode as $mode_key => $mode_val){
     
     <span>An example of these stylings can be found out at: </span><a target="_blank" href="http://techlaboratory.net/jquery-smartwizard">Click Here</a>
 </div>
-<button type="submit" class="btn btn-primary">Update</button>
+<button type="submit" class="btn btn-success">Update Settings</button>

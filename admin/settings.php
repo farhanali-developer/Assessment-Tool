@@ -20,7 +20,7 @@ else{
 require_once dirname( dirname( dirname( dirname( dirname( __FILE__ )) ) ) ) . '/wp-config.php';
 
 global $wpdb;
-$wpdb->show_errors();
+$wpdb->hide_errors();
 $settings_table = 'assessment_tool_settings';
 $charset_collate = $wpdb->get_charset_collate();
 
@@ -36,5 +36,5 @@ $wpdb->update( $settings_table, array( 'setting_value' => $dark_mode_data), arra
 
 
 
-$results = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $settings_table") );  
+// $results = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $settings_table") );  
 ?>

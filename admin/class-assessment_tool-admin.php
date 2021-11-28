@@ -81,12 +81,13 @@ class Assessment_tool_Admin {
 
 		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
 
-			// wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
-			// wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
-			// wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
-			wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
+			wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
+			wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
+
+			// wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
+			// wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
+			// wp_enqueue_style( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
 
 		}
@@ -119,16 +120,16 @@ class Assessment_tool_Admin {
 		
 		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
 
-			// wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( "jquery", plugins_url() . '/assessment_tool/assets/jquery/jquery.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( "bootstrap-bundle", plugins_url() . '/assessment_tool/assets/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "jquery", plugins_url() . '/assessment_tool/assets/jquery/jquery.min.js', array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "bootstrap-bundle", plugins_url() . '/assessment_tool/assets/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.js', array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
+			// wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
 
 		}
@@ -234,7 +235,7 @@ function all_tabs_function(){
 									} 
 									?>
 					</div>
-					<div class="d-flex justify-content-center">
+					<div class="d-flex justify-content-center update-form-btn">
 						<input type="submit" class="btn btn-success mb-3" value="Update Form"/>
 					</div>
 						<?php
@@ -300,7 +301,21 @@ function all_tabs_function(){
 				url: questionUrl,
 				data: {"questionId": deletequestion},
 				success: function (data) {
-					console.log(data);
+					// console.log(data);
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "Question Deleted Successfully",
+					});
 					console.log("Question Deleted.");
 				},
 				error: function (jqXHR, exception) {
@@ -328,11 +343,40 @@ function all_tabs_function(){
 					"questionsid": questionsid
 				},
 				success: function (data) {
-					console.log(data);
-					console.log("Tabs and Questions Deleted.");
+					// console.log(data);
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "Tab Deleted Successfully.",
+					});
+					console.log("Tabs and Questions Deleted Successfully.");
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
+
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "Error in Deleting Tab.",
+					});
 				}
 			});
 		});
@@ -367,41 +411,26 @@ function all_tabs_function(){
 					processData: false,
 					contentType: false,
 					success: function (data) {
-						console.log("Form Updated.");
-						console.log(data);
-						var updatedFormData = jQuery('div[data-repeater-list="outer-list"]');
-						updatedFormData.empty();
-						updatedFormData(data);
-						// jQuery("#assessment_backend_form input[type='text']").val('')
-						// $.ajax({
-						// 	"method" : "GET",
-						// 	"url": getFormData,
-						// 	"async" : true,
-						// 	dataType: "html",
-						// 	success : function(data){
-						// 		console.log("Form Data Fetched.");
-						// 		// console.log(data);
-						// 		// $("#tabs_and_questions").html(data);
-						// 	},
-						// 	error: function (jqXHR, exception) {
-						// 		console.log(jqXHR);
-						// 	}
-						// });
+						console.log("Form Again Updated.");
 
-						// const Toast = Swal.mixin({
-						// 	toast: true,
-						// 	position: "top-end",
-						// 	showConfirmButton: false,
-						// 	timer: 4000,
-						// 	timerProgressBar: true,
-						// 	customClass: {
-						// 		container: "mt-4",
-						// 	},
-						// });
-						// Toast.fire({
-						// 	icon: "success",
-						// 	title: "Form Submitted Successfully",
-						// });
+						jQuery('div[data-repeater-list="outer-list"]').empty();
+						jQuery(".update-form-btn").remove();
+						jQuery('div[data-repeater-list="outer-list"]').html(data);
+
+						const Toast = Swal.mixin({
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 4000,
+							timerProgressBar: true,
+							customClass: {
+								container: "mt-4",
+							},
+						});
+						Toast.fire({
+							icon: "success",
+							title: "Form Submitted Successfully",
+						});
 					},
 					error: function (jqXHR, exception) {
 						console.log(jqXHR);
@@ -586,8 +615,8 @@ jQuery(document).ready(function(){
 		"async" : true,
 		dataType: "html",
 		success : function(data){
-			console.log("Data Fetched.");
-			console.log(data);
+			console.log("Users Data Fetched.");
+			// console.log(data);
 			jQuery(".settings-form").html(data);
 		},
 		error: function (jqXHR, exception) {
@@ -645,8 +674,8 @@ jQuery(".settings-form").submit(function(e){
 				"async" : true,
 				dataType: "html",
 				success : function(data){
-					console.log("Data Fetched.");
-					console.log(data);
+					console.log("Users Data Fetched.");
+					// console.log(data);
 					jQuery(".settings-form").html(data);
 				},
 				error: function (jqXHR, exception) {
@@ -690,6 +719,7 @@ function users_function(){
 <div class="container mt-5">
 	<div class="row mx-auto justify-content-center">
 		<div class="col-12">
+			<form class="users">
 			<table id="dtBasicExample" class="table table-striped table-bordered table-sm cell-border hover" cellspacing="0" width="100%">
 				<thead>
 					<tr>
@@ -701,7 +731,7 @@ function users_function(){
 					</tr>
 				</thead>
 				<tbody>
-					<form class="users">
+					
 					<?php
 					require_once dirname( dirname( dirname( dirname( dirname( __FILE__ )) ) ) ) . '/wp-config.php';
 
@@ -726,14 +756,14 @@ function users_function(){
 						<td><?php echo $full_name; ?></td>
 						<td><a class="text-dark alert-link" href="tel:<?php echo $phone_number; ?>"><?php echo $phone_number; ?></a></td>
 						<td><a class="text-dark alert-link" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
-						<td><input class="form-check-input allow-retake" type="checkbox" value="" <?php (intval($allow_retake) == 1) ? 'checked' : '' ?> ></td>
+						<td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" value="" <?php (intval($allow_retake) == 1) ? 'checked' : '' ?> ></td>
 					</tr>
 
 					<?php
 
 					}
 					?>
-					</form>
+					
 				</tbody>
 				<tfoot>
 					<tr>
@@ -745,7 +775,8 @@ function users_function(){
 					</tr>
 				</tfoot>
 			</table>
-			<button class="btn btn-success text-right" id="update-users">Update</button>
+			<input class="btn btn-success text-right" type="submit" id="update-users" value="Update Users"/>
+			</form>
 		</div>
 	</div>
 </div>
@@ -756,10 +787,48 @@ function users_function(){
 	$postUsersUrl = plugin_dir_url( __FILE__ ) . "postUsers.php";
 ?>
 <script>
-	// var getUsersUrl = "<?php echo $getUsersUrl; ?>";
+	// var getUsersUrl = "<?php //echo $getUsersUrl; ?>";
 	var postUsersUrl = "<?php echo $postUsersUrl; ?>";
 
-	jQuery(document).ready(function(){
+	jQuery(".users").submit(function(e){
+			e.preventDefault();
+			console.log("Hello World");
+			var retake_val = [];
+			var input_retake = $(".allow-retake");
+			if(input_retake.prop('checked') == true){
+				retake_value = 1;
+					retake_val.push(retake_value);
+				}
+			else{
+				retake_value = 0;
+				retake_val.push(retake_value);
+			}
+
+			//var fd = new FormData(retake_val);    
+			// fd.append( 'file', $(this) );
+			
+console.log(retake_val)
+			// for(var f in fd){
+			// 	console.log("Retake Value: " + f);
+			// }
+
+			// $.ajax({
+			// 	"method" : "POST",
+			// 	"url" : postUsersUrl,
+			// 	"data" : "",
+			// 	success: function(data){
+			// 		console.log(data);
+			// 	},
+			// 	error: function (jqXHR, exception) {
+			// 		console.log(jqXHR);
+			// 	}
+			// });
+		});
+
+
+
+		
+	// jQuery(document).ready(function(){
 
 		// $.ajax({
 		// 	"method" : "GET",
@@ -778,34 +847,10 @@ function users_function(){
 		
 		
 
-		jQuery(".users").submit(function(e){
-			e.preventDefault();
-			console.log("Hello World");
-			// if($(".allow-retake").prop('checked') == true){
-			// 	retake_val = 1;
-			// 		// retake_val.push(val);
-			// 	}
-			// else{
-			// 	retake_val = 0;
-			// 	// retake_val.push(val);
-			// }
-			// console.log("Retake Value: " + retake_val);
-
-			// $.ajax({
-			// 	"method" : "POST",
-			// 	"url" : postUsersUrl,
-			// 	"data" : "",
-			// 	success: function(data){
-			// 		console.log(data);
-			// 	},
-			// 	error: function (jqXHR, exception) {
-			// 		console.log(jqXHR);
-			// 	}
-			// });
-		});
+		
 
 
-	});
+	// });
 </script>
 <?php
 }
