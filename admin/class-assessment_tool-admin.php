@@ -768,11 +768,10 @@ function users_function(){
 		e.preventDefault();
 		var retake_values = [];
 
-		jQuery(this).DataTable().destroy();
+		// jQuery(this).DataTable().destroy();
 
 		var table = jQuery("#dtBasicExample").DataTable({
-			"destroy": true,
-			"stateSave": true
+			"destroy": true
 		});
 		jQuery(".dataTables_length").addClass("bs-select");
 
@@ -827,8 +826,7 @@ function users_function(){
 				});
 
 				jQuery("#dtBasicExample").DataTable({
-					"destroy": true,
-					"stateSave": true
+					"destroy": true
 				});
   				jQuery(".dataTables_length").addClass("bs-select");
 			},
@@ -871,33 +869,75 @@ function users_function(){
 				console.log("Data Fetched.");
 				// console.log(data);
 				jQuery("#dtBasicExample tbody").html(data);
-				// jQuery("#dtBasicExample").DataTable({
-				// 	"destroy": true,
-				// });
-  				// jQuery(".dataTables_length").addClass("bs-select");
+				
+				var table = jQuery("#dtBasicExample").DataTable({
+					"destroy": true
+				});
+				jQuery(".dataTables_length").addClass("bs-select");
 
 
+				// Handle click on "Select all" control
+				$(".all-retake").on("click", function () {
+					// Check/uncheck all checkboxes in the table
+					var rows = table.rows({ search: "applied" }).nodes();
+					$('input[type="checkbox"]', rows).prop("checked", this.checked);
+				});
 
+				// if($('input[type="checkbox"]').prop("checked", true)){
+				// 	$(".all-retake").prop("checked", true);
+				// }
+				// else{
+				// 	$(".all-retake").prop("checked", false);
+				// }
 
-
-				  var oTable = jQuery("#dtBasicExample").dataTable({
-						"destroy": true,
-						"stateSave": true,
-						"columnDefs": {
-							"targets": [5],
-							"orderable": false
+				// Handle click on checkbox to set state of "Select all" control
+				$("#dtBasicExample tbody").on(
+					"change",
+					'input[type="checkbox"]',
+					function () {
+					// If checkbox is not checked
+					if (!this.checked) {
+						var el = $(".all-retake").get(0);
+						// If "Select all" control is checked and has 'indeterminate' property
+						if (el && el.checked && "indeterminate" in el) {
+						// Set visual state of "Select all" control
+						// as 'indeterminate'
+						el.indeterminate = true;
 						}
-					});
+					}
+					}
+				);
 
-					var allPages = oTable.fnGetNodes();
+				// $(".users").on("submit", function (e) {
+				// 	var form = this;
 
-					jQuery(".all-retake").click(function () {
-						jQuery("#dtBasicExample tbody input:checkbox", allPages)
-						.not(this)
-						.prop("checked", this.checked);
-					});
+				// 	// Iterate over all checkboxes in the table
+				// 	table.$('input[type="checkbox"]').each(function () {
+				// 	// If checkbox doesn't exist in DOM
+				// 	if (!$.contains(document, this)) {
+				// 		// If checkbox is checked
+				// 		if (this.checked) {
+				// 		// Create a hidden element
+				// 		$(form).append(
+				// 			$("<input>")
+				// 			.attr("type", "hidden")
+				// 			.attr("name", this.name)
+				// 			.val(this.value)
+				// 		);
+				// 		}
+				// 	}
+				// 	});
 
-					jQuery(".dataTables_length").addClass("bs-select");
+				// 	// FOR TESTING ONLY
+
+				// 	// Output form data to a console
+				// 	$("#example-console").text($(form).serialize());
+				// 	console.log("Form submission", $(form).serialize());
+
+				// 	// Prevent actual form submission
+				// 	e.preventDefault();
+				// });
+					
 			},
 			error: function (jqXHR, exception) {
 				console.log(jqXHR);
