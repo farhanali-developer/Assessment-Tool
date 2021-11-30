@@ -20,6 +20,19 @@
 .welcome_final{
   height: 100vh;
 }
+.welcome_final.final{
+  display: none !important;
+}
+.welcome_final.final.open{
+  display: flex !important;
+}
+
+@media only screen and (max-width: 414px){
+  .welcome_final{
+    height: auto;
+  }
+}
+
 
 .welcome_final.close{
   display: none !important;
@@ -99,25 +112,28 @@
   padding-bottom: 0.5rem;
 }
 
-.welcome_final button{
+.welcome_final .my-button{
   border: 2px solid var(--grey);
   background: none;
   border-radius: 10px;
   padding: 0.5rem 1rem;
   color: var(--grey);
   font-weight: 600;
+  text-decoration: none;
 }
 
-.welcome_final button.active{
+.welcome_final .my-button.active{
   border: 2px solid var(--green);
   color: var(--green);
 }
-.welcome_final button:hover{
+.welcome_final .my-button:hover{
   border: 2px solid var(--green);
   color: var(--green);
 }
-
-
+/* 
+.sw .nav li{
+  flex-basis: 25% !important;
+} */
 .sw > .tab-content > .tab-pane {
   padding: 0;
 }
@@ -141,7 +157,6 @@
 }
 
 .form-area {
-  width: 55%;
   margin: 2rem auto;
 }
 
@@ -161,7 +176,7 @@
 }
 .step-info p {
   margin: 0;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   font-weight: 600;
 }
 .step-info ul li{
@@ -183,8 +198,8 @@
   position: relative;
   display: inline-block;
   padding: 40px;
-  width: 110px;
-  font-size: 14px;
+  width: 100%;
+  font-size: 16px;
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 1px;
@@ -221,12 +236,18 @@
   border-radius: 4px;
   z-index: -1;
 }
-.form-radio + label i {
+.form-radio + label i.indication {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
   font-size: 1.25em;
   color: lightgrey;
+}
+.form-radio + label i.thumb {
+  display: block;
+  font-size: 3.25em;
+  color: lightgrey;
+  padding-bottom: 20px;
 }
 
 .form-radio.yes:checked + label i {
@@ -268,3 +289,31 @@
   transform: translateX(10px);
 }
 
+
+/* User Data */
+
+.user-data{
+  display: none !important;
+  height: 100vh; 
+}
+.user-data.show{
+  display: flex !important;
+}
+.user-data .row{
+  border: 2px solid var(--green);
+  border-radius: 25px;
+}
+
+.user-data-sec input{
+  width: 100%;
+  margin: 15px 0;
+}
+.user-data-sec input[type='submit']{
+  width: 50%;
+  background-color: var(--green);
+  color: white;
+}
+
+.message{
+  text-align: center;
+}

@@ -13,7 +13,9 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet"
     type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -21,7 +23,7 @@
   <form id="my-form" method="post">
 
     <!-- Welcome Page -->
-    <div class="welcome_final d-flex justify-content-center align-items-center">
+    <div class="welcome_final welcome d-flex justify-content-center align-items-center">
       <div class="container">
         <div class="row d-flex justify-content-center align-items-center py-5 slide-in-right">
           <div class="col-8">
@@ -39,10 +41,9 @@
             </p>
           </div>
           <div class="col-8">
-            <button id="start-survey" type="button">START SURVEY</button>
+            <button class="my-button" type="button">START SURVEY</button>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -59,134 +60,115 @@
         <li>
           <a class="nav-link" href="#step-3"> Mission Statement </a>
         </li>
-        <li>
-          <a class="nav-link" href="#step-4"> Business Plan </a>
-        </li>
-      </ul>
-      <ul class="nav">
-        <li>
-          <a class="nav-link" href="#step-5"> Marketing Plan(s) </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#step-6">Goals & Responsibilities(G&R)</a>
-        </li>
-        <li>
-          <a class="nav-link" href="#step-7"> System & Structure (S&S) </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#step-8"> Communication Plans </a>
-        </li>
       </ul>
 
       <div class="tab-content">
         <!-- Step 1 -->
         <div id="step-1" class="tab-pane" role="tabpanel" data-name="Values Statement" data-marks="" data-priority="">
           <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
+            <div class="container py-5">
+              <p class="lead">Values – “What is the ethical framework?" . It defines how employees will act under stress
+                or difficult circumstances, and provides the basis for the corporate culture.</p>
             </div>
           </div>
 
-          <div class="form-area">
+          <div class="form-area col-12 col-md-6">
             <!-- Q1 -->
             <div id="q-area-1" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question1 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are written, not in someone's head?</h5>
+              <div class="col-12 d-flex justify-content-between question1 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are
+                  written, not in someone's head?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-1" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans1" id="yes-1" value="Yes" />
                 <label class="for-yes" for="yes-1">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans1" id="no-1" value="No" />
                 <label class="for-no" for="no-1">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q2 -->
             <div id="q-area-2" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question2 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="10" data-value="">Are your organization's Value statements clearly and accurately understood?</h5>
+              <div class="col-12 d-flex justify-content-between question2 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Are your organization's Value statements clearly and
+                  accurately understood?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-1" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans2" id="yes-2" value="Yes" />
                 <label class="for-yes" for="yes-2">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans2" id="no-2" value="No" />
                 <label class="for-no" for="no-2">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q3 -->
             <div id="q-area-3" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question3 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
+              <div class="col-12 d-flex justify-content-between question3 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="12" data-value="">Are your organization's Value statements shared with
+                  the appropriate people at the appropriate times?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-1" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans3" id="yes-3" value="Yes" />
                 <label class="for-yes" for="yes-3">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans3" id="no-3" value="No" />
                 <label class="for-no" for="no-3">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q4 -->
             <div id="q-area-4" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question4 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="0" data-value="">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
+              <div class="col-12 d-flex justify-content-between question4 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements embraced,
+                  modeled and used by leadership and staff?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-1" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans4" id="yes-4" value="Yes" />
                 <label class="for-yes" for="yes-4">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans4" id="no-4" value="No" />
                 <label class="for-no" for="no-4">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
@@ -197,111 +179,109 @@
         <!-- Step 2 -->
         <div id="step-2" class="tab-pane" role="tabpanel" data-name="Vision Statement" data-marks="" data-priority="">
           <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
+            <div class="container py-5">
+              <p class="lead">Vision Statement - "What are you building?" The vision must be clear and concise, creating
+                a picture in every employee's mind of what the organization will become.</p>
             </div>
           </div>
 
-          <div class="form-area">
+          <div class="form-area col-12 col-md-6">
             <!-- Q1 -->
             <div id="q-area-5" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question5 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are written, not in someone's head?</h5>
+              <div class="col-12 d-flex justify-content-between question5 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are
+                  written, not in someone's head?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-5" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans5" id="yes-5" value="Yes" />
                 <label class="for-yes" for="yes-5">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans5" id="no-5" value="No" />
                 <label class="for-no" for="no-5">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q2 -->
             <div id="q-area-6" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question6 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="10" data-value="">Are your organization's Value statements clearly and accurately understood?</h5>
+              <div class="col-12 d-flex justify-content-between question6 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Are your organization's Value statements clearly and
+                  accurately understood?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-6" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans6" id="yes-6" value="Yes" />
                 <label class="for-yes" for="yes-6">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans6" id="no-6" value="No" />
                 <label class="for-no" for="no-6">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q3 -->
             <div id="q-area-7" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question7 align-items-center flex-wrap my-4">    
-                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
+              <div class="col-12 d-flex justify-content-between question7 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="12" data-value="">Are your organization's Value statements shared with
+                  the appropriate people at the appropriate times?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-7" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans7" id="yes-7" value="Yes" />
                 <label class="for-yes" for="yes-7">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans7" id="no-7" value="No" />
                 <label class="for-no" for="no-7">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q4 -->
             <div id="q-area-8" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question8 align-items-center flex-wrap my-4">  
-                <h5 class="question" data-marks="0" data-value="">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
+              <div class="col-12 d-flex justify-content-between question8 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements embraced,
+                  modeled and used by leadership and staff?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-8" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans8" id="yes-8" value="Yes" />
                 <label class="for-yes" for="yes-8">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans8" id="no-8" value="No" />
                 <label class="for-no" for="no-8">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
@@ -312,111 +292,110 @@
         <!-- Step 3 -->
         <div id="step-3" class="tab-pane" role="tabpanel" data-name="Mission Statement" data-marks="" data-priority="">
           <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
+            <div class="container py-5">
+              <p class="lead">Mission Statement - "What value does the business deliver to its customers?" The mission
+                must clearly describe the value the organization delivers to its clients in the simplest, most basic
+                form.</p>
             </div>
           </div>
 
-          <div class="form-area">
+          <div class="form-area col-12 col-md-6">
             <!-- Q1 -->
             <div id="q-area-9" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question9 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are written, not in someone's head?</h5>
+              <div class="col-12 d-flex justify-content-between question9 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Does your organization have Value statements that are
+                  written, not in someone's head?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-9" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans9" id="yes-9" value="Yes" />
                 <label class="for-yes" for="yes-9">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans9" value="No" id="no-9" />
                 <label class="for-no" for="no-9">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q2 -->
             <div id="q-area-10" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question10 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="10" data-value="">Are your organization's Value statements clearly and accurately understood?</h5>
+              <div class="col-12 d-flex justify-content-between question10 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="15" data-value="">Are your organization's Value statements clearly and
+                  accurately understood?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-10" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans10" value="Yes" id="yes-10" />
                 <label class="for-yes" for="yes-10">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans10" value="No" id="no-10" />
                 <label class="for-no" for="no-10">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q3 -->
             <div id="q-area-11" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question11 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
+              <div class="col-12 d-flex justify-content-between question11 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="12" data-value="">Are your organization's Value statements shared with
+                  the appropriate people at the appropriate times?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-11" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans11" id="yes-11" value="Yes" />
                 <label class="for-yes" for="yes-11">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans11" id="no-11" value="No" />
                 <label class="for-no" for="no-11">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
             </div>
             <!-- Q4 -->
             <div id="q-area-12" class="row q-area">
-              <div class="col-12 col-md-12 d-flex justify-content-between question12 align-items-center flex-wrap my-4">
-                <h5 class="question" data-marks="0" data-value="">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
+              <div class="col-12 d-flex justify-content-between question12 align-items-center flex-wrap my-4">
+                <h5 class="question" data-marks="5" data-value="">Are your organization's Value statements embraced,
+                  modeled and used by leadership and staff?</h5>
                 <h5 class="display-ans"></h5>
                 <a href="#q-area-12" class="edit">Edit</a>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-end">
+              <div class="col-6 d-flex justify-content-end">
                 <input class="yes form-radio" type="radio" name="ans12" id="yes-12" value="Yes" />
                 <label class="for-yes" for="yes-12">
-                  <i class="far fa-check-circle"></i>
+                  <i class="far fa-check-circle indication"></i>
+                  <i class="far fa-thumbs-up thumb"></i>
                   Yes
                 </label>
               </div>
-              <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-start">
+              <div class="col-6 d-flex justify-content-start">
                 <input class="no form-radio" type="radio" name="ans12" id="no-12" value="No" />
                 <label class="for-no" for="no-12">
-                  <i class="far fa-times-circle"></i>
+                  <i class="far fa-times-circle indication"></i>
+                  <i class="far fa-thumbs-down thumb"></i>
                   No
                 </label>
               </div>
@@ -424,909 +403,57 @@
           </div>
         </div>
 
-        <!-- Step 4 -->
-        <div id="step-4" class="tab-pane" role="tabpanel" data-name="Business Plan" data-marks="">
-          <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
+      </div>
+    </div>
+
+    <!-- User Data -->
+    <div class="user-data d-flex justify-content-center align-items-center">
+      <div class="container">
+        <div class="row py-5 slide-in-right">
+          <div class="col-10 col-md-6 col-lg-4 mx-auto info-section">
+            <div class="text-center pb-4">
+              <h1 class="display-6">Please Enter Contact Information</h1>
+            </div>
+            <div class="user-data-sec d-flex justify-content-center flex-wrap">
+              <input type="text" required name="name" class="user-info form-control" placeholder="Name" id="" />
+              <input type="email" required name="email" class="user-info form-control" placeholder="Email" id="" />
+              <input type="text" required name="phone" class="user-info form-control" placeholder="Phone Number"
+                id="" />
+              <input type="submit" class="btn mt-5" value="Submit" />
             </div>
           </div>
-
-          <div class="form-area">
-            <!-- Q1 -->
-            <div id="q-area-13" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question13
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Does your organization have Value statements that are written, not in someone's head?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans13" id="yes-13" value="Yes" />
-                <label class="for-yes" for="yes-13">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans13" id="no-13" value="No" />
-                <label class="for-no" for="no-13">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q2 -->
-            <div id="q-area-14" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question14
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements clearly and accurately understood?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans14" id="yes-14" value="Yes" />
-                <label class="for-yes" for="yes-14">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans14" id="no-14" value="No" />
-                <label class="for-no" for="no-14">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q3 -->
-            <div id="q-area-15" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question15
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans15" id="yes-15" value="Yes" />
-                <label class="for-yes" for="yes-15">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans15" id="no-15" value="No" />
-                <label class="for-no" for="no-15">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q4 -->
-            <div id="q-area-16" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question16
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans16" id="yes-16" value="Yes" />
-                <label class="for-yes" for="yes-16">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans16" id="no-16" value="No" />
-                <label class="for-no" for="no-16">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div id="step-5" class="tab-pane" role="tabpanel" data-name="Marketing Plan(s)" data-marks="">
-          <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="form-area">
-            <!-- Q1 -->
-            <div id="q-area-17" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question17
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Does your organization have Value statements that are written, not in someone's head?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans17" id="yes-17" value="Yes" />
-                <label class="for-yes" for="yes-17">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans17" id="no-17" value="No" />
-                <label class="for-no" for="no-17">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q2 -->
-            <div id="q-area-18" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question18
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements clearly and accurately understood?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans18" id="yes-18" value="Yes" />
-                <label class="for-yes" for="yes-18">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans18" id="no-18" value="No" />
-                <label class="for-no" for="no-18">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q3 -->
-            <div id="q-area-19" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question19
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans19" id="yes-19" value="Yes" />
-                <label class="for-yes" for="yes-19">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans19" id="no-19" value="No" />
-                <label class="for-no" for="no-19">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q4 -->
-            <div id="q-area-20" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question20
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans20" id="yes-20" value="Yes" />
-                <label class="for-yes" for="yes-20">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans20" id="no-20" value="No" />
-                <label class="for-no" for="no-20">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 6 -->
-        <div id="step-6" class="tab-pane" role="tabpanel" data-name="Goals & Responsibilities(G&R)" data-marks="">
-          <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="form-area">
-            <!-- Q1 -->
-            <div id="q-area-21" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question21
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Does your organization have Value statements that are written, not in someone's head?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans21" id="yes-21" value="Yes" />
-                <label class="for-yes" for="yes-21">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans21" id="no-21" value="No" />
-                <label class="for-no" for="no-21">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q2 -->
-            <div id="q-area-22" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question22
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements clearly and accurately understood?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans22" id="yes-22" value="Yes" />
-                <label class="for-yes" for="yes-22">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans22" id="no-22" value="No" />
-                <label class="for-no" for="no-22">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q3 -->
-            <div id="q-area-23" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question23
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans23" id="yes-23" value="Yes" />
-                <label class="for-yes" for="yes-23">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans23" id="no-23" value="No" />
-                <label class="for-no" for="no-23">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q4 -->
-            <div id="q-area-24" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question24
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans24" id="yes-24" value="Yes" />
-                <label class="for-yes" for="yes-24">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans24" id="no-24" value="No" />
-                <label class="for-no" for="no-24">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 7 -->
-        <div id="step-7" class="tab-pane" role="tabpanel" data-name="System & Structure (S&S)" data-marks="">
-          <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="form-area">
-            <!-- Q1 -->
-            <div id="q-area-25" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question25
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Does your organization have Value statements that are written, not in someone's head?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans25" id="yes-25" value="Yes" />
-                <label class="for-yes" for="yes-25">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans25" id="no-25" value="No" />
-                <label class="for-no" for="no-25">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q2 -->
-            <div id="q-area-26" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question26
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements clearly and accurately understood?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans26" id="yes-26" value="Yes" />
-                <label class="for-yes" for="yes-26">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans26" id="no-26" value="No" />
-                <label class="for-no" for="no-26">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q3 -->
-            <div id="q-area-27" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question27
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans27" id="yes-27" value="Yes" />
-                <label class="for-yes" for="yes-27">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans27" id="no-27" value="No" />
-                <label class="for-no" for="no-27">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q4 -->
-            <div id="q-area-28" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question28
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans28" id="yes-28" value="Yes" />
-                <label class="for-yes" for="yes-28">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans28" id="no-28" value="No" />
-                <label class="for-no" for="no-28">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 8 -->
-        <div id="step-8" class="tab-pane" role="tabpanel" data-name="Communication Plans" data-marks="">
-          <div class="step-info">
-            <div class="container">
-              <h4>THE CULTURAL FRAMEWORK: VALUES STATEMENTS</h4>
-              <p>
-                Your values statements are the bricks you build your company's
-                culture with. They:
-              </p>
-              <ul>
-                <li>are litmus tests for answers to difficult questions</li>
-                <li>
-                  describe what it feels like to work for your organization
-                </li>
-                <li>
-                  should parrot what your customers say about you when asked
-                  “Why do you do business with them?"
-                </li>
-                <li>often reflect the core beliefs of the founders.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="form-area">
-            <!-- Q1 -->
-            <div id="q-area-29" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question29
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Does your organization have Value statements that are written, not in someone's head?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans29" id="yes-29" value="Yes" />
-                <label class="for-yes" for="yes-29">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans29" id="no-29" value="No" />
-                <label class="for-no" for="no-29">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q2 -->
-            <div id="q-area-30" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question30
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements clearly and accurately understood?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans30" id="yes-30" value="Yes" />
-                <label class="for-yes" for="yes-30">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans30" id="no-30" value="No" />
-                <label class="for-no" for="no-30">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q3 -->
-            <div id="q-area-31" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question31
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements shared with the appropriate people at the appropriate times?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans31" id="yes-31" value="Yes" />
-                <label class="for-yes" for="yes-31">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans31" id="no-31" value="No" />
-                <label class="for-no" for="no-31">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
-            <!-- Q4 -->
-            <div id="q-area-32" class="row q-area">
-              <div class="
-                    col-12 col-md-12
-                    d-flex
-                    justify-content-between
-                    question32
-                    align-items-center
-                    flex-wrap
-                    my-4
-                  ">
-                <h5 class="question">Are your organization's Value statements embraced, modeled and used by leadership and staff?</h5>
-                <h5 class="display-ans"></h5>
-                <a href="#q-area-1" class="edit">Edit</a>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-end
-                  ">
-                <input class="yes form-radio" type="radio" name="ans32" id="yes-32" value="Yes" />
-                <label class="for-yes" for="yes-32">
-                  <i class="far fa-check-circle"></i>
-                  Yes
-                </label>
-              </div>
-              <div class="
-                    col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6
-                    d-flex
-                    justify-content-start
-                  ">
-                <input class="no form-radio" type="radio" name="ans32" id="no-32" value="No" />
-                <label class="for-no" for="no-32">
-                  <i class="far fa-times-circle"></i>
-                  No
-                </label>
-              </div>
-            </div>
+          <div class="message">
+            <h5 class="message-text">Thank You for Reaching Out!</h5>
           </div>
         </div>
       </div>
-      <input type="submit" value="Submit">
+    </div>
+
+    <!-- Final Page -->
+    <div class="welcome_final final d-flex justify-content-center align-items-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center align-items-center py-5 slide-in-right">
+          <div class="col-8">
+            <p>
+              <span>The unique circumstances of each business must be considered when determining which indicator to
+                begin with. Investing in immediate needs versus long-term goals is always a balancing act.</span>
+              <span>Focusing on one of the three weakest indicators will have the most immediate value by reducing
+                distractions and relieving time pressures.</span>
+              <span>An email with your results has been processed and you should receive it by email shortly.</span>
+            </p>
+          </div>
+          <div class="col-8">
+            <a href="https://businessesdontfail.com/fsc800723/" class="my-button">CLICK HERE TO GO TO THE WEBSITE</a>
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 
 
 
   <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>

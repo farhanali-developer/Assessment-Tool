@@ -1,14 +1,17 @@
 $(document).ready(function () {
 
-  // Transition from welcome section to Wizard section
+  var welcome_page = $('.welcome_final.welcome');
+  var final_page = $('.welcome_final.final');
+
+  // Welcome Page ; Transition from welcome page to form section
   $('#smartwizard').css('display', 'none')
-  $('.welcome_final button').click(function () {
+  $('.welcome_final.welcome button').click(function () {
     $(this).addClass('active');
 
     setTimeout(function () {
-      $('.welcome_final .row').addClass('slide-out-left');
+      $('.welcome_final.welcome .row').addClass('slide-out-left');
       setTimeout(function () {
-        $('.welcome_final').addClass('close')
+        $('.welcome_final.welcome').addClass('close')
         $('#smartwizard').css('display', 'block')
 
         // Smart Wizard Plugin
@@ -30,7 +33,7 @@ $(document).ready(function () {
             toolbarPosition: 'bottom', // none, top, bottom, both
             toolbarButtonPosition: 'center', // left, right, center
             showNextButton: true, // show/hide a Next button
-            showPreviousButton: true, // show/hide a Previous button
+            showPreviousButton: false, // show/hide a Previous button
             toolbarExtraButtons: [], // Extra buttons to show on toolbar, array of jQuery input/buttons elements
           },
           anchorSettings: {
@@ -63,54 +66,147 @@ $(document).ready(function () {
 
           // Next Button Arrow
           $('.sw .toolbar>.btn').append('<i class="fas fa-long-arrow-alt-right"></i>');
-        }, 800)
+          $('.sw .toolbar>.btn').addClass('disabled')
+        }, 500)
       }, 500)
     }, 500)
   })
 
+  // Final Page
+
+  $('.welcome_final.final button').click(function () {
+    $(this).addClass('active');
+
+    setTimeout(function () {
+      $('.welcome_final.welcome .row').addClass('slide-out-left');
+      setTimeout(function () {
+        $('.welcome_final.welcome').addClass('close')
+        $('#smartwizard').css('display', 'block');
+
+      }, 500)
+    }, 500)
+  })
 
   // All Global Variables
   let yes_color = 'green'
   let no_color = 'blue'
   var tabs = $("#smartwizard .nav-link");
-  var all_fields = {};
   var all_data = [];
+  var user_data = {
+    name: "",
+    email: "",
+    phone: "",
+    timestamp: "",
+  }
+  var message = $('.message');
 
 
+
+
+  // ----------------------------------
   // Fetching & Submiting Form Data
+  // ----------------------------------
+
   $("#my-form").submit(function (e) {
     e.preventDefault();
     console.log("working")
-    $.each($('#my-form').serializeArray(), function (i, field) {
-      if (field.value != '') {
-        all_fields[field.name] = field.value;
+
+    var user = $('.user-data-sec').children()
+    var date = new Date();
+
+    for (var info of user) {
+      if (info.value != 'Submit') {
+        if (info.getAttribute('name') == 'name') {
+          user_data.name = info.value
+        }
+        else if (info.getAttribute('name') == 'email') {
+          user_data.email = info.value
+        }
+        else if (info.getAttribute('name') == 'phone') {
+          user_data.phone = info.value
+        }
       }
-    });
-
-    for (var field in all_fields) {
-      // if (field == 'question_field_' + i) {
-      //   questions_values.push([field, all_fields[field], all_fields['ans' + i]])
-      //   i++;
-      // }
-
-
     }
+    user_data.timestamp = date;
 
-    console.log(all_fields)
+    var url = "";
+    var formdata = new FormData();
+    formdata.append('user_data', JSON.stringify(user_data))
+
+    // AJAX
+    // $.ajax({
+    //   "method": "POST",
+    //   "url": url,
+    //   "data": formdata,
+    //   "contentType": false,
+    //   success: function (data) {
+    //     console.log(data)
+    //     message = data;
+    //   },
+    //   error: function (jqXHR, exception) {
+    //     console.log(jqXHR)
+    //     message = jqXHR;
+    //   }
+    // })
+
+
+    // if (message.children().text() != '') {
+    //   $('.user-data .info-section').css('display', 'none')
+    // }
+
+
+    console.log(user_data)
+    console.table(all_data)
+
+    setTimeout(function () {
+      $('.user-data').removeClass('slide-in-right');
+      $('.user-data').addClass('slide-out-left');
+      setTimeout(function () {
+        $('.user-data').removeClass('show');;
+        $('.welcome_final.final').addClass('open');
+        $('.welcome_final.final').addClass('slide-in-right');
+      }, 300)
+      $('.welcome_final.final button').click(function () {
+        $(this).addClass('active');
+      })
+    }, 1000)
+
   })
 
-  // Hide all question except first one when rendering each step
+
+
+
+
   $("#smartwizard").on("showStep", function (e, anchorObject, stepIndex, stepDirection) {
-    for (var i = 1; i <= tabs.length; i++) {
-      if (i == stepIndex + 1) {
-        $("#step-" + i + " .q-area").css('display', 'none');
-        $("#step-" + i + " .q-area").first().css('display', 'flex');
+    var step = stepIndex + 1;
+    $('.sw .toolbar>.btn').addClass('disabled')
+
+    // Hide all question except first one when rendering each step
+    $("#step-" + step + " .q-area").css('display', 'none');
+    $("#step-" + step + " .q-area").first().css('display', 'flex');
+    setTimeout(function () {
+      // refresh tab height
+      $('.tab-content').css('height', '0%')
+      $('.tab-content').css('height', '100%')
+    }, 500)
+
+    if (step == tabs.length) {
+
+      // $('.sw .toolbar>.btn').removeClass('disabled')
+      $('.sw .toolbar>.btn').click(function () {
+
+        // Calling custom function to get data, Find function at the end of file
+        get_this_data(step);
+
+        // Events for displaying / not displaying different sections
+        $('#smartwizard').addClass('slide-out-left');
         setTimeout(function () {
-          // refresh tab height
-          $('.tab-content').css('height', '0%')
-          $('.tab-content').css('height', '100%')
+          $('#smartwizard').css('display', 'none')
+          setTimeout(function () {
+            $('.user-data').addClass('show , slide-in-right')
+          }, 500)
         }, 500)
-      }
+      })
     }
   });
 
@@ -118,8 +214,6 @@ $(document).ready(function () {
 
 
 
-
-  
   // ------------------------------------------
   // Events on Click for Radio Buttons 
   // ------------------------------------------
@@ -145,6 +239,7 @@ $(document).ready(function () {
     $('#' + grandParent + ' h5.question').attr('data-value', selected)
     $(edit).css('display', 'block')
 
+
     // If Yes is selected
     if (selected == 'Yes') {
 
@@ -163,6 +258,14 @@ $(document).ready(function () {
           $($(allNextQuestions).children().children('input.form-radio')).css('display', 'block')
           $($(allNextQuestions).children().children('label')).css('display', 'block')
         }
+      }
+
+      // Show / Hide Next Button
+      if ($('#' + grandParent + '').next().children().children('h5.question').attr('data-value') == '') {
+        $('.sw .toolbar>.btn').addClass('disabled')
+      }
+      else {
+        $('.sw .toolbar>.btn').removeClass('disabled')
       }
     }
 
@@ -183,11 +286,15 @@ $(document).ready(function () {
       // refresh tab height
       $('.tab-content').css('height', '0%')
       $('.tab-content').css('height', '100%')
+
+      // Show Next Button
+      $('.sw .toolbar>.btn').removeClass('disabled')
     }
 
     // Hide radio button after clicking
     $(input).css('display', 'none')
     $(label).css('display', 'none')
+
   })
 
 
@@ -203,9 +310,9 @@ $(document).ready(function () {
     var edit_grandParent = $(this).parent().parent().attr('id');
 
     // Check if ID of Parent Div which contains 'edit' button is equal to 
-    // the ID of Parent Div which contains the 'Yes/No' button => which was clicked just before 'edit' button was clicked
+    // the ID of Parent Div which contains the 'Yes/No' button => which was clicked just before 'edit' button
     if (current_grandParent == edit_grandParent) {
-      console.log("Same")
+      // console.log("Same")
       // If is Equals then show input fields ('Yes/No') of the same Parent Div
       var input = $('#' + current_grandParent + ' input.form-radio')
       var label = $('#' + current_grandParent + ' label')
@@ -213,7 +320,7 @@ $(document).ready(function () {
       $(label).css('display', 'inline-block')
     }
     else {
-      console.log("Not Same")
+      // console.log("Not Same")
       // If is not Equals then show input fields ('Yes/No') of the Parent Div of 'edit' button
       var input = $('#' + edit_grandParent + ' input.form-radio')
       var label = $('#' + edit_grandParent + ' label')
@@ -226,23 +333,49 @@ $(document).ready(function () {
 
 
 
-
-
-
   // Get Data of each step just before leaving that step and push that data into "all_data[]"
   $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+    var step = currentStepIndex + 1;
 
+    // Calling custom function to get data
+    // Find function at the end of file
+    get_this_data(step);
+  });
+
+
+
+  // Callback function for "Sort()"
+  function compare(key) {
+    return function (obj1, obj2) {
+      if (parseInt(obj1[key]) > parseInt(obj2[key])) { // Place obj2 first, then obj1
+        return -1;
+      }
+      if (parseInt(obj1[key]) < parseInt(obj2[key])) { // Place obj1 first, then obj2 
+        return 1;
+      }
+      return 0; //keep the same order
+    }
+  }
+
+
+
+
+  // ---------------------------- 
+  // To get data from every Tab
+  // -----------------------------
+  function get_this_data(tab) {
     // get all questions in this step
-    var all_questions = $('#step-' + (currentStepIndex + 1)).children('.form-area').children().children().children('.question')
+    var all_questions = $('#step-' + tab).children('.form-area').children().children().children('.question')
     var t_marks = 0;
 
     var each_data = {
-      tab_name: $('#step-' + (currentStepIndex + 1)).attr('data-name'),
+      tab_name: $('#step-' + tab).attr('data-name'),
       tab_marks: "",
       questions: []
     }
     var obj = {
       question: "",
+      ans: "",
       marks: "",
     };
 
@@ -252,13 +385,23 @@ $(document).ready(function () {
       if (attr == "Yes") {
         obj = {
           question: element.innerHTML,
-          marks: element.getAttribute('data-marks')
+          ans: attr,
+          marks: "0",
+        }
+        each_data.questions.push(obj)
+      }
+      else if (attr == "No") {
+        obj = {
+          question: element.innerHTML,
+          ans: attr,
+          marks: element.getAttribute('data-marks'),
         }
         each_data.questions.push(obj)
       }
       else {
         obj = {
           question: element.innerHTML,
+          ans: 'Not Answered',
           marks: "0"
         }
         each_data.questions.push(obj)
@@ -276,28 +419,12 @@ $(document).ready(function () {
     // Push total marks from t_marks in tab_marks of "each_data"
     each_data.tab_marks = t_marks;
 
-    // Now that we have tab name, tab marks, and all questions with their marks, of every step
+    // Now that we have tab name, tab marks, and all questions with their marks, of every step as an object
     // We Push that into Global array containing data of every step "all_data[]"
     all_data.push(each_data)
 
     // Sort all_data based on total marks
     all_data.sort(compare('tab_marks'));
-
-    console.table(all_data)
-
-  });
-
-  // Callback function for "Sort()"
-  function compare(key) {
-    return function (obj1, obj2) {
-      if (parseInt(obj1[key]) > parseInt(obj2[key])) { // Place obj2 first, then obj1
-        return -1;
-      }
-      if (parseInt(obj1[key]) < parseInt(obj2[key])) { // Place obj1 first, then obj2 
-        return 1;
-      }
-      return 0; //keep the same order
-    }
   }
 
 })
