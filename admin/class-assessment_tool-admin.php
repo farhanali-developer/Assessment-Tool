@@ -727,6 +727,7 @@ function users_function(){
 						<th class="th-sm">Full Name</th>
 						<th class="th-sm">Phone Number</th>
 						<th class="th-sm">Email</th>
+						<th class="th-sm">Submitted On</th>
 						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
 					</tr>
 				</thead>
@@ -743,6 +744,7 @@ function users_function(){
 						<th class="th-sm">Full Name</th>
 						<th class="th-sm">Phone Number</th>
 						<th class="th-sm">Email</th>
+						<th class="th-sm">Submitted On</th>
 						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
 					</tr>
 				</tfoot>

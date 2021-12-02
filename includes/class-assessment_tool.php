@@ -122,7 +122,6 @@ class Assessment_tool {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-assessment_tool-public.php';
 
-
 		$this->loader = new Assessment_tool_Loader();
 
 	}

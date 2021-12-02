@@ -45,6 +45,9 @@ class Assessment_tool_Activator {
           `full_name` VARCHAR(255) NOT NULL,
           `phone_number` VARCHAR(255),
           `user_email` VARCHAR(255) NOT NULL,
+          `submission_date` DATE,
+          `submission_time` TIME,
+          `timezone` VARCHAR(255),
           `allow_retake` BOOLEAN,
           PRIMARY KEY  (`id`)
         ) $charset_collate;";
