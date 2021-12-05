@@ -179,6 +179,7 @@
       var dataUrl = $(this).attr("action");
       var formdata = new FormData();
       formdata.append("user_data", JSON.stringify(user_data));
+      formdata.append("form_data", JSON.stringify(all_data));
 
       // AJAX
       jQuery.ajax({
@@ -188,6 +189,7 @@
         data: formdata,
         contentType: false,
         success: function (data) {
+          console.log(data);
           message.children().text(data);
           // responemessage = data;
           if (message.children().text() != "") {
@@ -195,7 +197,7 @@
           }
         },
         error: function (jqXHR, exception) {
-          console.log(jqXHR);
+          console.log(JSON.stringify(jqXHR));
           // message = jqXHR;
         },
       });

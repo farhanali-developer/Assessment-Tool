@@ -547,6 +547,7 @@ function assessment_form_add_new_tab(){
 				processData: false,
 				contentType: false,
 				success: function (data) {
+					console.log(data);
 					jQuery("#assessment_backend_form input[type='text']").val('')
 					const Toast = Swal.mixin({
 						toast: true,

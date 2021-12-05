@@ -42,19 +42,19 @@ class Assessment_tool_Activator {
 
         $users_query = "CREATE TABLE IF NOT EXISTS $users_table (
           `id` INT NOT NULL AUTO_INCREMENT,
-          `full_name` VARCHAR(255) NOT NULL,
-          `phone_number` VARCHAR(255),
-          `user_email` VARCHAR(255) NOT NULL,
+          `full_name` LONGTEXT NOT NULL,
+          `phone_number` LONGTEXT,
+          `user_email` LONGTEXT NOT NULL,
           `submission_date` DATE,
           `submission_time` TIME,
-          `timezone` VARCHAR(255),
+          `timezone` LONGTEXT,
           `allow_retake` BOOLEAN,
           PRIMARY KEY  (`id`)
         ) $charset_collate;";
 
         $tabs_query = "CREATE TABLE IF NOT EXISTS $tabs_table (
           `id` INT NOT NULL AUTO_INCREMENT,
-          `tab_name` VARCHAR(255) NOT NULL,
+          `tab_name` LONGTEXT NOT NULL,
           `tab_description` LONGTEXT,
           PRIMARY KEY  (`id`)
         ) $charset_collate;";
@@ -70,8 +70,8 @@ class Assessment_tool_Activator {
 
         $settings_query = "CREATE TABLE IF NOT EXISTS $settings_table (
           `id` INT NOT NULL AUTO_INCREMENT,
-          `setting_name` VARCHAR(255),
-          `setting_value` VARCHAR(255),
+          `setting_name` LONGTEXT,
+          `setting_value` LONGTEXT,
           PRIMARY KEY  (`id`)
         ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('email',''), ('theme','Default'), ('animation','Fade'), ('animation_speed','4'), ('alignment','0'), ('mode','0')";
 

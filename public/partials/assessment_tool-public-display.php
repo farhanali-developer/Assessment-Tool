@@ -13,7 +13,8 @@
  */
 
 function assessment_tool_function(){
-require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '\wp-config.php';
+require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '/wp-config.php';
+// require_once( ABSPATH . '/wp-config.php' );
 
 global $wpdb;
 $wpdb->hide_errors();

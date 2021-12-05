@@ -1,18 +1,20 @@
 <?php 
 
 $user_data = json_decode($_POST["user_data"], true);
+$form_data = json_decode($_POST["form_data"], true);
 
 require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '\wp-config.php';
 
 global $wpdb;
-$wpdb->show_errors();
+$wpdb->hide_errors();
 $users_table = 'assessment_tool_users';
 $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+htmlspecialchars($user_data["email"], ENT_QUOTES);
 
-$name = $user_data["name"];
-$email = $user_data["email"];
+$name = htmlspecialchars($user_data["name"], ENT_QUOTES);
+$email = htmlspecialchars($user_data["email"], ENT_QUOTES);
 $phone = $user_data["phone"];
 $date = $user_data["date"];
 $month = $user_data["month"];
@@ -33,7 +35,7 @@ if($wpdb->num_rows > 0){
     // print_r($allow);
     $check_user = $allow[0]->allow_retake;
 
-    if($check_user == 1){
+    if($check_user == 0){
         echo "You already submitted form.";
     }
     else{
@@ -56,9 +58,24 @@ else{
     ));
 
     echo "Form Submitted";
+
+    
+
+    // $to = "fareeboy12@gmail.com"; // this is your Email address
+    //     $from = $email; // this is the sender's Email address
+    //     $username = $name;
+    //     $subject = "Assessment Tool Survey";
+    //     $message = "Assessment Tool Form Submitted by $username";
+    
+    //     $headers = "From:" . $from;
+    //     $headers2 = "From:" . $to;
+    //     mail($to,$subject,$message,$headers);
+    //     mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
+    //     echo "Mail Sent. Thank you " . $first_name . ", we will contact you shortly.";
+    //     // You can also use header('Location: thank_you.php'); to redirect to another page.
     
 }
 
-
+exit;
 
 ?>

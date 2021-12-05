@@ -26,15 +26,13 @@ $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-$wpdb->update( $settings_table, array( 'setting_value' => $email_data), array( 'id' => 1 ) );
+$email = htmlspecialchars($email_data, ENT_QUOTES);
+
+$wpdb->update( $settings_table, array( 'setting_value' => $email), array( 'id' => 1 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $theme_data), array( 'id' => 2 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $animation_data), array( 'id' => 3 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $animation_speed_data), array( 'id' => 4 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $alignment_data), array( 'id' => 5 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $dark_mode_data), array( 'id' => 6 ) );
-
-
-
-
-// $results = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $settings_table") );  
+ 
 ?>

@@ -26,14 +26,14 @@ foreach($object_data as $outer_list_key => $outer_list_data){
         $inner_list_text = $inner_list_data;
 
         $tab_id = $inner_list_data['text-input-id'];
-        $tab_name = $inner_list_data["text-input"]; //GETTING ONLY TABS
-        $description = $inner_list_data["text-input-description"]; //GETTING ONLY DESCRIPTIONS
+        $tab_name = htmlspecialchars($inner_list_data["text-input"], ENT_QUOTES); //GETTING ONLY TABS
+        $description = htmlspecialchars($inner_list_data["text-input-description"], ENT_QUOTES); //GETTING ONLY DESCRIPTIONS
 
        foreach($inner_list_data["inner-list"] as $inner_list_key => $inner_list_obj){
 
             $question_id = $inner_list_obj["inner-text-id"];
-            $question = $inner_list_obj["inner-text-input"]; //GETTING QUESTION
-            $marks = $inner_list_obj["inner-text-marks"]; //GETTING MARKS
+            $question = htmlspecialchars($inner_list_obj["inner-text-input"], ENT_QUOTES); //GETTING QUESTION
+            $marks = htmlspecialchars($inner_list_obj["inner-text-marks"], ENT_QUOTES); //GETTING MARKS
 
             $wpdb->update( $questions_table, array( 'question' => $question, 'marks' => $marks), array( 'id' => $question_id ) );
             
