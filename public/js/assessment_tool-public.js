@@ -433,6 +433,7 @@
 
       var each_data = {
         tab_name: $("#step-" + tab).attr("data-name"),
+        tab_description: $("#step-" + tab + " p.lead").html(),
         tab_marks: "",
         questions: [],
       };

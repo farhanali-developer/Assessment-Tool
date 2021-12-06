@@ -78,10 +78,17 @@ else{
         ));
 
         echo "Form Submitted" . "\n";
-
-    
+        $useremail = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
+        $assessment_tool_email = $useremail->setting_value;
+        $admin_email = get_option('admin_email');
+        if($assessment_tool_email){
+            $to = "<$assessment_tool_email>"; // this is your Email address
+        }
+        else{
+            $to = $admin_email; // this is your Email address
+        }
         //Perform Mailing functionality Here
-        $to = "farhan@logikware.tech"; // this is your Email address
+
         $from = $email; // this is the sender's Email address
         $username = $name;
         $subject = "Assessment Tool Survey";
@@ -108,12 +115,14 @@ else{
             $i++;
             $tabname = $tab_values->tab_name;
             $tabmarks = $tab_values->tab_marks;
-
+            $tabdescription = $tab_values->tab_description;
+            $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+            echo $description;
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'></td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'></td>";
+            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
             $message .= "</tr>";
         }
 
@@ -121,14 +130,15 @@ else{
         $message .= "</table>";
         $message .= '</body></html>';
     
-        $headers = "From:" . $from;
+        $headers = "From:" . $from . "Reply-To: <test@test.com>";
         $headers2 = "From:" . $to;
         $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        $headers .= "Content-Type: text/html;";
         mail($to,$subject,$message,$headers);
         // mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
         echo "Mail Sent. Thank you " . $first_name . ", We will contact you shortly.";
         // You can also use header('Location: thank_you.php'); to redirect to another page.
+
     
 }
 
