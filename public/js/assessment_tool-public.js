@@ -141,6 +141,7 @@
     // Fetching & Submiting Form Data
     // ----------------------------------
 
+    var dataUrl = $("#my-form").attr("action");
     $("#my-form").submit(function (e) {
       e.preventDefault();
       // console.log("working");
@@ -176,7 +177,6 @@
       user_data.second = seconds;
       user_data.timezone = timezone;
 
-      var dataUrl = $(this).attr("action");
       var formdata = new FormData();
       formdata.append("user_data", JSON.stringify(user_data));
       formdata.append("form_data", JSON.stringify(all_data));
@@ -186,6 +186,8 @@
         method: "POST",
         url: dataUrl,
         processData: false,
+        async: true,
+        crossDomain: true,
         data: formdata,
         contentType: false,
         success: function (data) {
@@ -205,18 +207,18 @@
       // console.log(user_data);
       // console.table(all_data);
 
-      // setTimeout(function () {
-      //   $(".user-data").removeClass("slide-in-right");
-      //   $(".user-data").addClass("slide-out-left");
-      //   setTimeout(function () {
-      //     $(".user-data").removeClass("show");
-      //     $(".welcome_final.final").addClass("open");
-      //     $(".welcome_final.final").addClass("slide-in-right");
-      //   }, 300);
-      //   $(".welcome_final.final button").click(function () {
-      //     $(this).addClass("active");
-      //   });
-      // }, 1000);
+      setTimeout(function () {
+        $(".user-data").removeClass("slide-in-right");
+        $(".user-data").addClass("slide-out-left");
+        setTimeout(function () {
+          $(".user-data").removeClass("show");
+          $(".welcome_final.final").addClass("open");
+          $(".welcome_final.final").addClass("slide-in-right");
+        }, 300);
+        $(".welcome_final.final button").click(function () {
+          $(this).addClass("active");
+        });
+      }, 3000);
     });
 
     $("#smartwizard").on(
