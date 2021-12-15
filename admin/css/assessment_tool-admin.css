@@ -3,7 +3,7 @@
  * included in this file.
  */
 
- table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
 table.dataTable thead .sorting_asc:before,
@@ -13,17 +13,66 @@ table.dataTable thead .sorting_desc:after,
 table.dataTable thead .sorting_desc:before,
 table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
-bottom: .5em;
+  bottom: 0.5em;
 }
 
-.form-check-input[type=checkbox]:checked {
-    background-color: transparent !important;
-    border-color: #0d6efd !important;
+.form-check-input[type="checkbox"]:checked {
+  background-color: transparent !important;
+  border-color: #0d6efd !important;
 }
 
-table.dataTable thead th, table.dataTable thead td {
-    padding: 8px 10px !important;
+table.dataTable thead th,
+table.dataTable thead td {
+  padding: 8px 10px !important;
 }
-.table{
-    padding-top: 2rem !important;
+.table {
+  padding-top: 2rem !important;
+}
+
+/* .input-group {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.panel {
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: solid 2px #ccc;
+}
+
+.panel-heading {
+  background-color: #8affdf !important;
+}
+
+#accordion_search_bar {
+  border: solid 2px #ccc;
+}
+
+.btn-default {
+  border: solid 1.5px #ccc;
+}
+
+.fa-search {
+  font-size: 1.3em;
+}
+
+.fa-paw {
+  font-size: 1.4em;
+  color: #6b7f7a;
+} */
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
 }

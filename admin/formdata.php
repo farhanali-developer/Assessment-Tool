@@ -25,10 +25,12 @@ foreach($object_data as $outer_list_key => $outer_list_data){
         $inner_list_text = $inner_list_data;
 
         $tab_name = htmlspecialchars($inner_list_data["text-input"], ENT_QUOTES); //GETTING ONLY TABS Accepts double quotes as well
+        $chapter_title = htmlspecialchars($inner_list_data["text-input-chapter"], ENT_QUOTES); //GETTING ONLY TABS Accepts double quotes as well
         $description = htmlspecialchars($inner_list_data["text-input-description"], ENT_QUOTES); //GETTING ONLY DESCRIPTIONS Accepts double quotes as well
 
         $wpdb->insert($tabs_table, array(
             'tab_name' => $tab_name,
+            'chapter_title' => $chapter_title,
             'tab_description' => $description
         ));
 

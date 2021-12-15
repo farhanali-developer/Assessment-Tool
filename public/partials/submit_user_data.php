@@ -5,13 +5,16 @@ error_reporting(E_ALL);
 
 
 $user_data = json_decode($_POST["user_data"], true);
-$form_data = json_decode($_POST["form_data"], false);
+$form_data = json_decode($_POST["form_data"], true);
+
+// print_r($form_data);
 
 require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '/wp-config.php';
 
 global $wpdb;
 $wpdb->hide_errors();
 $users_table = 'assessment_tool_users';
+$formdata_table = 'assessment_tool_formdata';
 $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -48,19 +51,19 @@ if($wpdb->num_rows > 0){
     }
     else{
         //Perform Mailing functionality Here
-        echo "Form Submitted from check user";
+        // echo "Form Submitted from check user";
 
-        $wpdb->insert($users_table, array(
-            'full_name' => $name,
-            'phone_number' => $phone,
-            'user_email' => $email,
-            'submission_date' => $submission_date,
-            'submission_time' => $submission_time,
-            'timezone' => $timezone,
-            'allow_retake' => $allow_retake,
-        ));
+        // $wpdb->insert($users_table, array(
+        //     'full_name' => $name,
+        //     'phone_number' => $phone,
+        //     'user_email' => $email,
+        //     'submission_date' => $submission_date,
+        //     'submission_time' => $submission_time,
+        //     'timezone' => $timezone,
+        //     'allow_retake' => $allow_retake,
+        // ));
     
-        echo "Form Submitted";
+        // echo "Form Submitted";
     }
     
     
@@ -74,70 +77,102 @@ else{
             'submission_date' => $submission_date,
             'submission_time' => $submission_time,
             'timezone' => $timezone,
-            'allow_retake' => $allow_retake,
+            'allow_retake' => $allow_retake
         ));
 
-        echo "Form Submitted" . "\n";
-        $useremail = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
-        $assessment_tool_email = $useremail->setting_value;
-        $admin_email = get_option('admin_email');
-        if($assessment_tool_email){
-            $to = "<$assessment_tool_email>"; // this is your Email address
-        }
-        else{
-            $to = $admin_email; // this is your Email address
-        }
-        //Perform Mailing functionality Here
+        $user_id = $wpdb->insert_id;
 
-        $from = $email; // this is the sender's Email address
-        $username = $name;
-        $subject = "Assessment Tool Survey";
-        
-        
+       
 
-        $message = '<html><body>';
-        $message .= "<h1>Assessment Survey Form</h1>";
-        $message .= "<table style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>";
-        $message .= "<thead>";
-        $message .= "<tr>";
-        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Rank</th>";
-        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Chapter Title</th>";
-        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Indicator</th>";
-        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Description</th>";
-        $message .= "</tr>";
-        $message .= "</thead>";
-        $message .= "<tbody>";
-        $i = 0;
-        foreach($form_data as $tab => $tab_values){
-            if($i == 3){
-                break;
+        foreach($form_data as $form_key => $form_values){
+            
+            $tab_id = $form_values["tab_id"];
+            $tab_name = $form_values["tab_name"];
+            $tab_marks = $form_values["tab_marks"];
+            $questions = $form_values["questions"];
+            echo $tab_id . "\n";
+            echo $tab_name . "\n";
+            echo $tab_marks . "\n";
+            foreach($questions as $questions_keys => $questions_value){
+                $question_id = $questions_value["question_id"];
+                $question = $questions_value["question"];
+                $question_marks = $questions_value["marks"];
+                echo $question_id ."\n";
+                echo $question ."\n";
+                echo $question_marks ."\n";
+                
+                $wpdb->insert($formdata_table, array(
+                    'tab_id' => $tab_id,
+                    'tab_marks' => $tab_marks,
+                    'question_id' => $question_id,
+                    'question_marks' => $question_marks,
+                    'user_id' => $user_id
+                ));
             }
-            $i++;
-            $tabname = $tab_values->tab_name;
-            $tabmarks = $tab_values->tab_marks;
-            $tabdescription = $tab_values->tab_description;
-            $description = htmlspecialchars($tabdescription, ENT_QUOTES);
-            echo $description;
-            $message .= "<tr>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'></td>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
-            $message .= "</tr>";
+
         }
 
-        $message .= "</tbody>";
-        $message .= "</table>";
-        $message .= '</body></html>';
+        echo "Form Submitted" . "\n";
+//         $useremail = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
+//         $assessment_tool_email = $useremail->setting_value;
+//         $admin_email = get_option('admin_email');
+//         if($assessment_tool_email){
+//             $to = "<$assessment_tool_email>"; // this is your Email address
+//         }
+//         else{
+//             $to = $admin_email; // this is your Email address
+//         }
+//         //Perform Mailing functionality Here
+
+//         $from = $email; // this is the sender's Email address
+//         $username = $name;
+//         $subject = "Assessment Tool Survey";
+        
+        
+
+//         $message = '<html><body>';
+//         $message .= "<h1>Assessment Survey Form</h1>";
+//         $message .= "<table style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>";
+//         $message .= "<thead>";
+//         $message .= "<tr>";
+//         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Rank</th>";
+//         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Chapter Title</th>";
+//         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Indicator</th>";
+//         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Description</th>";
+//         $message .= "</tr>";
+//         $message .= "</thead>";
+//         $message .= "<tbody>";
+//         $i = 0;
+//         foreach($form_data as $tab => $tab_values){
+//             if($i == 3){
+//                 break;
+//             }
+//             $i++;
+//             $tabname = $tab_values->tab_name;
+//             $tabmarks = $tab_values->tab_marks;
+//             $tabdescription = $tab_values->tab_description;
+//             $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+//             echo $description;
+//             $message .= "<tr>";
+//             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
+//             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'></td>";
+//             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
+//             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
+//             $message .= "</tr>";
+//         }
+
+//         $message .= "</tbody>";
+//         $message .= "</table>";
+//         $message .= '</body></html>';
     
-        $headers = "From:" . $from . "Reply-To: <test@test.com>";
-        $headers2 = "From:" . $to;
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html;";
-        mail($to,$subject,$message,$headers);
-        // mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
-        echo "Mail Sent. Thank you " . $first_name . ", We will contact you shortly.";
-        // You can also use header('Location: thank_you.php'); to redirect to another page.
+//         $headers = "From:" . $from . "Reply-To: <test@test.com>";
+//         $headers2 = "From:" . $to;
+//         $headers .= "MIME-Version: 1.0\r\n";
+//         $headers .= "Content-Type: text/html;";
+//         mail($to,$subject,$message,$headers);
+//         // mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
+//         echo "Mail Sent. Thank you " . $first_name . ", We will contact you shortly.";
+//         // You can also use header('Location: thank_you.php'); to redirect to another page.
 
     
 }

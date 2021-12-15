@@ -181,6 +181,8 @@
       formdata.append("user_data", JSON.stringify(user_data));
       formdata.append("form_data", JSON.stringify(all_data));
 
+      console.log(all_data);
+
       // AJAX
       jQuery.ajax({
         method: "POST",
@@ -242,7 +244,9 @@
           // $('.sw .toolbar>.btn').removeClass('disabled')
           $(".sw .toolbar>.btn").click(function () {
             // Calling custom function to get data, Find function at the end of file
-            get_this_data(step);
+            var data_id = $(".nav-link").last().attr("data-id");
+
+            get_this_data(data_id);
 
             // Events for displaying / not displaying different sections
             $("#smartwizard").addClass("slide-out-left");
@@ -396,11 +400,12 @@
         nextStepIndex,
         stepDirection
       ) {
-        var step = currentStepIndex + 1;
+        // var step = currentStepIndex + 1;
+        var data_id = $(".nav-link.active").attr("data-id");
 
         // Calling custom function to get data
         // Find function at the end of file
-        get_this_data(step);
+        get_this_data(data_id);
       }
     );
 
@@ -429,15 +434,18 @@
         .children()
         .children()
         .children(".question");
+      var currentQuestion =  $("#step-" + tab).children(".form-area").children().attr('question-id')
       var t_marks = 0;
 
       var each_data = {
+        tab_id: $("#step-" + tab).attr("tab-id"),
         tab_name: $("#step-" + tab).attr("data-name"),
         tab_description: $("#step-" + tab + " p.lead").html(),
         tab_marks: "",
         questions: [],
       };
       var obj = {
+        question_id: "",
         question: "",
         ans: "",
         marks: "",
@@ -448,6 +456,7 @@
         var attr = element.getAttribute("data-value");
         if (attr == "Yes") {
           obj = {
+            question_id: currentQuestion,
             question: element.innerHTML,
             ans: attr,
             marks: "0",
@@ -455,6 +464,7 @@
           each_data.questions.push(obj);
         } else if (attr == "No") {
           obj = {
+            question_id: currentQuestion,
             question: element.innerHTML,
             ans: attr,
             marks: element.getAttribute("data-marks"),
@@ -462,6 +472,7 @@
           each_data.questions.push(obj);
         } else {
           obj = {
+            question_id: currentQuestion,
             question: element.innerHTML,
             ans: "Not Answered",
             marks: "0",

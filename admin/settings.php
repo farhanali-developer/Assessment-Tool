@@ -17,6 +17,36 @@ else{
     $dark_mode_data = 0;
 }
 
+if($theme_data == "Default"){
+    $theme_data = "default";
+}
+else if($theme_data == "Arrows"){
+    $theme_data = "arrows";
+}
+else if($theme_data == "Dots"){
+    $theme_data = "dots";
+}
+else if($theme_data == "Progress"){
+    $theme_data = "progress";
+}
+
+if($animation_data == "None"){
+    $animation_data = "none";
+}
+if($animation_data == "Fade"){
+    $animation_data = "fade";
+}
+if($animation_data == "Slide Horizantal"){
+    $animation_data = "slide-horizontal";
+}
+if($animation_data == "Slide Vertical"){
+    $animation_data = "slide-vertical";
+}
+if($animation_data == "Slide Swing"){
+    $animation_data = "slide-swing";
+}
+
+
 require_once dirname( dirname( dirname( dirname( dirname( __FILE__ )) ) ) ) . '/wp-config.php';
 
 global $wpdb;

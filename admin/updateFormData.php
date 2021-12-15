@@ -27,6 +27,7 @@ foreach($object_data as $outer_list_key => $outer_list_data){
 
         $tab_id = $inner_list_data['text-input-id'];
         $tab_name = htmlspecialchars($inner_list_data["text-input"], ENT_QUOTES); //GETTING ONLY TABS
+        $chapter_title = htmlspecialchars($inner_list_data["text-input-chapter"], ENT_QUOTES); //GETTING ONLY TABS
         $description = htmlspecialchars($inner_list_data["text-input-description"], ENT_QUOTES); //GETTING ONLY DESCRIPTIONS
 
        foreach($inner_list_data["inner-list"] as $inner_list_key => $inner_list_obj){
@@ -39,7 +40,7 @@ foreach($object_data as $outer_list_key => $outer_list_data){
             
        }
 
-        $wpdb->update( $tabs_table, array( 'tab_name' => $tab_name, 'tab_description' => $description), array( 'id' => $tab_id ) );
+        $wpdb->update( $tabs_table, array( 'tab_name' => $tab_name, 'chapter_title' => $chapter_title , 'tab_description' => $description), array( 'id' => $tab_id ) );
     }
     
 }
@@ -77,6 +78,7 @@ foreach($object_data as $outer_list_key => $outer_list_data){
         foreach($tabs as $tabs_name => $tabs_data){
             $tab_id = $tabs_data->id;
             $tab = $tabs_data->tab_name;
+            $chapter_title = $tabs_data->chapter_title;
             $description = $tabs_data->tab_description;
         
     ?>
@@ -95,6 +97,7 @@ foreach($object_data as $outer_list_key => $outer_list_data){
                 <div class="row mx-auto justify-content-start w-100 mt-2">
                     <div class="col-12 col-md-10">
                         <input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+                        <input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" value="<?php echo $chapter_title; ?>" required />
                         <input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
                     </div>
                 </div>

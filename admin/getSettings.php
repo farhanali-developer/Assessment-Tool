@@ -39,33 +39,33 @@ foreach($mode as $mode_key => $mode_val){
 <script>
     var theme = "<?php echo $theme_value; ?>";
 
-    if( theme == "Default"){
+    if( theme == "default"){
         jQuery("option[value='default']").attr("selected", true);
     }
-    if( theme == "Arrows"){
+    if( theme == "arrows"){
         jQuery("option[value='arrows']").attr("selected", true);
     }
-    if( theme == "Dots"){
+    if( theme == "dots"){
         jQuery("option[value='dots']s").attr("selected", true);
     }
-    if( theme == "Progress"){
+    if( theme == "progress"){
         jQuery("option[value='progress']").attr("selected", true);
     }
     
     var animation = "<?php echo $animation_value; ?>";
-    if(animation == "None"){
+    if(animation == "none"){
         jQuery("option[value='none']").attr("selected", true);
     }
-    if(animation == "Fade"){
+    if(animation == "fade"){
         jQuery("option[value='fade']").attr("selected", true);
     }
-    if(animation == "Slide Horizantal"){
-        jQuery("option[value='slide-horizantal']").attr("selected", true);
+    if(animation == "slide-horizontal"){
+        jQuery("option[value='slide-horizontal']").attr("selected", true);
     }
-    if(animation == "Slide Vertical"){
+    if(animation == "slide-vertical"){
         jQuery("option[value='slide-vertical']").attr("selected", true);
     }
-    if(animation == "Slide Swing"){
+    if(animation == "slide-swing"){
         jQuery("option[value='slide-swing']").attr("selected", true);
     }
 
@@ -93,6 +93,11 @@ foreach($mode as $mode_key => $mode_val){
     
     <div id="emailHelp" class="form-text">This email address will be used to send assessment tool results.</div>
     <div id="emailHelp" class="form-text">If left blank, the default admin email will be used.</div>
+</div>
+<div class="mb-3">
+    <h3>Email Template</h3>
+    <label>Email Subject</label>
+    <input type="text" class="form-control" placeholder=""/>
 </div>
 <div class="mb-3">
     <h2>Form Styles</h2>

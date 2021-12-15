@@ -79,11 +79,12 @@ class Assessment_tool_Admin {
 		
 		$screen = get_current_screen();
 
-		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
+		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users' || $screen->id == 'assessment-tool_page_assessment_tool_entries'){
 
 			wp_enqueue_style( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css", array(), $this->version, 'all' );
 			wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
 			wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
+			wp_enqueue_style( "fontawesome", "https://use.fontawesome.com/releases/v5.6.3/css/all.css", array(), $this->version, 'all' );
 
 			// wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
 			// wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
@@ -118,7 +119,7 @@ class Assessment_tool_Admin {
 		
 		$screen = get_current_screen();
 		
-		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users'){
+		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users' || $screen->id == 'assessment-tool_page_assessment_tool_entries'){
 
 			wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
@@ -145,14 +146,69 @@ class Assessment_tool_Admin {
 		add_menu_page( "Assessment Tool", "Assessment Tool", "manage_options", "assessment_tool", "assessment_form_add_new_tab", "dashicons-forms", "15" );
 		add_submenu_page( "assessment_tool", "Add New Tab", "Add New Tab", "manage_options", "assessment_tool", "assessment_form_add_new_tab");
 		add_submenu_page( "assessment_tool", "All Tabs", "All Tabs", "manage_options", "assessment_tool_all_tabs", "all_tabs_function");
-		add_submenu_page( "assessment_tool", "Settings", "Settings", "manage_options", "assessment_tool_settings", "settings_function");
 		add_submenu_page( "assessment_tool", "Users", "Users", "manage_options", "assessment_tool_users", "users_function");
+		add_submenu_page( "assessment_tool", "Entries", "Entries", "manage_options", "assessment_tool_entries", "entries_function");
+		add_submenu_page( "assessment_tool", "Settings", "Settings", "manage_options", "assessment_tool_settings", "settings_function");
 	}
 
 
 
 }
 
+function entries_function(){
+?>
+<div class="container mt-5 pt-5">
+	<div class="row mx-auto justify-content-center">
+		<div class="col-lg-12">
+			<!-- <div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
+				</span>
+				<input type="search" id="accordion_search_bar" class="form-control" placeholder="Enter a User's name here">
+			</div> -->
+
+
+			<div class="form-group has-search">
+				<span class="fa fa-search form-control-feedback"></span>
+				<input type="text" id="accordion_search_bar" class="form-control" placeholder="Search a user">
+			</div>
+			<div class="row mt-5">
+				<div class="col-lg-12 col-xs-12" id="user-data">
+					<div class="accordion" id="usersaccordion">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
+$getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
+?>
+<script>
+	jQuery(document).ready(function($){
+		let getUsersFormData = "<?php echo $getUsersFormData; ?>";
+		jQuery.ajax({
+			"method" : "GET",
+			"url": getUsersFormData,
+			"async" : true,
+			dataType: "html",
+			success : function(data){
+				console.log("Form Data Fetched.");
+				console.log(data);
+				jQuery("#usersaccordion").html(data);
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+			}
+		});
+	});
+</script>
+<?php
+}
 function all_tabs_function(){
 ?>
 <div class="container-fluid mt-5">
@@ -175,6 +231,7 @@ function all_tabs_function(){
 								foreach($tabs as $tabs_name => $tabs_data){
 									$tab_id = $tabs_data->id;
 									$tab = $tabs_data->tab_name;
+									$chapter_title = $tabs_data->chapter_title;
 									$description = $tabs_data->tab_description;
 									
 						?>
@@ -193,6 +250,7 @@ function all_tabs_function(){
 								<div class="row mx-auto justify-content-start w-100 mt-2">
 									<div class="col-12 col-md-10">
 										<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+										<input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" value="<?php echo $chapter_title; ?>" required />
 										<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
 									</div>
 								</div>
@@ -488,6 +546,7 @@ function assessment_form_add_new_tab(){
 							<div class="row mx-auto justify-content-start w-100 mt-2">
 								<div class="col-12 col-md-10">
 									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
+									<input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" required />
 									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
 								</div>
 							</div>
@@ -717,9 +776,9 @@ jQuery(".settings-form").submit(function(e){
 
 function users_function(){
 ?>
-<div class="container mt-5">
+<div class="container-fluid mt-5">
 	<div class="row mx-auto justify-content-center">
-		<div class="col-12">
+		<div class="col-11">
 			<form class="users">
 			<table id="dtBasicExample" class="table table-striped table-bordered table-sm cell-border hover" cellspacing="0" width="100%">
 				<thead>
@@ -730,6 +789,7 @@ function users_function(){
 						<th class="th-sm">Email</th>
 						<th class="th-sm">Submitted On</th>
 						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
+						<th class="th-sm">Submitted Entry</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -747,6 +807,7 @@ function users_function(){
 						<th class="th-sm">Email</th>
 						<th class="th-sm">Submitted On</th>
 						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
+						<th class="th-sm">Submitted Entry</th>
 					</tr>
 				</tfoot>
 			</table>

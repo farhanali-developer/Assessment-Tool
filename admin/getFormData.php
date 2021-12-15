@@ -18,6 +18,7 @@ if($tabs){
         foreach($tabs as $tabs_name => $tabs_data){
             $tab_id = $tabs_data->id;
             $tab = $tabs_data->tab_name;
+            $chapter_title = $tabs_data->chapter_title;
             $description = $tabs_data->tab_description;
         
     ?>
@@ -36,6 +37,7 @@ if($tabs){
                 <div class="row mx-auto justify-content-start w-100 mt-2">
                     <div class="col-12 col-md-10">
                         <input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
+                        <input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" value="<?php echo $chapter_title; ?>" required />
                         <input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
                     </div>
                 </div>
