@@ -181,7 +181,7 @@
       formdata.append("user_data", JSON.stringify(user_data));
       formdata.append("form_data", JSON.stringify(all_data));
 
-      console.log(all_data);
+      // console.log(all_data);
 
       // AJAX
       jQuery.ajax({
@@ -193,7 +193,7 @@
         data: formdata,
         contentType: false,
         success: function (data) {
-          console.log(data);
+          // console.log(data);
           message.children().text(data);
           // responemessage = data;
           if (message.children().text() != "") {
@@ -434,7 +434,7 @@
         .children()
         .children()
         .children(".question");
-      var currentQuestion =  $("#step-" + tab).children(".form-area").children().attr('question-id')
+
       var t_marks = 0;
 
       var each_data = {
@@ -454,9 +454,10 @@
       // Populate questions array in "each_data" with all questions and their marks
       for (var element of all_questions) {
         var attr = element.getAttribute("data-value");
+        var q_id = element.getAttribute("question-id");
         if (attr == "Yes") {
           obj = {
-            question_id: currentQuestion,
+            question_id: q_id,
             question: element.innerHTML,
             ans: attr,
             marks: "0",
@@ -464,7 +465,7 @@
           each_data.questions.push(obj);
         } else if (attr == "No") {
           obj = {
-            question_id: currentQuestion,
+            question_id: q_id,
             question: element.innerHTML,
             ans: attr,
             marks: element.getAttribute("data-marks"),
@@ -472,7 +473,7 @@
           each_data.questions.push(obj);
         } else {
           obj = {
-            question_id: currentQuestion,
+            question_id: q_id,
             question: element.innerHTML,
             ans: "Not Answered",
             marks: "0",

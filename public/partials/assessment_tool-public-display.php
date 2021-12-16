@@ -102,9 +102,9 @@ $formUrl = plugin_dir_url( __FILE__ ) . "submit_user_data.php";
                         $marks = $questions_data->marks;
                 ?>
                     <!-- Q1 -->
-                    <div id="q-area-<?php echo $question_id; ?>" class="row q-area" question-id="<?php echo $question_id; ?>">
+                    <div id="q-area-<?php echo $question_id; ?>" class="row q-area">
                         <div class="col-12 d-flex justify-content-between question1 align-items-center flex-wrap my-4">
-                            <h5 class="question" data-marks="<?php echo $marks; ?>" data-value=""><?php echo $question; ?></h5>
+                            <h5 class="question" data-marks="<?php echo $marks; ?>" data-value="" question-id="<?php echo $question_id; ?>"><?php echo $question; ?></h5>
                             <h5 class="display-ans"></h5>
                             <a href="#q-area-<?php echo $question_id; ?>" class="edit">Edit</a>
                         </div>

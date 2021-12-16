@@ -159,17 +159,7 @@ function entries_function(){
 ?>
 <div class="container mt-5 pt-5">
 	<div class="row mx-auto justify-content-center">
-		<div class="col-lg-12">
-			<!-- <div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">
-						<i class="fa fa-search" aria-hidden="true"></i>
-					</button>
-				</span>
-				<input type="search" id="accordion_search_bar" class="form-control" placeholder="Enter a User's name here">
-			</div> -->
-
-
+		<div class="col-lg-12" id="all-entries">
 			<div class="form-group has-search">
 				<span class="fa fa-search form-control-feedback"></span>
 				<input type="text" id="accordion_search_bar" class="form-control" placeholder="Search a user">
@@ -198,8 +188,8 @@ $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 			dataType: "html",
 			success : function(data){
 				console.log("Form Data Fetched.");
-				console.log(data);
-				jQuery("#usersaccordion").html(data);
+				// console.log(data);
+				jQuery("#all-entries").html(data);
 			},
 			error: function (jqXHR, exception) {
 				console.log(jqXHR);
