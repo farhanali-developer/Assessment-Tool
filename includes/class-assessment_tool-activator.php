@@ -76,6 +76,7 @@ class Assessment_tool_Activator {
           `tab_marks` INT NOT NULL,
           `question_id` INT NOT NULL,
           `question_marks` INT NOT NULL,
+          `question_answer` VARCHAR(255) NOT NULL,
           `user_id` INT NOT NULL,
           CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(id),
           CONSTRAINT FOREIGN KEY (question_id) REFERENCES $questions_table(id),
@@ -88,7 +89,7 @@ class Assessment_tool_Activator {
           `setting_name` LONGTEXT,
           `setting_value` LONGTEXT,
           PRIMARY KEY  (`id`)
-        ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('email',''), ('theme','default'), ('animation','fade'), ('animation_speed','4'), ('alignment','1'), ('mode','0')";
+        ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('subject',''), ('theme','default'), ('animation','fade'), ('animation_speed','4'), ('alignment','1'), ('mode','0')";
 
  
         

@@ -475,7 +475,7 @@
           obj = {
             question_id: q_id,
             question: element.innerHTML,
-            ans: "Not Answered",
+            ans: "-",
             marks: "0",
           };
           each_data.questions.push(obj);

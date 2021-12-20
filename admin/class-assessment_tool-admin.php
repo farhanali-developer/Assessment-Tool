@@ -159,18 +159,9 @@ function entries_function(){
 ?>
 <div class="container mt-5 pt-5">
 	<div class="row mx-auto justify-content-center">
-		<div class="col-lg-12" id="all-entries">
-			<div class="form-group has-search">
-				<span class="fa fa-search form-control-feedback"></span>
-				<input type="text" id="accordion_search_bar" class="form-control" placeholder="Search a user">
-			</div>
-			<div class="row mt-5">
-				<div class="col-lg-12 col-xs-12" id="user-data">
-					<div class="accordion" id="usersaccordion">
-						
-					</div>
-				</div>
-			</div>
+		<div class="col-lg-12">
+			<form id="all-entries">
+			</form>
 		</div>
 	</div>
 </div>
@@ -194,6 +185,45 @@ $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 			error: function (jqXHR, exception) {
 				console.log(jqXHR);
 			}
+		});
+
+
+
+
+
+
+		$("#all-entries").submit(function(e){
+			e.preventDefault();
+			
+			
+			
+			$(".user").each(function(index,value){
+				index = index+1;
+				var user_id = $(".user:nth-child("+index+")").attr("user_id");
+
+				var tab_id = $(".user[user_id = "+ user_id +"] > .accordion-collapse").attr("tab_id");
+				var question_id = $(".tab[tab_id = "+ tab_id +"] .question").attr("question_id");
+				var answer = $(".question[question_id = "+ question_id +"] .form-select option").filter(":selected").val();
+
+				// var formdata = formdata.users['user' + index].userid = user_id;
+				
+				formdata = {
+					[`user${user_id}`]: {
+						userid : user_id,
+						tabs : {
+							tabid : tab_id,
+							questions : {
+								questionid : question_id,
+								answer : answer
+							} 
+						}
+					}
+				}	
+				console.log(formdata);			
+				
+			});
+
+			
 		});
 	});
 </script>
@@ -680,7 +710,7 @@ jQuery(document).ready(function(){
 jQuery(".settings-form").submit(function(e){
 	e.preventDefault();
 	var settingsUrl = "<?php echo $settingsUrl ?>";
-	let email = jQuery("#exampleInputEmail1").val();
+	let emailsubject = jQuery(".emailsubject").val();
 	let theme = jQuery("#theme_selector").find(":selected").text();
 	let animation = jQuery("#animation").find(":selected").text();
 	let animation_speed = jQuery("#animation_speed").val();
@@ -691,7 +721,7 @@ jQuery(".settings-form").submit(function(e){
 		method: "POST",
 		url: settingsUrl,
 		data: {
-			"email" : email,
+			"subject" : emailsubject,
 			"theme": theme,
 			"animation": animation,
 			"animation_speed" : animation_speed,

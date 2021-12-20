@@ -9,7 +9,7 @@ $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-$email = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 1" );
+$email_subject = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 1" );
 $theme = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 2" );
 $animation = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 3" );
 $animation_speed = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 4" );
@@ -80,24 +80,31 @@ foreach($mode as $mode_key => $mode_val){
     }
 </script>
 
-<div class="mb-3">
+<!-- <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <?php
-    foreach($email as $email_key => $email_val){
-        $email_value = $email_val->setting_value;
+    // foreach($email as $email_key => $email_val){
+    //     $email_value = $email_val->setting_value;
         ?>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $email_value; ?>">
     <?php
-    }
+    // }
     ?>
     
     <div id="emailHelp" class="form-text">This email address will be used to send assessment tool results.</div>
     <div id="emailHelp" class="form-text">If left blank, the default admin email will be used.</div>
-</div>
+</div> -->
 <div class="mb-3">
     <h3>Email Template</h3>
     <label>Email Subject</label>
-    <input type="text" class="form-control" placeholder=""/>
+    <?php
+    foreach($email_subject as $email_key => $email_val){
+        $email_value = $email_val->setting_value;
+    ?>
+    <input type="text" class="form-control emailsubject" placeholder="" value="<?php echo $email_value; ?>"/>
+    <?php
+    }
+    ?>
 </div>
 <div class="mb-3">
     <h2>Form Styles</h2>

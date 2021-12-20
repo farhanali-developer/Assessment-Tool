@@ -1,6 +1,6 @@
 <?php
 
-$email_data = $_POST['email'];
+$emailsubject = $_POST['subject'];
 $theme_data = $_POST['theme'];
 $animation_data = $_POST['animation'];
 $animation_speed_data = $_POST['animation_speed'];
@@ -56,9 +56,9 @@ $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-$email = htmlspecialchars($email_data, ENT_QUOTES);
+$subject = htmlspecialchars($emailsubject, ENT_QUOTES);
 
-$wpdb->update( $settings_table, array( 'setting_value' => $email), array( 'id' => 1 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $subject), array( 'id' => 1 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $theme_data), array( 'id' => 2 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $animation_data), array( 'id' => 3 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $animation_speed_data), array( 'id' => 4 ) );
