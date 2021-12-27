@@ -178,8 +178,6 @@ $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 			"async" : true,
 			dataType: "html",
 			success : function(data){
-				console.log("Form Data Fetched.");
-				// console.log(data);
 				jQuery("#all-entries").html(data);
 			},
 			error: function (jqXHR, exception) {
@@ -194,18 +192,19 @@ $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 
 		$("#all-entries").submit(function(e){
 			e.preventDefault();
-			
+			var formdata = {};
 			
 			
 			$(".user").each(function(index,value){
 				index = index+1;
 				var user_id = $(".user:nth-child("+index+")").attr("user_id");
+				var user = "user"+user_id;
 
 				var tab_id = $(".user[user_id = "+ user_id +"] > .accordion-collapse").attr("tab_id");
 				var question_id = $(".tab[tab_id = "+ tab_id +"] .question").attr("question_id");
 				var answer = $(".question[question_id = "+ question_id +"] .form-select option").filter(":selected").val();
 
-				// var formdata = formdata.users['user' + index].userid = user_id;
+				// formdata.user["user_id"] = user_id;
 				
 				formdata = {
 					[`user${user_id}`]: {

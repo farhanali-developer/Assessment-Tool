@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 $user_data = json_decode($_POST["user_data"], true);
 $form_data = json_decode($_POST["form_data"], true);
 
-
+print_r($form_data);
 require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '/wp-config.php';
 
 global $wpdb;
@@ -89,17 +89,11 @@ else{
             $tab_name = $form_values["tab_name"];
             $tab_marks = $form_values["tab_marks"];
             $questions = $form_values["questions"];
-            echo $tab_id . "\n";
-            echo $tab_name . "\n";
-            echo $tab_marks . "\n";
             foreach($questions as $questions_keys => $questions_value){
                 $question_id = $questions_value["question_id"];
                 $question = $questions_value["question"];
                 $question_marks = $questions_value["marks"];
                 $question_ans = $questions_value["ans"];
-                echo $question_id ."\n";
-                echo $question ."\n";
-                echo $question_marks ."\n";
                 
                 $wpdb->insert($formdata_table, array(
                     'tab_id' => $tab_id,
@@ -113,13 +107,11 @@ else{
 
         }
 
-        echo "Form Submitted" . "\n";
         $emailsubject = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
         $subject = $emailsubject->setting_value;
         $admin_email = get_option('admin_email');
-        $to = $admin_email; // this is your Email address
-
-        echo "<script>console.log($to);</script>";
+        // $to = $admin_email; // this is your Email address
+        $to = "farhan@logikware.tech";
         //Perform Mailing functionality Here
 
         $from = $email; // this is the sender's Email address
@@ -140,18 +132,19 @@ else{
         $message .= "<tbody>";
         $i = 0;
         foreach($form_data as $tab => $tab_values){
-            if($i == 3){
-                break;
-            }
-            $i++;
+            // if($i == 3){
+            //     break;
+            // }
+            // $i++;
             $tabname = $tab_values->tab_name;
+            $chapter_title = $tab_values->chapter_title;
             $tabmarks = $tab_values->tab_marks;
             $tabdescription = $tab_values->tab_description;
             $description = htmlspecialchars($tabdescription, ENT_QUOTES);
-            echo $description;
+            // echo $description;
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
-            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'></td>";
+            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$chapter_title</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
             $message .= "</tr>";

@@ -144,7 +144,6 @@
     var dataUrl = $("#my-form").attr("action");
     $("#my-form").submit(function (e) {
       e.preventDefault();
-      // console.log("working");
 
       var user = $(".user-data-sec").children();
       var date = new Date();
@@ -181,8 +180,6 @@
       formdata.append("user_data", JSON.stringify(user_data));
       formdata.append("form_data", JSON.stringify(all_data));
 
-      // console.log(all_data);
-
       // AJAX
       jQuery.ajax({
         method: "POST",
@@ -193,7 +190,6 @@
         data: formdata,
         contentType: false,
         success: function (data) {
-          // console.log(data);
           message.children().text(data);
           // responemessage = data;
           if (message.children().text() != "") {
@@ -202,12 +198,8 @@
         },
         error: function (jqXHR, exception) {
           console.log(JSON.stringify(jqXHR));
-          // message = jqXHR;
         },
       });
-
-      // console.log(user_data);
-      // console.table(all_data);
 
       setTimeout(function () {
         $(".user-data").removeClass("slide-in-right");
@@ -374,14 +366,12 @@
       // Check if ID of Parent Div which contains 'edit' button is equal to
       // the ID of Parent Div which contains the 'Yes/No' button => which was clicked just before 'edit' button
       if (current_grandParent == edit_grandParent) {
-        // console.log("Same")
         // If is Equals then show input fields ('Yes/No') of the same Parent Div
         var input = $("#" + current_grandParent + " input.form-radio");
         var label = $("#" + current_grandParent + " label");
         $(input).css("display", "inline-block");
         $(label).css("display", "inline-block");
       } else {
-        // console.log("Not Same")
         // If is not Equals then show input fields ('Yes/No') of the Parent Div of 'edit' button
         var input = $("#" + edit_grandParent + " input.form-radio");
         var label = $("#" + edit_grandParent + " label");
@@ -439,6 +429,7 @@
 
       var each_data = {
         tab_id: $("#step-" + tab).attr("tab-id"),
+        chapter_title: $("#step-" + tab).attr("chapter-title"),
         tab_name: $("#step-" + tab).attr("data-name"),
         tab_description: $("#step-" + tab + " p.lead").html(),
         tab_marks: "",

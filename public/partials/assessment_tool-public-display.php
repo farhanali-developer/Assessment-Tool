@@ -81,11 +81,12 @@ $formUrl = plugin_dir_url( __FILE__ ) . "submit_user_data.php";
         foreach($tabs as $tabs_name => $tabs_data){
             $tab_id = $tabs_data->id;
             $tab = $tabs_data->tab_name;
+            $chapter_title = $tabs_data->chapter_title;
             $description = $tabs_data->tab_description;
         
         ?>
             <!-- Step 1 -->
-            <div id="step-<?php echo $tab_id; ?>" tab-id="<?php echo $tab_id; ?>" class="tab-pane" role="tabpanel" data-name="<?php echo $tab; ?>" data-marks="" data-priority="">
+            <div id="step-<?php echo $tab_id; ?>" tab-id="<?php echo $tab_id; ?>" chapter-title="<?php echo $chapter_title; ?>" class="tab-pane" role="tabpanel" data-name="<?php echo $tab; ?>" data-marks="" data-priority="">
                 <div class="step-info">
                     <div class="container py-5">
                     <p class="lead"><?php echo $description; ?></p>
