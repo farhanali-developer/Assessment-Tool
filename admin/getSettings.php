@@ -138,12 +138,25 @@ foreach($mode as $mode_key => $mode_val){
     <span>An example of these stylings can be found out at: </span><a target="_blank" href="http://techlaboratory.net/jquery-smartwizard">Click Here</a>
 
     <div class="form-floating mt-3">
-        <textarea class="form-control" placeholder="Welcome Screen Text" id="welcome_screen_text" style="height: 200px" value="<?php echo $welcome_screen_text; ?>"></textarea>
+    <?php
+    foreach($welcome_screen_text as $welcome_key => $welcome_val){
+        $welcome_text = $welcome_val->setting_value;
+    ?>
+
+    <?php } ?>
+        <textarea class="form-control" placeholder="Welcome Screen Text" id="welcome_screen_text" style="height: 200px">
+        <?php echo $welcome_text; ?></textarea>
         <label for="welcome_screen_text">Welcome Screen Text</label>
     </div>
 
     <div class="form-floating mt-3">
-        <textarea class="form-control" placeholder="End Screen Text" id="end_screen_text" style="height: 200px" value="<?php echo $end_screen_text; ?>"></textarea>
+    <?php
+    foreach($end_screen_text as $end_key => $end_val){
+        $end_text = $end_val->setting_value;
+    ?>
+
+    <?php } ?>
+        <textarea class="form-control" placeholder="End Screen Text" id="end_screen_text" style="height: 200px"><?php echo $end_text; ?></textarea>
         <label for="end_screen_text">End Screen Text</label>
     </div>
 </div>

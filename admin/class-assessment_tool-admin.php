@@ -752,26 +752,25 @@ function settings_function(){
 	$getSettingsUrl = plugin_dir_url( __FILE__ ) . "getSettings.php";
 ?>
 <script>
+function getSettings(){
+	var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
+	jQuery.ajax({
+		"method" : "GET",
+		"url": getSettingsUrl,
+		"async" : true,
+		dataType: "html",
+		success : function(data){
+			console.log("Users Data Fetched.");
+			// console.log(data);
+			jQuery(".settings-form").html(data);
+		},
+		error: function (jqXHR, exception) {
+			console.log(jqXHR);
+		}
+	});
+}
 
 jQuery(document).ready(function(){
-	function getSettings(){
-		var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
-		jQuery.ajax({
-			"method" : "GET",
-			"url": getSettingsUrl,
-			"async" : true,
-			dataType: "html",
-			success : function(data){
-				console.log("Users Data Fetched.");
-				// console.log(data);
-				jQuery(".settings-form").html(data);
-			},
-			error: function (jqXHR, exception) {
-				console.log(jqXHR);
-			}
-		});
-	}
-
 	getSettings();
 });
 
