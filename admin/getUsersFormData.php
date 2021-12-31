@@ -35,8 +35,6 @@ foreach($user_data as $user_key => $userData){
         </button>
     </h2>
     <?php
-
-        // $user_data = $wpdb->get_row("SELECT full_name FROM $users_table WHERE id = $user_id");
         $tab_data = $wpdb->get_results("SELECT * FROM $tabs_table");
         foreach($tab_data as $tab_key => $tab_val){
             $tabName = $tab_val->tab_name; //Tab name fetched.
@@ -57,19 +55,12 @@ foreach($user_data as $user_key => $userData){
                         <div class="accordion-body">
                             <?php
                                 $formdata = $wpdb->get_results("SELECT * FROM $formdata_table WHERE tab_id = $tab_id");
-                                // foreach($formdata as $formkeys => $formvals){
-                                //     $id = $formvals->id;
-                                //     $tabid = $formvals->tab_id;
-                                //     $tab_marks = $formvals->tab_marks;
-                                //     $question_id = $formvals->question_id;
-                                //     $question_marks = $formvals->question_marks;
-                                //     $user_id = $formvals->user_id;
-                    
-                                    $questions_data = $wpdb->get_results("SELECT id, question FROM $questions_table WHERE tab_id IN (SELECT fd.tab_id from $formdata_table as fd where fd.tab_id = $tab_id AND fd.user_id = $userDb_id)");
-                                    $questions_marks = $wpdb->get_results("SELECT formdata.question_marks, formdata.question_id, formdata.question_answer FROM $formdata_table as formdata WHERE formdata.tab_id = $tab_id AND user_id = $userDb_id");
+                                $questions_data = $wpdb->get_results("SELECT id, question, marks FROM $questions_table WHERE tab_id IN (SELECT fd.tab_id from $formdata_table as fd where fd.tab_id = $tab_id AND fd.user_id = $userDb_id)");
+                                $questions_marks = $wpdb->get_results("SELECT formdata.question_marks, formdata.question_id, formdata.question_answer FROM $formdata_table as formdata WHERE formdata.tab_id = $tab_id AND user_id = $userDb_id");
                                     
                                 foreach($questions_data as $qkey => $qVal){
                                     $question = $qVal->question;
+                                    $question_marks = $qVal->marks;
                                     $qd_question_id = $qVal->id;
                                         foreach($questions_marks as $qmarks => $qm){ 
                                             $marks = $qm->question_marks;
@@ -87,23 +78,23 @@ foreach($user_data as $user_key => $userData){
                                                                 <?php
                                                                 if($answer == "No"){
                                                                     ?>
-                                                                    <option>-</option>
-                                                                <option>Yes</option>
-                                                                <option selected>No</option>
+                                                                    <option question_marks="0">-</option>
+                                                                    <option question_marks="0">Yes</option>
+                                                                    <option question_marks="<?php echo $question_marks; ?>" selected>No</option>
                                                                     <?php
                                                                 }
                                                                 elseif($answer == "Yes"){
                                                                     ?>
-                                                                    <option>-</option>
-                                                                    <option selected>Yes</option>
-                                                                    <option>No</option>
+                                                                    <option question_marks="0">-</option>
+                                                                    <option question_marks="0" selected>Yes</option>
+                                                                    <option question_marks="<?php echo $question_marks; ?>">No</option>
                                                                     <?php
                                                                 }
                                                                 else{
                                                                     ?>
-                                                                <option selected>-</option>
-                                                                <option>Yes</option>
-                                                                <option>No</option>
+                                                                    <option question_marks="0" selected>-</option>
+                                                                    <option question_marks="<?php echo $question_marks; ?>">Yes</option>
+                                                                    <option question_marks="<?php echo $question_marks; ?>">No</option>
                                                                     <?php
                                                                 }
                                                                 ?>
@@ -116,8 +107,6 @@ foreach($user_data as $user_key => $userData){
                                         }
 
                                     }
-                                // }
-
                             ?>
                         </div>
                     </div>

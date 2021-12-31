@@ -15,6 +15,8 @@ $animation = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHER
 $animation_speed = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 4" );
 $alignment = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 5" );
 $mode = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 6" );
+$welcome_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 7" );
+$end_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 8" );
 
 foreach($theme as $theme_key => $theme_val){
     $theme_value = $theme_val->setting_value;
@@ -80,20 +82,6 @@ foreach($mode as $mode_key => $mode_val){
     }
 </script>
 
-<!-- <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <?php
-    // foreach($email as $email_key => $email_val){
-    //     $email_value = $email_val->setting_value;
-        ?>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $email_value; ?>">
-    <?php
-    // }
-    ?>
-    
-    <div id="emailHelp" class="form-text">This email address will be used to send assessment tool results.</div>
-    <div id="emailHelp" class="form-text">If left blank, the default admin email will be used.</div>
-</div> -->
 <div class="mb-3">
     <h3>Email Template</h3>
     <label>Email Subject</label>
@@ -148,5 +136,15 @@ foreach($mode as $mode_key => $mode_val){
     </div>
     
     <span>An example of these stylings can be found out at: </span><a target="_blank" href="http://techlaboratory.net/jquery-smartwizard">Click Here</a>
+
+    <div class="form-floating mt-3">
+        <textarea class="form-control" placeholder="Welcome Screen Text" id="welcome_screen_text" style="height: 200px" value="<?php echo $welcome_screen_text; ?>"></textarea>
+        <label for="welcome_screen_text">Welcome Screen Text</label>
+    </div>
+
+    <div class="form-floating mt-3">
+        <textarea class="form-control" placeholder="End Screen Text" id="end_screen_text" style="height: 200px" value="<?php echo $end_screen_text; ?>"></textarea>
+        <label for="end_screen_text">End Screen Text</label>
+    </div>
 </div>
 <button type="submit" class="btn btn-success">Update Settings</button>

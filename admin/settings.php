@@ -4,6 +4,9 @@ $emailsubject = $_POST['subject'];
 $theme_data = $_POST['theme'];
 $animation_data = $_POST['animation'];
 $animation_speed_data = $_POST['animation_speed'];
+$welcome_screen_text = $_POST["welcome_screen_text"];
+$end_screen_text = $_POST["end_screen_text"];
+
 if($_POST['alignment'] == "true"){
     $alignment_data = 1;
 }
@@ -64,5 +67,7 @@ $wpdb->update( $settings_table, array( 'setting_value' => $animation_data), arra
 $wpdb->update( $settings_table, array( 'setting_value' => $animation_speed_data), array( 'id' => 4 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $alignment_data), array( 'id' => 5 ) );
 $wpdb->update( $settings_table, array( 'setting_value' => $dark_mode_data), array( 'id' => 6 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $welcome_screen_text), array( 'id' => 7 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $end_screen_text), array( 'id' => 8 ) );
  
 ?>

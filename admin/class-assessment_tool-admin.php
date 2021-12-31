@@ -168,62 +168,128 @@ function entries_function(){
 
 <?php
 $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
+$postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 ?>
 <script>
 	jQuery(document).ready(function($){
-		let getUsersFormData = "<?php echo $getUsersFormData; ?>";
-		jQuery.ajax({
-			"method" : "GET",
-			"url": getUsersFormData,
-			"async" : true,
-			dataType: "html",
-			success : function(data){
-				jQuery("#all-entries").html(data);
-			},
-			error: function (jqXHR, exception) {
-				console.log(jqXHR);
-			}
-		});
+		function getFormData(){
 
+			let getUsersFormData = "<?php echo $getUsersFormData; ?>";
+			jQuery.ajax({
+				"method" : "GET",
+				"url": getUsersFormData,
+				"async" : true,
+				dataType: "html",
+				success : function(data){
+					jQuery("#all-entries").html(data);
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+				}
+			});
 
-
-
+		}
+		
+		getFormData();
 
 
 		$("#all-entries").submit(function(e){
 			e.preventDefault();
-			var formdata = {};
-			
-			
+			var formdata = []; // This has all info, logged at the bottom
+
 			$(".user").each(function(index,value){
+				var single_user = {
+					user: '',
+					userid : '',
+					tabs : [],
+				};
 				index = index+1;
 				var user_id = $(".user:nth-child("+index+")").attr("user_id");
 				var user = "user"+user_id;
+				single_user.userid = user_id;
+				single_user.user = user;
 
-				var tab_id = $(".user[user_id = "+ user_id +"] > .accordion-collapse").attr("tab_id");
-				var question_id = $(".tab[tab_id = "+ tab_id +"] .question").attr("question_id");
-				var answer = $(".question[question_id = "+ question_id +"] .form-select option").filter(":selected").val();
-
-				// formdata.user["user_id"] = user_id;
-				
-				formdata = {
-					[`user${user_id}`]: {
-						userid : user_id,
-						tabs : {
-							tabid : tab_id,
-							questions : {
-								questionid : question_id,
-								answer : answer
-							} 
-						}
+				$(".user[user_id = "+ user_id +"] > .tab").each(function(index,value){
+					var single_tab = {
+						tabid : '',
+						questions : [],
 					}
-				}	
-				console.log(formdata);			
-				
-			});
+					var tab_id = $(this).attr('tab_id');
+					single_tab.tabid = tab_id;
 
+					$(".user[user_id = "+ user_id +"] > .tab[tab_id = "+ tab_id +"] .question").each(function(index,value){
+						var single_question = {
+							questionid : '',
+							answer : '',
+							marks: ''
+						} 
+						var question_id = $(this).attr("question_id");
+						var question_marks = $('option:selected',this).attr('question_marks');
+						var answer = $(".user[user_id = "+ user_id +"] > .tab[tab_id = "+ tab_id +"] .question[question_id = "+ question_id +"] .form-select option:selected").text();
+
+						single_question = {
+							questionid: question_id,
+							answer: answer,
+							question_marks : question_marks
+						}
+
+						single_tab.questions.push(single_question);
+					});
+
+					single_user.tabs.push(single_tab);					
+				
+				});
+				formdata.push(single_user);	
+			});
 			
+
+			let postUsersFormData = "<?php echo $postUsersFormData; ?>";
+			jQuery.ajax({
+				"method" : "POST",
+				"url": postUsersFormData,
+				"data" : {data : formdata},
+				"async" : true,
+				dataType: "html",
+				success : function(data){
+					// jQuery("#all-entries").html(data);
+					console.log(data);
+					getFormData();
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "success",
+						title: "User Updated Successfully",
+					});
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "error",
+						title: "User updated Failed",
+					});
+				}
+			});		
+
 		});
+
 	});
 </script>
 <?php
@@ -397,6 +463,20 @@ function all_tabs_function(){
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
+					const Toast = Swal.mixin({
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 4000,
+						timerProgressBar: true,
+						customClass: {
+							container: "mt-4",
+						},
+					});
+					Toast.fire({
+						icon: "error",
+						title: "Question Deleting Failed",
+					});
 				}
 			});
 		});
@@ -452,7 +532,7 @@ function all_tabs_function(){
 					});
 					Toast.fire({
 						icon: "success",
-						title: "Error in Deleting Tab.",
+						title: "Tab Deletition Failed",
 					});
 				}
 			});
@@ -467,19 +547,6 @@ function all_tabs_function(){
 				var updateFormData1 = jQuery('form#tabs_and_questions.repeater').repeaterVal();
 				var updateFormData = new FormData();
 				updateFormData.append('data',JSON.stringify(updateFormData1));
-
-				console.log(updateFormData1);
-
-				
-				// console.log(updateFormData1);
-
-				// for(var a in updateFormData1){
-				// 	// console.log(a + " : " + updateFormData1[a])
-				// 	var b = updateFormData1[a];
-				// 	for(var c in b){
-				// 		console.log(b[c]);
-				// 	}
-				// }
 
 				jQuery.ajax({
 					method: "POST",
@@ -687,21 +754,25 @@ function settings_function(){
 <script>
 
 jQuery(document).ready(function(){
-	var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
-	jQuery.ajax({
-		"method" : "GET",
-		"url": getSettingsUrl,
-		"async" : true,
-		dataType: "html",
-		success : function(data){
-			console.log("Users Data Fetched.");
-			// console.log(data);
-			jQuery(".settings-form").html(data);
-		},
-		error: function (jqXHR, exception) {
-			console.log(jqXHR);
-		}
-	});
+	function getSettings(){
+		var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
+		jQuery.ajax({
+			"method" : "GET",
+			"url": getSettingsUrl,
+			"async" : true,
+			dataType: "html",
+			success : function(data){
+				console.log("Users Data Fetched.");
+				// console.log(data);
+				jQuery(".settings-form").html(data);
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+			}
+		});
+	}
+
+	getSettings();
 });
 
 
@@ -715,6 +786,8 @@ jQuery(".settings-form").submit(function(e){
 	let animation_speed = jQuery("#animation_speed").val();
 	let alignment = jQuery("#is_justified").is(":checked");
 	let dark_mode = jQuery("#dark_mode").is(":checked");
+	let welcome_screen_text = jQuery("#welcome_screen_text").val();
+	let end_screen_text = jQuery("#end_screen_text").val();
 
 	jQuery.ajax({
 		method: "POST",
@@ -725,7 +798,9 @@ jQuery(".settings-form").submit(function(e){
 			"animation": animation,
 			"animation_speed" : animation_speed,
 			"alignment" : alignment,
-			"dark_mode" : dark_mode
+			"dark_mode" : dark_mode,
+			"welcome_screen_text" : welcome_screen_text,
+			"end_screen_text" : end_screen_text
 		},
 		success: function (data) {
 
@@ -744,23 +819,7 @@ jQuery(".settings-form").submit(function(e){
 				title: "Form Updated.",
 			});
 
-
-			
-			var getSettingsUrl = "<?php echo $getSettingsUrl; ?>";
-			jQuery.ajax({
-				"method" : "GET",
-				"url": getSettingsUrl,
-				"async" : true,
-				dataType: "html",
-				success : function(data){
-					console.log("Users Data Fetched.");
-					// console.log(data);
-					jQuery(".settings-form").html(data);
-				},
-				error: function (jqXHR, exception) {
-					console.log(jqXHR);
-				}
-			});
+			getSettings();
 
 		},
 		error: function (jqXHR, exception) {
@@ -779,16 +838,11 @@ jQuery(".settings-form").submit(function(e){
 				icon: "error",
 				title: "Form Update Failed.",
 			});
+
+			getSettings();
 		}
 	});
 });
-
-
-
-// jQuery(".settings-form").submit(function(e){
-// 	e.preventDefault();
-	
-// });
 </script>
 <?php
 }
@@ -812,10 +866,6 @@ function users_function(){
 					</tr>
 				</thead>
 				<tbody>
-					
-					
-
-					
 					
 				</tbody>
 				<tfoot>
@@ -850,8 +900,6 @@ function users_function(){
 	jQuery(".users").submit(function(e){
 		e.preventDefault();
 		var retake_values = [];
-
-		// jQuery(this).DataTable().destroy();
 
 		var table = jQuery("#dtBasicExample").DataTable({
 			"destroy": true
@@ -966,13 +1014,6 @@ function users_function(){
 					$('input[type="checkbox"]', rows).prop("checked", this.checked);
 				});
 
-				// if($('input[type="checkbox"]').prop("checked", true)){
-				// 	$(".all-retake").prop("checked", true);
-				// }
-				// else{
-				// 	$(".all-retake").prop("checked", false);
-				// }
-
 				// Handle click on checkbox to set state of "Select all" control
 				$("#dtBasicExample tbody").on(
 					"change",
@@ -990,36 +1031,6 @@ function users_function(){
 					}
 					}
 				);
-
-				// $(".users").on("submit", function (e) {
-				// 	var form = this;
-
-				// 	// Iterate over all checkboxes in the table
-				// 	table.$('input[type="checkbox"]').each(function () {
-				// 	// If checkbox doesn't exist in DOM
-				// 	if (!$.contains(document, this)) {
-				// 		// If checkbox is checked
-				// 		if (this.checked) {
-				// 		// Create a hidden element
-				// 		$(form).append(
-				// 			$("<input>")
-				// 			.attr("type", "hidden")
-				// 			.attr("name", this.name)
-				// 			.val(this.value)
-				// 		);
-				// 		}
-				// 	}
-				// 	});
-
-				// 	// FOR TESTING ONLY
-
-				// 	// Output form data to a console
-				// 	$("#example-console").text($(form).serialize());
-				// 	console.log("Form submission", $(form).serialize());
-
-				// 	// Prevent actual form submission
-				// 	e.preventDefault();
-				// });
 					
 			},
 			error: function (jqXHR, exception) {
@@ -1031,11 +1042,6 @@ function users_function(){
 			}
 		});
 		
-		
-
-		
-
-
 	});
 </script>
 <?php
