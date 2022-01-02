@@ -73,13 +73,17 @@ class Assessment_tool_Activator {
         $formdata_query = "CREATE TABLE IF NOT EXISTS $formdata_table (
           `id` INT NOT NULL AUTO_INCREMENT,
           `tab_id` INT NOT NULL,
+          `tab_name` LONGTEXT NOT NULL,
+          `chapter_title` LONGTEXT NOT NULL,
           `tab_marks` INT NOT NULL,
           `question_id` INT NOT NULL,
+          `question_tab_id` INT NOT NULL,
+          `question` LONGTEXT NOT NULL,
           `question_marks` INT NOT NULL,
           `question_answer` VARCHAR(255) NOT NULL,
           `user_id` INT NOT NULL,
-          CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(id),
-          CONSTRAINT FOREIGN KEY (question_id) REFERENCES $questions_table(id),
+          -- CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(id),
+          -- CONSTRAINT FOREIGN KEY (question_id) REFERENCES $questions_table(id),
           CONSTRAINT FOREIGN KEY (user_id) REFERENCES $users_table(id),
           PRIMARY KEY  (`id`)
         ) $charset_collate;"; 

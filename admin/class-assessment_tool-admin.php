@@ -169,6 +169,7 @@ function entries_function(){
 <?php
 $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
+$deleteUsersFormData = plugin_dir_url( __FILE__ ) . "deleteUsersFormData.php";
 ?>
 <script>
 	jQuery(document).ready(function($){
@@ -182,6 +183,41 @@ $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 				dataType: "html",
 				success : function(data){
 					jQuery("#all-entries").html(data);
+
+					  // This section makes the search work.
+					(function () {
+						var searchTerm, panelContainerId;
+						$("#accordion_search_bar").on("change keyup", function () {
+							searchTerm = $(this).val();
+							$("#usersaccordion > .accordion-item").each(function () {
+								panelContainerId = "#" + $(this).attr("id");
+
+								// Makes search to be case insesitive
+								$.extend($.expr[":"], {
+								contains: function (elem, i, match, array) {
+									return (
+									(elem.textContent || elem.innerText || "")
+										.toLowerCase()
+										.indexOf((match[3] || "").toLowerCase()) >= 0
+									);
+								},
+								});
+
+								// END Makes search to be case insesitive
+
+								// Show and Hide Triggers
+								$(panelContainerId + ":not(:contains(" + searchTerm + "))").hide(); //Hide the rows that done contain the search query.
+								$(panelContainerId + ":contains(" + searchTerm + ")").show(); //Show the rows that do!
+							});
+						});
+					})();
+					// End Show and Hide Triggers
+
+					$('select').on('change', function() {
+						$(this).closest('.user').addClass('changed');
+					});
+
+					deleteEntry();
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
@@ -192,24 +228,75 @@ $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 		
 		getFormData();
 
+		var delete_user;
+		function deleteEntry(){
+			$(".delete-entry").on("click", function(){
+				delete_user = $(this).attr("delete-user-id");
+
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+					}).then((result) => {
+					if (result.isConfirmed) {
+						deleteAjax();
+						Swal.fire(
+						'Deleted!',
+						'Entry deleted.',
+						'success'
+						)
+					}
+				})
+			});
+		}
+
+		function deleteAjax(){
+			let deleteUsersFormData = "<?php echo $deleteUsersFormData; ?>";
+			var deleteEntryFormData = new FormData();
+			deleteEntryFormData.append('data',JSON.stringify(delete_user));
+
+			$.ajax({
+				method: "POST",
+				url: deleteUsersFormData,
+				data: deleteEntryFormData,
+				processData: false,
+				contentType: false,
+				success: function(data){
+					console.log(data);
+					$(this).hide();
+					getFormData();
+				},
+				error: function(jqXHR, exception){
+					console.log(jqXHR);
+				}
+			});
+		}
+
+		
+
+		
 
 		$("#all-entries").submit(function(e){
 			e.preventDefault();
 			var formdata = []; // This has all info, logged at the bottom
 
-			$(".user").each(function(index,value){
+			$(".changed").each(function(index,value){
 				var single_user = {
 					user: '',
 					userid : '',
 					tabs : [],
 				};
 				index = index+1;
-				var user_id = $(".user:nth-child("+index+")").attr("user_id");
+				var user_id = $(this).attr("user_id");
 				var user = "user"+user_id;
 				single_user.userid = user_id;
 				single_user.user = user;
 
-				$(".user[user_id = "+ user_id +"] > .tab").each(function(index,value){
+				$(".changed[user_id = "+ user_id +"] .tab .accordion").each(function(index,value){
 					var single_tab = {
 						tabid : '',
 						questions : [],
@@ -217,17 +304,20 @@ $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 					var tab_id = $(this).attr('tab_id');
 					single_tab.tabid = tab_id;
 
-					$(".user[user_id = "+ user_id +"] > .tab[tab_id = "+ tab_id +"] .question").each(function(index,value){
+					$(".changed[user_id = "+ user_id +"] #tabsaccordion[tab_id = "+ tab_id +"] .question").each(function(index,value){
 						var single_question = {
 							questionid : '',
 							answer : '',
 							marks: ''
 						} 
+						var entry_id = $(this).attr("entry_id");
 						var question_id = $(this).attr("question_id");
 						var question_marks = $('option:selected',this).attr('question_marks');
-						var answer = $(".user[user_id = "+ user_id +"] > .tab[tab_id = "+ tab_id +"] .question[question_id = "+ question_id +"] .form-select option:selected").text();
+						// var answer = $(".user[user_id = "+ user_id +"] > #tabsaccordion[tab_id = "+ tab_id +"] .question[question_id = "+ question_id +"] .form-select option:selected").text();
+						var answer = $(".form-select option:selected", this).text();
 
 						single_question = {
+							entry_id: entry_id,
 							questionid: question_id,
 							answer: answer,
 							question_marks : question_marks
@@ -242,14 +332,18 @@ $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 				formdata.push(single_user);	
 			});
 			
-
 			let postUsersFormData = "<?php echo $postUsersFormData; ?>";
+
+			var updateEntryFormData = new FormData();
+			updateEntryFormData.append('data',JSON.stringify(formdata));
+
+			
 			jQuery.ajax({
-				"method" : "POST",
-				"url": postUsersFormData,
-				"data" : {data : formdata},
-				"async" : true,
-				dataType: "html",
+				method : "POST",
+				url: postUsersFormData,
+				data : updateEntryFormData,
+				processData: false,
+				contentType: false,
 				success : function(data){
 					// jQuery("#all-entries").html(data);
 					console.log(data);
@@ -997,6 +1091,7 @@ function users_function(){
 			dataType: "html",
 			success : function(data){
 				console.log("Data Fetched.");
+				console.log(data);
 				// console.log(data);
 				jQuery("#dtBasicExample tbody").html(data);
 				

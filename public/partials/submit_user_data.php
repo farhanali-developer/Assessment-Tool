@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 $user_data = json_decode($_POST["user_data"], true);
 $form_data = json_decode($_POST["form_data"], true);
 
-print_r($form_data);
+// print_r($form_data);
 require_once dirname( dirname( dirname( dirname( dirname( dirname( __FILE__ ) )) ) ) ) . '/wp-config.php';
 
 global $wpdb;
@@ -87,6 +87,7 @@ else{
             
             $tab_id = $form_values["tab_id"];
             $tab_name = $form_values["tab_name"];
+            $chapter_title = $form_values["chapter_title"];
             $tab_marks = $form_values["tab_marks"];
             $questions = $form_values["questions"];
             foreach($questions as $questions_keys => $questions_value){
@@ -97,8 +98,11 @@ else{
                 
                 $wpdb->insert($formdata_table, array(
                     'tab_id' => $tab_id,
+                    'tab_name' => $tab_name,
                     'tab_marks' => $tab_marks,
+                    'chapter_title' => $chapter_title,
                     'question_id' => $question_id,
+                    'question' => $question,
                     'question_marks' => $question_marks,
                     'question_answer' => $question_ans,
                     'user_id' => $user_id
