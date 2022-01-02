@@ -135,6 +135,13 @@
   .sw .nav li{
     flex-basis: 25% !important;
   } */
+.sw.sw-justified > .nav .nav-link,
+.sw.sw-justified > .nav > li {
+  flex-basis: auto;
+}
+.sw > .nav .nav-link {
+  overflow-y: clip;
+}
 .sw > .tab-content > .tab-pane {
   padding: 0;
   width: 100%;

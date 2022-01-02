@@ -170,6 +170,7 @@ function entries_function(){
 $getUsersFormData = plugin_dir_url( __FILE__ ) . "getUsersFormData.php";
 $postUsersFormData = plugin_dir_url( __FILE__ ) . "postUsersFormData.php";
 $deleteUsersFormData = plugin_dir_url( __FILE__ ) . "deleteUsersFormData.php";
+
 ?>
 <script>
 	jQuery(document).ready(function($){
@@ -594,7 +595,6 @@ function all_tabs_function(){
 					"questionsid": questionsid
 				},
 				success: function (data) {
-					// console.log(data);
 					const Toast = Swal.mixin({
 						toast: true,
 						position: "top-end",
@@ -700,9 +700,6 @@ function all_tabs_function(){
 <?php
 }
 
-// function assessment_tool_function(){
-// 	return "";
-// }
 
 function assessment_form_add_new_tab(){
 ?>
@@ -844,6 +841,7 @@ function settings_function(){
 	//getting file path to send form data
 	$settingsUrl = plugin_dir_url( __FILE__ ) . "settings.php";
 	$getSettingsUrl = plugin_dir_url( __FILE__ ) . "getSettings.php";
+	
 ?>
 <script>
 function getSettings(){
@@ -940,40 +938,41 @@ jQuery(".settings-form").submit(function(e){
 <?php
 }
 
+
 function users_function(){
 ?>
 <div class="container-fluid mt-5">
 	<div class="row mx-auto justify-content-center">
 		<div class="col-11">
-			<form class="users">
-			<table id="dtBasicExample" class="table table-striped table-bordered table-sm cell-border hover" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th class="th-sm">ID</th>
-						<th class="th-sm">Full Name</th>
-						<th class="th-sm">Phone Number</th>
-						<th class="th-sm">Email</th>
-						<th class="th-sm">Submitted On</th>
-						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
-						<th class="th-sm">Submitted Entry</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-				</tbody>
-				<tfoot>
-					<tr>
-						<th class="th-sm">ID</th>
-						<th class="th-sm">Full Name</th>
-						<th class="th-sm">Phone Number</th>
-						<th class="th-sm">Email</th>
-						<th class="th-sm">Submitted On</th>
-						<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
-						<th class="th-sm">Submitted Entry</th>
-					</tr>
-				</tfoot>
-			</table>
-			<input class="btn btn-success text-right" type="submit" id="update-users" value="Update Users"/>
+			<form class="allusers">
+				<table id="dtBasicExample" class="table table-striped table-bordered table-sm cell-border hover" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th class="th-sm">ID</th>
+							<th class="th-sm">Full Name</th>
+							<th class="th-sm">Phone Number</th>
+							<th class="th-sm">Email</th>
+							<th class="th-sm">Submitted On</th>
+							<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
+							<th class="th-sm">Submitted Entry</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="th-sm">ID</th>
+							<th class="th-sm">Full Name</th>
+							<th class="th-sm">Phone Number</th>
+							<th class="th-sm">Email</th>
+							<th class="th-sm">Submitted On</th>
+							<th class="th-sm"><input class="form-check-input all-retake" type="checkbox"> Allow Retake</th>
+							<th class="th-sm">Submitted Entry</th>
+						</tr>
+					</tfoot>
+				</table>
+				<input class="btn btn-success text-right" type="submit" id="update-users" value="Update Users"/>
 			</form>
 		</div>
 	</div>
@@ -983,6 +982,7 @@ function users_function(){
 	//getting file path to send form data
 	$getUsersUrl = plugin_dir_url( __FILE__ ) . "getUsers.php";
 	$postUsersUrl = plugin_dir_url( __FILE__ ) . "postUsers.php";
+	$deleteUser = plugin_dir_url( __FILE__ ) . "deleteUser.php";
 ?>
 <script>
 	var getUsersUrl = "<?php echo $getUsersUrl; ?>";
@@ -990,7 +990,7 @@ function users_function(){
 
 	
 
-	jQuery(".users").submit(function(e){
+	jQuery(".allusers").submit(function(e){
 		e.preventDefault();
 		var retake_values = [];
 
@@ -1084,57 +1084,109 @@ function users_function(){
 		
 	jQuery(document).ready(function(){
 
-		jQuery.ajax({
-			"method" : "GET",
-			"url": getUsersUrl,
-			"async" : true,
-			dataType: "html",
-			success : function(data){
-				console.log("Data Fetched.");
-				console.log(data);
-				// console.log(data);
-				jQuery("#dtBasicExample tbody").html(data);
-				
-				var table = jQuery("#dtBasicExample").DataTable({
-					"destroy": true
-				});
-				jQuery(".dataTables_length").addClass("bs-select");
-
-
-				// Handle click on "Select all" control
-				$(".all-retake").on("click", function () {
-					// Check/uncheck all checkboxes in the table
-					var rows = table.rows({ search: "applied" }).nodes();
-					$('input[type="checkbox"]', rows).prop("checked", this.checked);
-				});
-
-				// Handle click on checkbox to set state of "Select all" control
-				$("#dtBasicExample tbody").on(
-					"change",
-					'input[type="checkbox"]',
-					function () {
-					// If checkbox is not checked
-					if (!this.checked) {
-						var el = $(".all-retake").get(0);
-						// If "Select all" control is checked and has 'indeterminate' property
-						if (el && el.checked && "indeterminate" in el) {
-						// Set visual state of "Select all" control
-						// as 'indeterminate'
-						el.indeterminate = true;
-						}
-					}
-					}
-				);
+		function getAllUsers(){
+			jQuery.ajax({
+				"method" : "GET",
+				"url": getUsersUrl,
+				"async" : true,
+				dataType: "html",
+				success : function(data){
+					jQuery("#dtBasicExample tbody").html(data);
 					
-			},
-			error: function (jqXHR, exception) {
-				console.log(jqXHR);
-				jQuery("#dtBasicExample").DataTable({
-					"destroy": true,
-				});
-  				jQuery(".dataTables_length").addClass("bs-select");
-			}
-		});
+					var table = jQuery("#dtBasicExample").DataTable({
+						"destroy": true
+					});
+					jQuery(".dataTables_length").addClass("bs-select");
+
+
+					// Handle click on "Select all" control
+					$(".all-retake").on("click", function () {
+						// Check/uncheck all checkboxes in the table
+						var rows = table.rows({ search: "applied" }).nodes();
+						$('input[type="checkbox"]', rows).prop("checked", this.checked);
+					});
+
+					// Handle click on checkbox to set state of "Select all" control
+					$("#dtBasicExample tbody").on("change",'input[type="checkbox"]',function () {
+						// If checkbox is not checked
+						if (!this.checked) {
+							var el = $(".all-retake").get(0);
+							// If "Select all" control is checked and has 'indeterminate' property
+							if (el && el.checked && "indeterminate" in el) {
+							// Set visual state of "Select all" control
+							// as 'indeterminate'
+							el.indeterminate = true;
+							}
+						}
+					});
+					
+					
+
+					
+					deleteClickUser();
+					
+						
+				},
+				error: function (jqXHR, exception) {
+					console.log(jqXHR);
+					jQuery("#dtBasicExample").DataTable({
+						"destroy": true,
+					});
+					jQuery(".dataTables_length").addClass("bs-select");
+				}
+			});
+		}
+		getAllUsers();
+
+		
+		
+		function deleteClickUser(){
+			$(".delete-user").on("click", function(){
+			let user_id = $(this).attr("user-id");
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				if (result.isConfirmed) {
+					deleteUser(user_id);
+					Swal.fire(
+					'Deleted!',
+					'Entry deleted.',
+					'success'
+					)
+				}
+			});
+			});
+			
+		}
+
+		function deleteUser(id){
+
+			var deleteUser = "<?php echo $deleteUser; ?>";
+			var deleteUserEntry = new FormData();
+			deleteUserEntry.append('data',JSON.stringify(id));
+
+			$.ajax({
+				method: "POST",
+				url: deleteUser,
+				data: deleteUserEntry,
+				processData: false,
+				contentType: false,
+				success: function(data){
+					console.log(data);
+					// $(this).hide();
+					getAllUsers();
+				},
+				error: function(jqXHR, exception){
+					console.log(jqXHR);
+				}
+			});
+		}
 		
 	});
 </script>
