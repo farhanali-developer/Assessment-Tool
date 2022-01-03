@@ -19,8 +19,8 @@ $charset_collate = $wpdb->get_charset_collate();
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 htmlspecialchars($user_data["email"], ENT_QUOTES);
 
-$name = htmlspecialchars($user_data["name"], ENT_QUOTES);
-$email = htmlspecialchars($user_data["email"], ENT_QUOTES);
+$name = $user_data["name"];
+$email = $user_data["email"];
 $phone = $user_data["phone"];
 $date = $user_data["date"];
 $month = $user_data["month"];
@@ -119,6 +119,8 @@ else{
         //Perform Mailing functionality Here
 
         $from = $email; // this is the sender's Email address
+
+        
         $username = $name;
         // $subject = "Assessment Tool Survey";
         
@@ -140,10 +142,10 @@ else{
                 break;
             }
             $i++;
-            $tabname = $tab_values->tab_name;
-            $chapter_title = $tab_values->chapter_title;
-            $tabmarks = $tab_values->tab_marks;
-            $tabdescription = $tab_values->tab_description;
+            $tabname = $tab_values["tab_name"];
+            $chapter_title = $tab_values["chapter_title"];
+            $tabmarks = $tab_values["tab_marks"];
+            $tabdescription = $tab_values["tab_description"];
             $description = htmlspecialchars($tabdescription, ENT_QUOTES);
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
@@ -160,10 +162,12 @@ else{
         $headers = "From:" . $from . "Reply-To: $to";
         $headers2 = "From:" . $to;
         $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html;";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $headers2 .= "MIME-Version: 1.0\r\n";
+        $headers2 .= "Content-Type: text/html; charset=UTF-8\r\n";
         mail($to,$subject,$message,$headers);
-        // mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
-        echo "Mail Sent. Thank you " . $first_name . ", We will contact you shortly.";
+        mail($from,$subject,$message,$headers2); // sends a copy of the message to the sender
+        echo "Mail Sent. Thank you " . $username . ", We will contact you shortly.";
         // You can also use header('Location: thank_you.php'); to redirect to another page.
 
     
