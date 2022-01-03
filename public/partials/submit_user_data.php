@@ -136,16 +136,15 @@ else{
         $message .= "<tbody>";
         $i = 0;
         foreach($form_data as $tab => $tab_values){
-            // if($i == 3){
-            //     break;
-            // }
-            // $i++;
+            if($i == 3){
+                break;
+            }
+            $i++;
             $tabname = $tab_values->tab_name;
             $chapter_title = $tab_values->chapter_title;
             $tabmarks = $tab_values->tab_marks;
             $tabdescription = $tab_values->tab_description;
             $description = htmlspecialchars($tabdescription, ENT_QUOTES);
-            // echo $description;
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$chapter_title</td>";

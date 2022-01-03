@@ -1084,111 +1084,172 @@ function users_function(){
 		
 	jQuery(document).ready(function(){
 
-		function getAllUsers(){
-			jQuery.ajax({
-				"method" : "GET",
-				"url": getUsersUrl,
-				"async" : true,
-				dataType: "html",
-				success : function(data){
-					jQuery("#dtBasicExample tbody").html(data);
-					
-					var table = jQuery("#dtBasicExample").DataTable({
-						"destroy": true
-					});
-					jQuery(".dataTables_length").addClass("bs-select");
-
-
-					// Handle click on "Select all" control
-					$(".all-retake").on("click", function () {
-						// Check/uncheck all checkboxes in the table
-						var rows = table.rows({ search: "applied" }).nodes();
-						$('input[type="checkbox"]', rows).prop("checked", this.checked);
-					});
-
-					// Handle click on checkbox to set state of "Select all" control
-					$("#dtBasicExample tbody").on("change",'input[type="checkbox"]',function () {
-						// If checkbox is not checked
-						if (!this.checked) {
-							var el = $(".all-retake").get(0);
-							// If "Select all" control is checked and has 'indeterminate' property
-							if (el && el.checked && "indeterminate" in el) {
-							// Set visual state of "Select all" control
-							// as 'indeterminate'
-							el.indeterminate = true;
-							}
-						}
-					});
-					
-					
-
-					
-					deleteClickUser();
-					
-						
-				},
-				error: function (jqXHR, exception) {
-					console.log(jqXHR);
-					jQuery("#dtBasicExample").DataTable({
-						"destroy": true,
-					});
-					jQuery(".dataTables_length").addClass("bs-select");
-				}
-			});
-		}
 		getAllUsers();
 
 		
+
 		
-		function deleteClickUser(){
-			$(".delete-user").on("click", function(){
-			let user_id = $(this).attr("user-id");
-			Swal.fire({
-				title: 'Are you sure?',
-				text: "You won't be able to revert this!",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes, delete it!'
-				}).then((result) => {
-				if (result.isConfirmed) {
-					deleteUser(user_id);
-					Swal.fire(
-					'Deleted!',
-					'Entry deleted.',
-					'success'
-					)
-				}
-			});
-			});
-			
-		}
 
-		function deleteUser(id){
-
-			var deleteUser = "<?php echo $deleteUser; ?>";
-			var deleteUserEntry = new FormData();
-			deleteUserEntry.append('data',JSON.stringify(id));
-
-			$.ajax({
-				method: "POST",
-				url: deleteUser,
-				data: deleteUserEntry,
-				processData: false,
-				contentType: false,
-				success: function(data){
-					console.log(data);
-					// $(this).hide();
-					getAllUsers();
-				},
-				error: function(jqXHR, exception){
-					console.log(jqXHR);
-				}
-			});
-		}
-		
 	});
+
+	function getAllUsers(){
+		jQuery.ajax({
+			"method" : "GET",
+			"url": getUsersUrl,
+			"async" : true,
+			dataType: "html",
+			success : function(data){
+				jQuery("#dtBasicExample tbody").html(data);
+				
+				var table = jQuery("#dtBasicExample").DataTable({
+					"destroy": true
+				});
+				jQuery(".dataTables_length").addClass("bs-select");
+
+
+				// Handle click on "Select all" control
+				$(".all-retake").on("click", function () {
+					// Check/uncheck all checkboxes in the table
+					var rows = table.rows({ search: "applied" }).nodes();
+					$('input[type="checkbox"]', rows).prop("checked", this.checked);
+				});
+
+				// Handle click on checkbox to set state of "Select all" control
+				$("#dtBasicExample tbody").on("change",'input[type="checkbox"]',function () {
+					// If checkbox is not checked
+					if (!this.checked) {
+						var el = $(".all-retake").get(0);
+						// If "Select all" control is checked and has 'indeterminate' property
+						if (el && el.checked && "indeterminate" in el) {
+						// Set visual state of "Select all" control
+						// as 'indeterminate'
+						el.indeterminate = true;
+						}
+					}
+				});
+			},
+			complete: function (data) {
+				
+				$(".delete-user").on("click", function(){
+					console.log("Ajax completed");
+					let user_id = $(this).attr("user-id");
+					deleteClickUser(user_id);
+				});
+			},
+			error: function (jqXHR, exception) {
+				console.log(jqXHR);
+				jQuery("#dtBasicExample").DataTable({
+					"destroy": true,
+				});
+				jQuery(".dataTables_length").addClass("bs-select");
+			}
+		});
+	}
+
+
+
+
+	function deleteClickUser(user_id){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+			if (result.isConfirmed) {
+				deleteUser(user_id);
+				
+				Swal.fire(
+				'Deleted!',
+				'Entry deleted.',
+				'success'
+				)
+			}
+		});
+			
+	}
+
+	function deleteUser(id){
+
+		var deleteUser = "<?php echo $deleteUser; ?>";
+		var deleteUserEntry = new FormData();
+		deleteUserEntry.append('data',JSON.stringify(id));
+
+		$.ajax({
+			method: "POST",
+			url: deleteUser,
+			data: deleteUserEntry,
+			processData: false,
+			contentType: false,
+			success: function(data){
+				console.log(data);
+				// $(this).hide();
+				
+				var getUsersUrls = "<?php echo $getUsersUrl; ?>";
+
+				jQuery.ajax({
+					"method" : "GET",
+					"url": getUsersUrls,
+					"async" : true,
+					dataType: "html",
+					success : function(data){
+						jQuery("#dtBasicExample tbody").html(data);
+						console.log("Nested Ajax called.")
+						var table = jQuery("#dtBasicExample").DataTable({
+							"destroy": true
+						});
+						jQuery(".dataTables_length").addClass("bs-select");
+
+
+						// Handle click on "Select all" control
+						$(".all-retake").on("click", function () {
+							// Check/uncheck all checkboxes in the table
+							var rows = table.rows({ search: "applied" }).nodes();
+							$('input[type="checkbox"]', rows).prop("checked", this.checked);
+						});
+
+						// Handle click on checkbox to set state of "Select all" control
+						$("#dtBasicExample tbody").on("change",'input[type="checkbox"]',function () {
+							// If checkbox is not checked
+							if (!this.checked) {
+								var el = $(".all-retake").get(0);
+								// If "Select all" control is checked and has 'indeterminate' property
+								if (el && el.checked && "indeterminate" in el) {
+								// Set visual state of "Select all" control
+								// as 'indeterminate'
+								el.indeterminate = true;
+								}
+							}
+						});
+					},
+					error: function (jqXHR, exception) {
+						console.log(jqXHR);
+						jQuery("#dtBasicExample").DataTable({
+							"destroy": true,
+						});
+						jQuery(".dataTables_length").addClass("bs-select");
+					}
+				});
+
+
+
+
+
+
+
+
+
+
+
+			},
+			error: function(jqXHR, exception){
+				console.log(jqXHR);
+			}
+		});
+	}
 </script>
 <?php
 }

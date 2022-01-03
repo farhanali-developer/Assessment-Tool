@@ -31,7 +31,7 @@ foreach($users as $col => $val){
     <td><a class="text-dark alert-link" href="mailto:<?php echo $user_email; ?>"><?php echo $user_email; ?></a></td>
     <td><?php echo $submission_date; ?> | <?php echo $submission_time; ?> <?php echo $timezone; ?></td>
     <td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" <?php echo ($num_allow_retake == 1) ? 'checked' : '' ?> ></td>
-    <td><span class="text-decoration-none btn btn-primary text-white d-inline download-userdata" href="#">Download</span><span class="text-decoration-none btn btn-danger text-white d-inline delete-user" user-id="<?php echo $user_id; ?>">Delete</span></td>
+    <td><span class="text-decoration-none btn btn-danger text-white d-inline delete-user" user-id="<?php echo $user_id; ?>">Delete User</span></td>
 </tr>
 
 <?php
