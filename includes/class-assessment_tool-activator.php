@@ -93,7 +93,7 @@ class Assessment_tool_Activator {
           `setting_name` LONGTEXT,
           `setting_value` LONGTEXT,
           PRIMARY KEY  (`id`)
-        ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('subject',''), ('theme','default'), ('animation','fade'), ('animation_speed','4'), ('alignment','1'), ('mode','0'), ('welcome_screen_text',''), ('end_screen_text','')";
+        ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('email',''),('password',''),('subject',''), ('theme','arrows'), ('animation','fade'), ('animation_speed','400'), ('alignment','1'), ('mode','0'), ('welcome_screen_text',''), ('end_screen_text','')";
 
  
         

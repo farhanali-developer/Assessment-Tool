@@ -1,5 +1,7 @@
 <?php
 
+$emailaddress = $_POST['email'];
+$password_gmail = $_POST['password'];
 $emailsubject = $_POST['subject'];
 $theme_data = $_POST['theme'];
 $animation_data = $_POST['animation'];
@@ -61,13 +63,15 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 $subject = htmlspecialchars($emailsubject, ENT_QUOTES);
 
-$wpdb->update( $settings_table, array( 'setting_value' => $subject), array( 'id' => 1 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $theme_data), array( 'id' => 2 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $animation_data), array( 'id' => 3 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $animation_speed_data), array( 'id' => 4 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $alignment_data), array( 'id' => 5 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $dark_mode_data), array( 'id' => 6 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $welcome_screen_text), array( 'id' => 7 ) );
-$wpdb->update( $settings_table, array( 'setting_value' => $end_screen_text), array( 'id' => 8 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $emailaddress), array( 'id' => 1 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $password_gmail), array( 'id' => 2 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $subject), array( 'id' => 3 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $theme_data), array( 'id' => 4 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $animation_data), array( 'id' => 5 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $animation_speed_data), array( 'id' => 6 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $alignment_data), array( 'id' => 7 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $dark_mode_data), array( 'id' => 8 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $welcome_screen_text), array( 'id' => 9 ) );
+$wpdb->update( $settings_table, array( 'setting_value' => $end_screen_text), array( 'id' => 10 ) );
  
 ?>

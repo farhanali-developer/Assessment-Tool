@@ -54,6 +54,7 @@ class Assessment_tool_Public {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/assessment_tool-public-display.php';
 
@@ -104,9 +105,8 @@ class Assessment_tool_Public {
 		 */
 		wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
-		wp_enqueue_script( "smart-wizard", "https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js", array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( "smart-wizard", "https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js", array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-public.js', array( 'jquery' ), $this->version, true );
-
 	}
 
 }

@@ -120,7 +120,7 @@ class Assessment_tool_Admin {
 		$screen = get_current_screen();
 		
 		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users' || $screen->id == 'assessment-tool_page_assessment_tool_entries'){
-
+			wp_enqueue_editor();
 			wp_enqueue_script( "at_jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( "bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
@@ -132,7 +132,7 @@ class Assessment_tool_Admin {
 			// wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
 			// wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
-
+			
 		}
 
 
@@ -871,6 +871,8 @@ jQuery(document).ready(function(){
 jQuery(".settings-form").submit(function(e){
 	e.preventDefault();
 	var settingsUrl = "<?php echo $settingsUrl ?>";
+	let email = jQuery(".email").val();
+	let password = jQuery(".password").val();
 	let emailsubject = jQuery(".emailsubject").val();
 	let theme = jQuery("#theme_selector").find(":selected").text();
 	let animation = jQuery("#animation").find(":selected").text();
@@ -884,6 +886,8 @@ jQuery(".settings-form").submit(function(e){
 		method: "POST",
 		url: settingsUrl,
 		data: {
+			"email" : email,
+			"password" : password,
 			"subject" : emailsubject,
 			"theme": theme,
 			"animation": animation,
@@ -1127,13 +1131,34 @@ function users_function(){
 						}
 					}
 				});
-			},
-			complete: function (data) {
-				
+
+
+
 				$(".delete-user").on("click", function(){
 					console.log("Ajax completed");
 					let user_id = $(this).attr("user-id");
-					deleteClickUser(user_id);
+					// deleteClickUser(user_id);
+
+					Swal.fire({
+						title: 'Are you sure?',
+						text: "You won't be able to revert this!",
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Yes, delete it!'
+						}).then((result) => {
+						if (result.isConfirmed) {
+							deleteUser(user_id);
+							Swal.fire(
+							'Deleted!',
+							'Entry deleted.',
+							'success'
+							)
+						}
+					});
+
+
 				});
 			},
 			error: function (jqXHR, exception) {
@@ -1147,36 +1172,11 @@ function users_function(){
 	}
 
 
-
-
-	function deleteClickUser(user_id){
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
-			}).then((result) => {
-			if (result.isConfirmed) {
-				deleteUser(user_id);
-				
-				Swal.fire(
-				'Deleted!',
-				'Entry deleted.',
-				'success'
-				)
-			}
-		});
-			
-	}
-
-	function deleteUser(id){
+	function deleteUser(user_id){
 
 		var deleteUser = "<?php echo $deleteUser; ?>";
 		var deleteUserEntry = new FormData();
-		deleteUserEntry.append('data',JSON.stringify(id));
+		deleteUserEntry.append('data',JSON.stringify(user_id));
 
 		$.ajax({
 			method: "POST",
@@ -1185,70 +1185,14 @@ function users_function(){
 			processData: false,
 			contentType: false,
 			success: function(data){
-				console.log(data);
-				// $(this).hide();
-				
-				var getUsersUrls = "<?php echo $getUsersUrl; ?>";
-
-				jQuery.ajax({
-					"method" : "GET",
-					"url": getUsersUrls,
-					"async" : true,
-					dataType: "html",
-					success : function(data){
-						jQuery("#dtBasicExample tbody").html(data);
-						console.log("Nested Ajax called.")
-						var table = jQuery("#dtBasicExample").DataTable({
-							"destroy": true
-						});
-						jQuery(".dataTables_length").addClass("bs-select");
-
-
-						// Handle click on "Select all" control
-						$(".all-retake").on("click", function () {
-							// Check/uncheck all checkboxes in the table
-							var rows = table.rows({ search: "applied" }).nodes();
-							$('input[type="checkbox"]', rows).prop("checked", this.checked);
-						});
-
-						// Handle click on checkbox to set state of "Select all" control
-						$("#dtBasicExample tbody").on("change",'input[type="checkbox"]',function () {
-							// If checkbox is not checked
-							if (!this.checked) {
-								var el = $(".all-retake").get(0);
-								// If "Select all" control is checked and has 'indeterminate' property
-								if (el && el.checked && "indeterminate" in el) {
-								// Set visual state of "Select all" control
-								// as 'indeterminate'
-								el.indeterminate = true;
-								}
-							}
-						});
-					},
-					error: function (jqXHR, exception) {
-						console.log(jqXHR);
-						jQuery("#dtBasicExample").DataTable({
-							"destroy": true,
-						});
-						jQuery(".dataTables_length").addClass("bs-select");
-					}
-				});
-
-
-
-
-
-
-
-
-
-
-
+				console.log("Delete success, getting data again.");
+				getAllUsers();				
 			},
 			error: function(jqXHR, exception){
 				console.log(jqXHR);
 			}
 		});
+
 	}
 </script>
 <?php

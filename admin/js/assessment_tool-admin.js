@@ -3,8 +3,6 @@
 jQuery(document).ready(function () {
   //$(".collapse").not(":first").collapse(); // Collapse all but the first row on the page.
 
-
-
   // END This section makes the search work.
 
   // jQuery(".all-retake").click(function () {

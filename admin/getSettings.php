@@ -8,15 +8,18 @@ $settings_table = 'assessment_tool_settings';
 $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+require_once( ABSPATH . 'wp-includes/class-wp-editor.php' );
 
-$email_subject = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 1" );
-$theme = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 2" );
-$animation = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 3" );
-$animation_speed = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 4" );
-$alignment = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 5" );
-$mode = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 6" );
-$welcome_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 7" );
-$end_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 8" );
+$email_address = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 1" );
+$password_gmail = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 2" );
+$email_subject = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 3" );
+$theme = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 4" );
+$animation = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 5" );
+$animation_speed = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 6" );
+$alignment = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 7" );
+$mode = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 8" );
+$welcome_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 9" );
+$end_screen_text = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 10" );
 
 foreach($theme as $theme_key => $theme_val){
     $theme_value = $theme_val->setting_value;
@@ -84,7 +87,28 @@ foreach($mode as $mode_key => $mode_val){
 
 <div class="mb-3">
     <h3>Email Template</h3>
-    <label>Email Subject</label>
+    <label>Email Address</label>
+    <?php
+    foreach($email_address as $email_add => $email_add_val){
+        $email_address = $email_add_val->setting_value;
+    ?>
+    <input type="email" class="form-control email" placeholder="" value="<?php echo $email_address; ?>"/>
+    <?php
+    }
+    ?>
+
+    <label>Password</label>
+    <?php
+    foreach($password_gmail as $password_key => $password_val){
+        $password = $password_val->setting_value;
+    ?>
+    <input type="text" class="form-control password" placeholder="" value="<?php echo $password; ?>"/>
+    <div id="emailHelp" class="form-text">This password can be generated from your Gmail account's security settings. <br>Note:</b> This is not your Gmail account password.</div>
+    <?php
+    }
+    ?>
+
+    <label class="mt-2">Email Subject</label>
     <?php
     foreach($email_subject as $email_key => $email_val){
         $email_value = $email_val->setting_value;
@@ -123,7 +147,7 @@ foreach($mode as $mode_key => $mode_val){
     }
     ?>
     
-    <span>Please provide animated speed in seconds i.e 1 = 1seconds or 5 = 5seconds</span>
+    <span>100 = 1 seconds.</span>
     
     <div class="custom-control custom-checkbox mt-3">
         <input type="checkbox" class="custom-control-input" id="is_justified" value="1" data-np-checked="1" />
@@ -161,3 +185,20 @@ foreach($mode as $mode_key => $mode_val){
     </div>
 </div>
 <button type="submit" class="btn btn-success">Update Settings</button>
+<?php
+wp_editor(
+    "",
+    'distribution',
+    array(
+      'media_buttons' => true,
+      'textarea_rows' => 8,
+      'tabindex' => 4,
+      'tinymce' => array(
+        'theme_advanced_buttons1' => 'bold,italic,strikethrough,separator,bullist,numlist,separator,blockquote,separator,justifyleft,justifycenter,justifyright,separator,link,unlink,separator,undo,redo,separator',
+        'toolbar1'      => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
+        'toolbar2'      => '',
+        'toolbar3'      => '',
+      ),
+    )
+);
+     ?>
