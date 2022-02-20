@@ -1,20 +1,4 @@
-// jQuery.noConflict();
-
 jQuery(document).ready(function () {
-  //$(".collapse").not(":first").collapse(); // Collapse all but the first row on the page.
-
-  // END This section makes the search work.
-
-  // jQuery(".all-retake").click(function () {
-  //   jQuery("#dtBasicExample tbody input:checkbox")
-  //     .not(this)
-  //     .prop("checked", this.checked);
-  // });
-
-  //Datatable JQUERY plugin for users data in admin panel
-  // jQuery("#dtBasicExample").DataTable();
-  // jQuery(".dataTables_length").addClass("bs-select");
-
   var $repeater = jQuery(".repeater").repeater({
     hide: function (deleteElement) {
       if (confirm("Are you sure you want to delete this element?")) {
@@ -55,22 +39,4 @@ jQuery(document).ready(function () {
   jQuery(".marks").inputFilter(function (value) {
     return /^-?\d*$/.test(value);
   });
-  // $("#uintTextBox").inputFilter(function (value) {
-  //   return /^\d*$/.test(value);
-  // });
-  // $("#intLimitTextBox").inputFilter(function (value) {
-  //   return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 500);
-  // });
-  // $("#floatTextBox").inputFilter(function (value) {
-  //   return /^-?\d*[.,]?\d*$/.test(value);
-  // });
-  // $("#currencyTextBox").inputFilter(function (value) {
-  //   return /^-?\d*[.,]?\d{0,2}$/.test(value);
-  // });
-  // $("#latinTextBox").inputFilter(function (value) {
-  //   return /^[a-z]*$/i.test(value);
-  // });
-  // $("#hexTextBox").inputFilter(function (value) {
-  //   return /^[0-9a-f]*$/i.test(value);
-  // });
 });

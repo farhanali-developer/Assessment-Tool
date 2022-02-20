@@ -74,9 +74,6 @@ class Assessment_tool_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		
-		
 		$screen = get_current_screen();
 
 		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users' || $screen->id == 'assessment-tool_page_assessment_tool_entries'){
@@ -85,10 +82,6 @@ class Assessment_tool_Admin {
 			wp_enqueue_style( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.min.css", array(), $this->version, 'all' );
 			wp_enqueue_style( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css", array(), $this->version, 'all' );
 			wp_enqueue_style( "fontawesome", "https://use.fontawesome.com/releases/v5.6.3/css/all.css", array(), $this->version, 'all' );
-
-			// wp_enqueue_style( "bootstrap", plugins_url() . '/assessment_tool/assets/bootstrap/css/bootstrap.min.css', array(), $this->version, 'all' );
-			// wp_enqueue_style( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.min.css', array(), $this->version, 'all' );
-			// wp_enqueue_style( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/assessment_tool-admin.css', array(), $this->version, 'all' );
 
 		}
@@ -113,10 +106,6 @@ class Assessment_tool_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		
-
-		
 		$screen = get_current_screen();
 		
 		if ( $screen->id == 'toplevel_page_assessment_tool' || $screen->id == 'assessment-tool_page_assessment_tool_all_tabs' || $screen->id == 'assessment-tool_page_assessment_tool_settings' || $screen->id == 'assessment-tool_page_assessment_tool_users' || $screen->id == 'assessment-tool_page_assessment_tool_entries'){
@@ -126,11 +115,6 @@ class Assessment_tool_Admin {
 			wp_enqueue_script( "dataTable", "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( "repeater", "https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( "sweetalert2", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.10/sweetalert2.all.min.js", array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "jquery", plugins_url() . '/assessment_tool/assets/jquery/jquery.min.js', array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "bootstrap-bundle", plugins_url() . '/assessment_tool/assets/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "datatables", plugins_url() . '/assessment_tool/assets/dataTables/datatables.min.js', array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "jquery-repeater", plugins_url() . '/assessment_tool/assets/repeaterJs/jquery.repeater.min.js', array( 'jquery' ), $this->version, true );
-			// wp_enqueue_script( "sweetalert2", plugins_url() . '/assessment_tool/assets/sweetalert2/sweetalert2.all.min.js', array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/assessment_tool-admin.js', array( 'jquery' ), $this->version, true );
 			
 		}
@@ -314,7 +298,6 @@ $deleteUsersFormData = plugin_dir_url( __FILE__ ) . "deleteUsersFormData.php";
 						var entry_id = $(this).attr("entry_id");
 						var question_id = $(this).attr("question_id");
 						var question_marks = $('option:selected',this).attr('question_marks');
-						// var answer = $(".user[user_id = "+ user_id +"] > #tabsaccordion[tab_id = "+ tab_id +"] .question[question_id = "+ question_id +"] .form-select option:selected").text();
 						var answer = $(".form-select option:selected", this).text();
 
 						single_question = {
@@ -346,8 +329,6 @@ $deleteUsersFormData = plugin_dir_url( __FILE__ ) . "deleteUsersFormData.php";
 				processData: false,
 				contentType: false,
 				success : function(data){
-					// jQuery("#all-entries").html(data);
-					console.log(data);
 					getFormData();
 					const Toast = Swal.mixin({
 						toast: true,
@@ -382,9 +363,7 @@ $deleteUsersFormData = plugin_dir_url( __FILE__ ) . "deleteUsersFormData.php";
 					});
 				}
 			});		
-
 		});
-
 	});
 </script>
 <?php
@@ -405,7 +384,7 @@ function all_tabs_function(){
 
 							require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-							$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
+							$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs ORDER BY id");
 
 							if($tabs){
 								foreach($tabs as $tabs_name => $tabs_data){
@@ -418,7 +397,7 @@ function all_tabs_function(){
 						<div data-repeater-item class="card mw-100 p-0 mt-0 mb-5">  
 							<div class="row mx-auto w-100 justify-content-center align-items-center card-header">
 								<div class="col-12 col-md-10">
-									<input type="hidden" name="text-input-id" value="<?php echo $tab_id; ?>"/>
+									<input type="text" name="text-input-id" class="tab-id" value="<?php echo $tab_id; ?>" />
 									<h5><?php echo $tab; ?></h5>
 								</div>
 								<div class="col-12 col-md-2">
@@ -431,14 +410,15 @@ function all_tabs_function(){
 									<div class="col-12 col-md-10">
 										<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
 										<input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" value="<?php echo $chapter_title; ?>" required />
-										<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
+										<!-- <input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php //echo $description; ?>" /> -->
+										<textarea class="form-control mt-3 mb-3" name="text-input-description" placeholder="Tab Description"><?php echo $description; ?></textarea>
 									</div>
 								</div>
 								<!-- innner repeater -->
 								<div class="inner-repeater">
 									<div data-repeater-list="inner-list">
 										<?php
-											$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id");
+											$questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id ORDER BY id");
 											foreach($questions as $questions_name => $questions_data){
 												$question_id = $questions_data->id;
 												$question = $questions_data->question;
@@ -446,7 +426,7 @@ function all_tabs_function(){
 										?>
 											<div data-repeater-item class="row mx-auto justify-content-center w-100 mt-2 questions" question-id="<?php echo $question_id; ?>">
 												<div class="col-12 col-md-8">
-													<input type="hidden" name="inner-text-id" value="<?php echo $question_id; ?>"/>
+													<input type="text" name="inner-text-id" class="question-id" value="<?php echo $question_id; ?>"/>
 													<input type="text" name="inner-text-input" class="form-control" placeholder="Question *" value="<?php echo $question; ?>" required />
 												</div>
 												<div class="col-12 col-md-2">
@@ -519,9 +499,6 @@ function all_tabs_function(){
 				"async" : true,
 				dataType: "html",
 				success : function(data){
-					console.log("Form Data Fetched.");
-					// console.log(data);
-					//jQuery("#tabs_and_questions div[data-repeater-list='outer-list']").html(data);
 				},
 				error: function (jqXHR, exception) {
 					console.log(jqXHR);
@@ -539,7 +516,6 @@ function all_tabs_function(){
 				url: questionUrl,
 				data: {"questionId": deletequestion},
 				success: function (data) {
-					// console.log(data);
 					const Toast = Swal.mixin({
 						toast: true,
 						position: "top-end",
@@ -639,6 +615,7 @@ function all_tabs_function(){
 				e.preventDefault();
 				var updateFormdata = "<?php echo $updateFormData ?>";
 				var updateFormData1 = jQuery('form#tabs_and_questions.repeater').repeaterVal();
+				console.log("This data is from Submit Form: " + updateFormData1);
 				var updateFormData = new FormData();
 				updateFormData.append('data',JSON.stringify(updateFormData1));
 
@@ -687,15 +664,9 @@ function all_tabs_function(){
 							icon: "error",
 							title: "There is some error in the form. Please try again.",
 						});
-
 					}
 				});
 			});
-
-		
-
-
-
 	</script>
 <?php
 }
@@ -724,7 +695,20 @@ function assessment_form_add_new_tab(){
 								<div class="col-12 col-md-10">
 									<input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" required />
 									<input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" required />
-									<input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" />
+									<textarea class="form-control mt-3 mb-3" name="text-input-description" placeholder="Tab Description"></textarea>
+									<?php
+									// $args = array(
+									// 	'media_buttons' => false,
+									// 	'textarea_rows' => 8,
+									// 	'tabindex' => 4,
+									// 	'tinymce'       => array(
+									// 		'toolbar1'      => 'formatselect,bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link,wp_more,spellchecker,fullscreen,wp_adv,listbuttons,hr,forecolor,pastetext,removeformat,charmap,outdent,indent',
+									// 	),
+									// );
+									// $editor_id = "customfield";
+									// $content = "";
+									// wp_editor( $content, $editor_id, $args );
+									?>
 								</div>
 							</div>
 
@@ -774,7 +758,10 @@ function assessment_form_add_new_tab(){
 			var formData1 = jQuery('#assessment_backend_form').repeaterVal();
 			var formData = new FormData();
 
+			// var description = encodeURIComponent(tinyMCE.get("customfield").getContent());
+
 			formData.append('data',JSON.stringify(formData1));
+			console.log(formData1);
 
 			jQuery.ajax({
 				method: "POST",
@@ -852,8 +839,6 @@ function getSettings(){
 		"async" : true,
 		dataType: "html",
 		success : function(data){
-			console.log("Users Data Fetched.");
-			// console.log(data);
 			jQuery(".settings-form").html(data);
 		},
 		error: function (jqXHR, exception) {
@@ -1084,16 +1069,8 @@ function users_function(){
 		});
 	});
 
-
-		
 	jQuery(document).ready(function(){
-
 		getAllUsers();
-
-		
-
-		
-
 	});
 
 	function getAllUsers(){
@@ -1137,8 +1114,6 @@ function users_function(){
 				$(".delete-user").on("click", function(){
 					console.log("Ajax completed");
 					let user_id = $(this).attr("user-id");
-					// deleteClickUser(user_id);
-
 					Swal.fire({
 						title: 'Are you sure?',
 						text: "You won't be able to revert this!",

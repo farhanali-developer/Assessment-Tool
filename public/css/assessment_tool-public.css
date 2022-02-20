@@ -178,8 +178,9 @@
 /* Step Info */
 
 .step-info {
-  background-color: var(--grey);
+  background-color: #fff;
   padding: 10px;
+  border-bottom: 3px solid var(--grey);
 }
 .step-info span {
   padding-left: 1rem;
@@ -190,10 +191,25 @@
 .step-info p {
   margin: 0;
   /* margin-top: 1rem; */
-  font-weight: 600;
+  font-weight: 300;
+  font-size: 1em !important;
 }
 .step-info ul li {
   font-weight: 600;
+}
+
+.sw .toolbar > .btn.disabled {
+  visibility: hidden;
+}
+
+.sw .toolbar > .btn:not(.disabled) {
+  visibility: visible;
+}
+
+.question {
+  font-size: 1em !important;
+  color: #000 !important;
+  font-weight: 600 !important;
 }
 
 [type="radio"]:checked,
@@ -209,16 +225,14 @@
 .form-radio:not(:checked) + label {
   position: relative;
   display: inline-block;
-  padding: 40px;
-  width: 100%;
-  font-size: 16px;
+  padding: 0;
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 1px;
   margin: 0 auto;
   margin-left: 5px;
   margin-right: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   text-align: center;
   border-radius: 4px;
   overflow: hidden;
@@ -226,6 +240,8 @@
   text-transform: uppercase;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
+  width: 30%;
+  font-size: 0.9em;
 }
 .form-radio + label::before {
   border: 2px solid lightgrey;
@@ -256,9 +272,9 @@
 }
 .form-radio + label i.thumb {
   display: block;
-  font-size: 3.25em;
+  font-size: 2em;
   color: lightgrey;
-  padding-bottom: 20px;
+  padding: 10px;
 }
 
 .form-radio.yes:checked + label i {
@@ -282,13 +298,14 @@
 }
 
 .sw .toolbar > .btn {
-  background-color: var(--blue);
-  border: 1px solid var(--blue);
+  background: var(--blue);
+  border: 1px solid var(--blue) !important;
   padding: 0.375rem 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  font-size: 1em;
 }
 .sw .toolbar > .btn .fas {
   padding-left: 15px;
@@ -316,11 +333,12 @@
 
 .user-data-sec input {
   width: 100%;
-  margin: 15px 0;
+  margin: 5px 0;
+  font-size: 1em;
 }
 .user-data-sec input[type="submit"] {
   width: 50%;
-  background-color: var(--green);
+  background: var(--green);
   color: white;
 }
 

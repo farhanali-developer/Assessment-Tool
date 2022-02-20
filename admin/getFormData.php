@@ -39,7 +39,8 @@ if($tabs){
                         
                         <input type="text" class="form-control" name="text-input" placeholder="Add Tab Name *" value="<?php echo $tab; ?>" required />
                         <input type="text" class="form-control mt-3" name="text-input-chapter" placeholder="Add Chapter Title *" value="<?php echo $chapter_title; ?>" required />
-                        <input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php echo $description; ?>" />
+                        <!-- <input class="form-control mt-3 mb-3" type="text" name="text-input-description" placeholder="Tab Description" value="<?php //echo $description; ?>" /> -->
+                        <textarea class="form-control mt-3 mb-3" name="text-input-description" placeholder="Tab Description"><?php echo $description; ?></textarea>
                     </div>
                 </div>
                 <!-- innner repeater -->

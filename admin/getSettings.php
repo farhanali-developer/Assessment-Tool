@@ -8,7 +8,6 @@ $settings_table = 'assessment_tool_settings';
 $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-require_once( ABSPATH . 'wp-includes/class-wp-editor.php' );
 
 $email_address = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 1" );
 $password_gmail = $wpdb->get_results( "SELECT setting_value FROM $settings_table WHERE id = 2" );
@@ -103,7 +102,6 @@ foreach($mode as $mode_key => $mode_val){
         $password = $password_val->setting_value;
     ?>
     <input type="text" class="form-control password" placeholder="" value="<?php echo $password; ?>"/>
-    <div id="emailHelp" class="form-text">This password can be generated from your Gmail account's security settings. <br>Note:</b> This is not your Gmail account password.</div>
     <?php
     }
     ?>
@@ -165,11 +163,12 @@ foreach($mode as $mode_key => $mode_val){
     <?php
     foreach($welcome_screen_text as $welcome_key => $welcome_val){
         $welcome_text = $welcome_val->setting_value;
+        
     ?>
 
     <?php } ?>
         <textarea class="form-control" placeholder="Welcome Screen Text" id="welcome_screen_text" style="height: 200px">
-        <?php echo $welcome_text; ?></textarea>
+        <?php echo html_entity_decode($welcome_text); ?></textarea>
         <label for="welcome_screen_text">Welcome Screen Text</label>
     </div>
 
@@ -180,25 +179,8 @@ foreach($mode as $mode_key => $mode_val){
     ?>
 
     <?php } ?>
-        <textarea class="form-control" placeholder="End Screen Text" id="end_screen_text" style="height: 200px"><?php echo $end_text; ?></textarea>
+        <textarea class="form-control" placeholder="End Screen Text" id="end_screen_text" style="height: 200px"><?php echo html_entity_decode($end_text);; ?></textarea>
         <label for="end_screen_text">End Screen Text</label>
     </div>
 </div>
 <button type="submit" class="btn btn-success">Update Settings</button>
-<?php
-wp_editor(
-    "",
-    'distribution',
-    array(
-      'media_buttons' => true,
-      'textarea_rows' => 8,
-      'tabindex' => 4,
-      'tinymce' => array(
-        'theme_advanced_buttons1' => 'bold,italic,strikethrough,separator,bullist,numlist,separator,blockquote,separator,justifyleft,justifycenter,justifyright,separator,link,unlink,separator,undo,redo,separator',
-        'toolbar1'      => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
-        'toolbar2'      => '',
-        'toolbar3'      => '',
-      ),
-    )
-);
-     ?>

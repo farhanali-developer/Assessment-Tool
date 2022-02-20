@@ -1,7 +1,5 @@
 <?php
-
 require_once dirname( dirname( dirname( dirname( dirname( __FILE__ )) ) ) ) . '/wp-config.php';
-
 global $wpdb;
 $wpdb->show_errors();
 $users_table = 'assessment_tool_users';
@@ -33,7 +31,6 @@ foreach($users as $col => $val){
     <td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" <?php echo ($num_allow_retake == 1) ? 'checked' : '' ?> ></td>
     <td><span class="text-decoration-none btn btn-danger text-white d-inline delete-user" user-id="<?php echo $user_id; ?>">Delete User</span></td>
 </tr>
-
 <?php
 
 }

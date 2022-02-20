@@ -12,8 +12,6 @@ $charset_collate = $wpdb->get_charset_collate();
 $wpdb->delete( $formdata_table, array( 'user_id' => $delete_id ) );
 $wpdb->delete( $users_table, array( 'id' => $delete_id ) );
 
-
-
 $users = $wpdb->get_results("SELECT * FROM $users_table");
 
 foreach($users as $col => $val){
@@ -36,7 +34,5 @@ foreach($users as $col => $val){
     <td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" <?php echo ($num_allow_retake == 1) ? 'checked' : '' ?> ></td>
     <td></td>
 </tr>
-
 <?php
-
 }

@@ -43,9 +43,6 @@ foreach($users as $col => $val){
     <td><input id="<?php echo $user_id; ?>" class="form-check-input allow-retake" type="checkbox" <?php echo ($num_allow_retake == 1) ? 'checked' : '' ?> ></td>
     <td></td>
 </tr>
-
 <?php
-
 }
-
 ?>

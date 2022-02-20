@@ -25,7 +25,7 @@ $charset_collate = $wpdb->get_charset_collate();
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs");
+$tabs = $wpdb->get_results("SELECT * FROM assessment_tool_tabs ORDER BY id");
 
 if($tabs){
 $formUrl = plugin_dir_url( __FILE__ ) . "submit_user_data.php";
@@ -45,7 +45,7 @@ $end_text = $end_value->setting_value;
             <div class="row d-flex justify-content-center align-items-center py-5 slide-in-right">
                 <div class="col-8">
                     <p>
-                    <?php echo $welcome_text; ?>
+                    <?php echo html_entity_decode($welcome_text); ?>
                     </p>
                 </div>
                 <div class="col-8">
@@ -58,7 +58,7 @@ $end_text = $end_value->setting_value;
 
     <!-- Smart Wizard -->
     <div id="smartwizard" class="container">
-        <ul class="nav">
+        <ul class="nav mx-0">
         <?php
         foreach($tabs as $tabs_name => $tabs_data){
             $tab_id = $tabs_data->id;
@@ -86,15 +86,15 @@ $end_text = $end_value->setting_value;
             <!-- Step 1 -->
             <div id="step-<?php echo $tab_id; ?>" tab-id="<?php echo $tab_id; ?>" chapter-title="<?php echo $chapter_title; ?>" class="tab-pane" role="tabpanel" data-name="<?php echo $tab; ?>" data-marks="" data-priority="">
                 <div class="step-info">
-                    <div class="container py-5">
-                    <p class="lead"><?php echo $description; ?></p>
+                    <div class="container">
+                    <p class="lead my-0"><?php echo htmlspecialchars_decode($description); ?></p>
                     </div>
                 </div>
 
-                <div class="form-area col-12 col-md-6">
+                <div class="form-area col-12 col-md-10">
 
                 <?php
-                    $questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id");
+                    $questions = $wpdb->get_results("SELECT * FROM assessment_tool_questions WHERE tab_id = $tab_id ORDER BY id");
                     foreach($questions as $questions_name => $questions_data){
                         $question_id = $questions_data->id;
                         $question = $questions_data->question;
@@ -102,9 +102,9 @@ $end_text = $end_value->setting_value;
                 ?>
                     <!-- Q1 -->
                     <div id="q-area-<?php echo $question_id; ?>" class="row q-area">
-                        <div class="col-12 d-flex justify-content-between question1 align-items-center flex-wrap my-4">
-                            <h5 class="question" data-marks="<?php echo $marks; ?>" data-value="" question-id="<?php echo $question_id; ?>"><?php echo $question; ?></h5>
-                            <h5 class="display-ans"></h5>
+                        <div class="col-12 d-flex justify-content-between question1 align-items-center flex-wrap mb-2">
+                            <h5 class="question my-0" data-marks="<?php echo $marks; ?>" data-value="" question-id="<?php echo $question_id; ?>"><?php echo $question; ?></h5>
+                            <h5 class="display-ans my-0"></h5>
                             <a href="#q-area-<?php echo $question_id; ?>" class="edit">Edit</a>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
@@ -162,11 +162,11 @@ $end_text = $end_value->setting_value;
             <div class="row d-flex justify-content-center align-items-center py-5 slide-in-right">
                 <div class="col-8">
                     <p>
-                    <?php echo $end_text; ?>
+                    <?php echo html_entity_decode($end_text); ?>
                     </p>
                 </div>
                 <div class="col-8">
-                    <a href="https://businessesdontfail.com/fsc800723/" class="my-button">CLICK HERE TO GO TO THE WEBSITE</a>
+                    <a href="https://mandelberg.biz/" class="my-button">CLICK HERE TO GO TO THE WEBSITE</a>
                 </div>
             </div>
         </div>
@@ -406,11 +406,11 @@ $end_text = $end_value->setting_value;
           $(".user-data").removeClass("show");
           $(".welcome_final.final").addClass("open");
           $(".welcome_final.final").addClass("slide-in-right");
-        }, 300);
+        }, 0);
         $(".welcome_final.final button").click(function () {
           $(this).addClass("active");
         });
-      }, 5000);
+      }, 7000);
     });
 
     $("#smartwizard").on(
@@ -418,6 +418,8 @@ $end_text = $end_value->setting_value;
       function (e, anchorObject, stepIndex, stepDirection) {
         var step = stepIndex + 1;
         $(".sw .toolbar>.btn").addClass("disabled");
+
+        console.log("Step is: " + step)
 
         // Hide all question except first one when rendering each step
         $("#step-" + step + " .q-area").css("display", "none");
@@ -459,6 +461,8 @@ $end_text = $end_value->setting_value;
     var current_grandParent;
 
     $("input.form-radio").click(function () {
+
+      console.log("Hello World")
       var current = $(this);
       var parent = current.parent();
       var grandParent = current.parent().parent().attr("id");

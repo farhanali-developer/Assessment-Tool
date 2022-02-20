@@ -1,13 +1,14 @@
 <?php
-
 $emailaddress = $_POST['email'];
 $password_gmail = $_POST['password'];
 $emailsubject = $_POST['subject'];
 $theme_data = $_POST['theme'];
 $animation_data = $_POST['animation'];
 $animation_speed_data = $_POST['animation_speed'];
-$welcome_screen_text = $_POST["welcome_screen_text"];
-$end_screen_text = $_POST["end_screen_text"];
+$welcome_text = $_POST["welcome_screen_text"];
+$welcome_screen_text = htmlspecialchars($welcome_text);
+$end_text = $_POST["end_screen_text"];
+$end_screen_text = htmlspecialchars($end_text);
 
 if($_POST['alignment'] == "true"){
     $alignment_data = 1;

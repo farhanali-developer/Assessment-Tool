@@ -82,8 +82,6 @@ class Assessment_tool_Activator {
           `question_marks` INT NOT NULL,
           `question_answer` VARCHAR(255) NOT NULL,
           `user_id` INT NOT NULL,
-          -- CONSTRAINT FOREIGN KEY (tab_id) REFERENCES $tabs_table(id),
-          -- CONSTRAINT FOREIGN KEY (question_id) REFERENCES $questions_table(id),
           CONSTRAINT FOREIGN KEY (user_id) REFERENCES $users_table(id),
           PRIMARY KEY  (`id`)
         ) $charset_collate;"; 
@@ -94,15 +92,11 @@ class Assessment_tool_Activator {
           `setting_value` LONGTEXT,
           PRIMARY KEY  (`id`)
         ) $charset_collate; INSERT INTO $settings_table(setting_name, setting_value) VALUES('email',''),('password',''),('subject',''), ('theme','arrows'), ('animation','fade'), ('animation_speed','400'), ('alignment','1'), ('mode','0'), ('welcome_screen_text',''), ('end_screen_text','')";
-
- 
         
         dbDelta( $users_query );
         dbDelta( $tabs_query );
         dbDelta( $questions_query );
         dbDelta( $formdata_query );
         dbDelta( $settings_query );
-        
 	}
-
 }

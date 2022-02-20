@@ -3,7 +3,7 @@
 $ajax_data = $_POST;
 //getting array from jquery
 $array_data = $ajax_data["data"];
-
+print_r($array_data);
 //converting array to object
 $object_data = json_decode($array_data, true);
 
@@ -45,12 +45,8 @@ foreach($object_data as $outer_list_key => $outer_list_data){
                 'question' => $question,
                 'marks' => $marks,
                 'tab_id' => $tab_id
-            ));
-            
+            ));  
         }
     }
-    
 }
-
-
 ?>

@@ -15,11 +15,10 @@ include('./phpmailer/src/SMTP.php');
 //Create a new PHPMailer instance
 $mail = new PHPMailer(true);
 
-// $pop = new POP3(); /*Create a new object for pop3*/
-// $pop->Authorise('logikware.tech', 993, 30, 'farhan@logikware.tech', 'Icsm1458319', 1); /*login in to pop3 */
 
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
+
 
 //Enable SMTP debugging
 //SMTP::DEBUG_OFF = off (for production use)
@@ -29,7 +28,7 @@ $mail->isSMTP();
 $mail->SMTPDebug = SMTP::DEBUG_OFF;
 
 //Set the hostname of the mail server
-$mail->Host = 'smtp.gmail.com';
+$mail->Host = 'mail.mandelberg.biz';
 //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
 //if your network does not support SMTP over IPv6,
 //though this may cause issues with TLS
@@ -54,6 +53,12 @@ $mail->SMTPAuth = true;
 // header("Access-Control-Allow-Origin: *");
 // ini_set('display_errors', 1); 
 // error_reporting(E_ALL);
+
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="result.csv"');
+header('Cache-Control: no-cache, no-store, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
 
 
 $user_data = json_decode($_POST["user_data"], true);
@@ -144,6 +149,44 @@ if($wpdb->num_rows > 0){
 
         }
 
+        $userFromDataResults = $wpdb->get_results("SELECT chapter_title, tab_name, tab_marks, question, question_marks, question_answer FROM assessment_tool_formdata WHERE user_id = $user_id ORDER BY tab_marks DESC");
+
+        $delimiter = ","; 
+        $filename = "$name-surveyFormResults.csv"; 
+
+        // Set headers to download file rather than displayed 
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '";'); 
+
+        // Create a file pointer 
+        $f = fopen($filename, 'w'); 
+
+        // Set column headers 
+        $fields = array('Chapter Title', 'Tab Name', 'Tab Marks', 'Question', 'Question Marks', 'Question Answer'); 
+        fputcsv($f, $fields, $delimiter); 
+
+        // Output each row of the data, format line as csv and write to file pointer 
+        foreach($userFromDataResults as $row){
+            $chapter_title_att = $row->chapter_title;
+            $tab_name_att = $row->tab_name;
+            $tab_marks_att = $row->tab_marks;
+            $question_att = $row->question;
+            $question_marks_att = $row->question_marks;
+            $question_answer_att = $row->question_answer;
+            $lineData = array($chapter_title_att, $tab_name_att, $tab_marks_att, $question_att, $question_marks_att, $question_answer_att); 
+            fputcsv($f, $lineData, $delimiter);
+        }
+
+        // Move back to beginning of file 
+        // fseek($f, 0);
+
+
+        
+        //output all remaining data on a file pointer 
+        // fpassthru($f); 
+        // unlink($filename);
+        fclose($f); 
+
 
         $email = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
         $password_gmail = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 2");
@@ -158,7 +201,6 @@ if($wpdb->num_rows > 0){
         $mail->Username = $admin_email;
 
         //Password to use for SMTP authentication
-        // $mail->Password = 'yoffeaqmopkdfcup';
         $mail->Password = "$password";
 
         $from = $admin_email; // this is the sender's Email address
@@ -167,21 +209,21 @@ if($wpdb->num_rows > 0){
         //Note that with gmail you can only use your account address (same as `Username`)
         //or predefined aliases that you have configured within your account.
         //Do not use user-submitted addresses in here
-        $mail->setFrom($admin_email, "Larry");
+        $mail->setFrom($admin_email, "Larry Mandelberg");
 
         //Set an alternative reply-to address
         //This is a good place to put user-submitted addresses
-        $mail->addReplyTo($admin_email, "Lary");
+        $mail->addReplyTo($admin_email, "Larry Mandelberg");
 
         //Set who the message is to be sent to
-        $mail->addAddress($admin_email, $name);
+        $mail->addAddress($admin_email, "Larry Mandelberg");
         $mail->addAddress($user_email, $name);
 
         //Set the subject line
         $mail->Subject = $subject;
 
 
-        $message = '<html><body>';
+        $message = '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>';
         $message .= "<h1>Assessment Survey Form</h1>";
         $message .= "<table style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>";
         $message .= "<thead>";
@@ -190,25 +232,28 @@ if($wpdb->num_rows > 0){
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Chapter Title</th>";
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Indicator</th>";
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Description</th>";
+        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Marks</th>";
         $message .= "</tr>";
         $message .= "</thead>";
         $message .= "<tbody>";
         $i = 0;
         foreach($form_data as $tab => $tab_values){
-            if($i == 3){
-                break;
-            }
+            // if($i == 3){
+            //     break;
+            // }
             $i++;
             $tabname = $tab_values["tab_name"];
             $chapter_title = $tab_values["chapter_title"];
             $tabmarks = $tab_values["tab_marks"];
             $tabdescription = $tab_values["tab_description"];
-            $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+            // $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+            $description = html_entity_decode($tabdescription);
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$chapter_title</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
+            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabmarks</td>";
             $message .= "</tr>";
         }
 
@@ -218,9 +263,11 @@ if($wpdb->num_rows > 0){
 
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
-        $mail->msgHTML(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->IsHTML(true);
+        $mail->AddAttachment($filename);
         $mail->Body = $message;
-
+        
 
         //Attach an image file
         // $mail->addAttachment('images/phpmailer_mini.png');
@@ -236,7 +283,6 @@ if($wpdb->num_rows > 0){
             //     echo "Message saved!";
             // }
         }
-
 
         //Section 2: IMAP
         //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
@@ -305,19 +351,58 @@ else{
 
         }
 
+        $userFromDataResults = $wpdb->get_results("SELECT chapter_title, tab_name, tab_marks, question, question_marks, question_answer FROM assessment_tool_formdata WHERE user_id = $user_id ORDER BY tab_marks DESC");
+
+        $delimiter = ","; 
+        $filename = "$name-surveyFormResults.csv"; 
+
+        // Set headers to download file rather than displayed 
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '";'); 
+
+        // Create a file pointer 
+        $f = fopen($filename, 'w'); 
+
+        // Set column headers 
+        $fields = array('Chapter Title', 'Tab Name', 'Tab Marks', 'Question', 'Question Marks', 'Question Answer'); 
+        fputcsv($f, $fields, $delimiter); 
+
+        // Output each row of the data, format line as csv and write to file pointer 
+        foreach($userFromDataResults as $row){
+            $chapter_title_att = $row->chapter_title;
+            $tab_name_att = $row->tab_name;
+            $tab_marks_att = $row->tab_marks;
+            $question_att = $row->question;
+            $question_marks_att = $row->question_marks;
+            $question_answer_att = $row->question_answer;
+            $lineData = array($chapter_title_att, $tab_name_att, $tab_marks_att, $question_att, $question_marks_att, $question_answer_att); 
+            fputcsv($f, $lineData, $delimiter);
+        }
+
+        // Move back to beginning of file 
+        // fseek($f, 0);
+
+
+        
+        //output all remaining data on a file pointer 
+        // fpassthru($f); 
+        // unlink($filename);
+        fclose($f); 
 
         $email = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 1");
+        $password_gmail = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 2");
         $emailsubject = $wpdb->get_row("SELECT setting_value FROM assessment_tool_settings WHERE id = 3");
         $subject = $emailsubject->setting_value;
         // $admin_email = get_option('admin_email');
         $admin_email = $email->setting_value;
+        $password = $password_gmail->setting_value;
 
 
         //Username to use for SMTP authentication - use full email address for gmail
         $mail->Username = $admin_email;
 
         //Password to use for SMTP authentication
-        $mail->Password = 'yoffeaqmopkdfcup';
+        $mail->Password = "$password";
 
         $from = $admin_email; // this is the sender's Email address
 
@@ -325,21 +410,21 @@ else{
         //Note that with gmail you can only use your account address (same as `Username`)
         //or predefined aliases that you have configured within your account.
         //Do not use user-submitted addresses in here
-        $mail->setFrom($admin_email, "Larry");
+        $mail->setFrom($admin_email, "Larry Mandelberg");
 
         //Set an alternative reply-to address
         //This is a good place to put user-submitted addresses
-        $mail->addReplyTo($admin_email, "Lary");
+        $mail->addReplyTo($admin_email, "Larry Mandelberg");
 
         //Set who the message is to be sent to
-        $mail->addAddress($admin_email, $name);
+        $mail->addAddress($admin_email, "Larry Mandelberg");
         $mail->addAddress($user_email, $name);
 
         //Set the subject line
         $mail->Subject = $subject;
 
 
-        $message = '<html><body>';
+        $message = '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>';
         $message .= "<h1>Assessment Survey Form</h1>";
         $message .= "<table style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>";
         $message .= "<thead>";
@@ -348,25 +433,28 @@ else{
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Chapter Title</th>";
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Indicator</th>";
         $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Description</th>";
+        $message .= "<th style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>Marks</th>";
         $message .= "</tr>";
         $message .= "</thead>";
         $message .= "<tbody>";
         $i = 0;
         foreach($form_data as $tab => $tab_values){
-            if($i == 3){
-                break;
-            }
+            // if($i == 3){
+            //     break;
+            // }
             $i++;
             $tabname = $tab_values["tab_name"];
             $chapter_title = $tab_values["chapter_title"];
             $tabmarks = $tab_values["tab_marks"];
             $tabdescription = $tab_values["tab_description"];
-            $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+            // $description = htmlspecialchars($tabdescription, ENT_QUOTES);
+            $description = html_entity_decode($tabdescription);
             $message .= "<tr>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$i</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$chapter_title</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabname</td>";
             $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$description</td>";
+            $message .= "<td style='border: 1px solid black; border-collapse: collapse; padding: 15px;'>$tabmarks</td>";
             $message .= "</tr>";
         }
 
@@ -376,9 +464,11 @@ else{
 
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
-        $mail->msgHTML(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->IsHTML(true);
+        $mail->AddAttachment($filename);
         $mail->Body = $message;
-
+        
 
         //Attach an image file
         // $mail->addAttachment('images/phpmailer_mini.png');
@@ -394,7 +484,7 @@ else{
             //     echo "Message saved!";
             // }
         }
-
+        
 
         //Section 2: IMAP
         //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
