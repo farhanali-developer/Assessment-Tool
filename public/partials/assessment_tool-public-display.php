@@ -378,6 +378,8 @@ $end_text = $end_value->setting_value;
       formdata.append("user_data", JSON.stringify(user_data));
       formdata.append("form_data", JSON.stringify(all_data));
 
+      console.log(all_data);
+
       // AJAX
       jQuery.ajax({
         method: "POST",
@@ -676,7 +678,7 @@ $end_text = $end_value->setting_value;
       }
 
       // Sort questions based on marks
-      each_data.questions.sort(compare("marks"));
+      // each_data.questions.sort(compare("marks"));
 
       // Populate t_marks declared above with Sum of marks of all questions
       for (var key in each_data.questions) {
